@@ -1,0 +1,352 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Daily Indian Trading Idea Scout 2026-05-19</title><style>body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;background:#0b1020;color:#e8eefc;margin:0;padding:28px}h1{margin-top:0}.card{background:#141b31;border:1px solid #27324f;border-radius:16px;padding:20px;margin:18px 0;box-shadow:0 10px 30px #0006}a{color:#8ec5ff}.metrics{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}.metrics span{background:#22304f;border:1px solid #3b4e78;border-radius:999px;padding:8px 12px;font-weight:700}pre{white-space:pre-wrap;background:#090d18;border-radius:12px;padding:12px;max-height:420px;overflow:auto}.warn{color:#ffcc66}</style></head><body><h1>Daily Indian Trading Idea Scout — 2026-05-19</h1><p class='warn'>Research only. Index tests are signal-validation proxies, not tradable execution reports. Backtests include simple 5 bps/side cost and preserve public provenance.</p><section class='card'><h2>IND-SCOUT-20260519-01: 2-period RSI mean reversion on NIFTY</h2><p><b>Source:</b> <a href='https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html'>https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html</a></p><p><b>Instrument:</b> NIFTY index proxy (signal validation; index not directly tradable)</p><p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p><p><b>Strategy:</b> Long next open after RSI(2)&lt;5, exit next open after RSI(2)&gt;50; short next open after RSI(2)&gt;95, cover next open after RSI(2)&lt;50. One position at a time.</p><p><b>Costs:</b> 5 bps per side included on entry and exit; no financing/margin costs.</p><div class='metrics'><span>Total -20.80%</span><span>CAGR -2.12%</span><span>Max DD -34.80%</span><span>Trades 183</span><span>Win rate 54.64%</span><span>Avg trade -0.10%</span></div><h3>Recent trades</h3><pre>[
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-06-27&quot;,
+    &quot;entry_price&quot;: 25563.86206542969,
+    &quot;exit_date&quot;: &quot;2025-07-03&quot;,
+    &quot;exit_price&quot;: 25517.852159179685,
+    &quot;return&quot;: 0.0018030477629149555,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2025-07-14&quot;,
+    &quot;entry_price&quot;: 25162.07475,
+    &quot;exit_date&quot;: &quot;2025-07-16&quot;,
+    &quot;exit_price&quot;: 25184.001309570314,
+    &quot;return&quot;: 0.000871413020912204,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-08-20&quot;,
+    &quot;entry_price&quot;: 24953.317880859377,
+    &quot;exit_date&quot;: &quot;2025-08-25&quot;,
+    &quot;exit_price&quot;: 24961.624965820312,
+    &quot;return&quot;: -0.0003327942380477733,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-09-10&quot;,
+    &quot;entry_price&quot;: 24978.504500000003,
+    &quot;exit_date&quot;: &quot;2025-09-22&quot;,
+    &quot;exit_price&quot;: 25250.718659179685,
+    &quot;return&quot;: -0.010780451948868452,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2025-09-26&quot;,
+    &quot;entry_price&quot;: 24830.960056640622,
+    &quot;exit_date&quot;: &quot;2025-10-03&quot;,
+    &quot;exit_price&quot;: 24747.171005859378,
+    &quot;return&quot;: -0.003374378219372809,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-10-08&quot;,
+    &quot;entry_price&quot;: 25067.210125,
+    &quot;exit_date&quot;: &quot;2025-10-15&quot;,
+    &quot;exit_price&quot;: 25194.540193359375,
+    &quot;return&quot;: -0.005053875458022272,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-10-20&quot;,
+    &quot;entry_price&quot;: 25811.687309570312,
+    &quot;exit_date&quot;: &quot;2025-10-27&quot;,
+    &quot;exit_price&quot;: 25856.120818359374,
+    &quot;return&quot;: -0.001718490917535842,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2025-11-17&quot;,
+    &quot;entry_price&quot;: 25935.225119140625,
+    &quot;exit_date&quot;: &quot;2025-11-19&quot;,
+    &quot;exit_price&quot;: 25931.058659179685,
+    &quot;return&quot;: 0.00016067450294654506,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2026-01-05&quot;,
+    &quot;entry_price&quot;: 26320.532369140627,
+    &quot;exit_date&quot;: &quot;2026-01-07&quot;,
+    &quot;exit_price&quot;: 26156.171159179685,
+    &quot;return&quot;: 0.006283840588161116,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-01-09&quot;,
+    &quot;entry_price&quot;: 25853.320590820313,
+    &quot;exit_date&quot;: &quot;2026-01-28&quot;,
+    &quot;exit_price&quot;: 25246.220184570313,
+    &quot;return&quot;: -0.023482492475862538,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-04&quot;,
+    &quot;entry_price&quot;: 24400.995181640625,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 23621.08394042969,
+    &quot;return&quot;: -0.03196227184200018,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;SHORT&quot;,
+    &quot;entry_date&quot;: &quot;2026-04-09&quot;,
+    &quot;entry_price&quot;: 23897.096255859375,
+    &quot;exit_date&quot;: &quot;2026-04-23&quot;,
+    &quot;exit_price&quot;: 24214.450784179688,
+    &quot;return&quot;: -0.01310599737110929,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  }
+]</pre></section><section class='card'><h2>IND-SCOUT-20260519-02: 20/60 SMA crossover on NIFTY</h2><p><b>Source:</b> <a href='https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/'>https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/</a></p><p><b>Instrument:</b> NIFTY index proxy (QuantInsti discusses Nifty/options; tested underlying index rule)</p><p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p><p><b>Strategy:</b> Buy next open when SMA20 crosses above SMA60; exit next open when SMA20 crosses below SMA60. Long-only, one position at a time.</p><p><b>Costs:</b> 5 bps per side included; index proxy ignores option roll/Greeks.</p><div class='metrics'><span>Total 206.31%</span><span>CAGR 11.10%</span><span>Max DD -12.96%</span><span>Trades 16</span><span>Win rate 75.00%</span><span>Avg trade 7.90%</span></div><h3>Recent trades</h3><pre>[
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2018-12-11&quot;,
+    &quot;entry_price&quot;: 10355.224829589843,
+    &quot;exit_date&quot;: &quot;2019-07-23&quot;,
+    &quot;exit_price&quot;: 11366.563875,
+    &quot;return&quot;: 0.0976646149217617,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2019-10-07&quot;,
+    &quot;entry_price&quot;: 11201.798295410155,
+    &quot;exit_date&quot;: &quot;2020-02-13&quot;,
+    &quot;exit_price&quot;: 12213.440029785157,
+    &quot;return&quot;: 0.09031065438747587,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2020-06-04&quot;,
+    &quot;entry_price&quot;: 10059.277124999999,
+    &quot;exit_date&quot;: &quot;2021-04-13&quot;,
+    &quot;exit_price&quot;: 14357.717940429688,
+    &quot;return&quot;: 0.42731110416939533,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2021-05-24&quot;,
+    &quot;entry_price&quot;: 15218.955284179687,
+    &quot;exit_date&quot;: &quot;2021-11-30&quot;,
+    &quot;exit_price&quot;: 17042.624815429688,
+    &quot;return&quot;: 0.11982882511953563,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2022-01-18&quot;,
+    &quot;entry_price&quot;: 18346.367818359373,
+    &quot;exit_date&quot;: &quot;2022-02-17&quot;,
+    &quot;exit_price&quot;: 17387.852505859377,
+    &quot;return&quot;: -0.052245508320224676,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2022-04-08&quot;,
+    &quot;entry_price&quot;: 17706.99946582031,
+    &quot;exit_date&quot;: &quot;2022-05-11&quot;,
+    &quot;exit_price&quot;: 16261.914779785156,
+    &quot;return&quot;: -0.08161092955498139,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2022-07-26&quot;,
+    &quot;entry_price&quot;: 16641.21684082031,
+    &quot;exit_date&quot;: &quot;2022-10-13&quot;,
+    &quot;exit_price&quot;: 17078.805934570315,
+    &quot;return&quot;: 0.02629549857655933,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2022-11-07&quot;,
+    &quot;entry_price&quot;: 18220.855874999997,
+    &quot;exit_date&quot;: &quot;2023-01-11&quot;,
+    &quot;exit_price&quot;: 17915.287875,
+    &quot;return&quot;: -0.016770233083246766,
+    &quot;win_loss&quot;: &quot;loss&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2023-04-28&quot;,
+    &quot;entry_price&quot;: 17959.375590820313,
+    &quot;exit_date&quot;: &quot;2023-10-26&quot;,
+    &quot;exit_price&quot;: 19017.736375,
+    &quot;return&quot;: 0.058930823002591115,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2023-12-04&quot;,
+    &quot;entry_price&quot;: 20612.250193359374,
+    &quot;exit_date&quot;: &quot;2024-10-28&quot;,
+    &quot;exit_price&quot;: 24238.974059570315,
+    &quot;return&quot;: 0.17594992454435454,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2025-04-15&quot;,
+    &quot;entry_price&quot;: 23380.033784179686,
+    &quot;exit_date&quot;: &quot;2025-08-06&quot;,
+    &quot;exit_price&quot;: 24629.028934570313,
+    &quot;return&quot;: 0.05342144335290788,
+    &quot;win_loss&quot;: &quot;win&quot;
+  },
+  {
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2025-09-26&quot;,
+    &quot;entry_price&quot;: 24830.960056640622,
+    &quot;exit_date&quot;: &quot;2026-01-22&quot;,
+    &quot;exit_price&quot;: 25331.47831542969,
+    &quot;return&quot;: 0.020157024039640925,
+    &quot;win_loss&quot;: &quot;win&quot;
+  }
+]</pre></section><section class='card'><h2>IND-SCOUT-20260519-03: NIFTY 50 Bollinger+RSI mean reversion</h2><p><b>Source:</b> <a href='https://www.algomaya.com/blog/mean-reversion-nifty-50'>https://www.algomaya.com/blog/mean-reversion-nifty-50</a></p><p><b>Instrument:</b> NIFTY 50 constituents daily OHLC basket</p><p><b>Coverage:</b> 2021-02-10 to 2026-05-11</p><p><b>Strategy:</b> Long next open when prior close is below 20-day lower Bollinger Band, RSI14&lt;30, and volume &gt;1.5x 20-day average. Exit via conservative intraday stop -3%, target +5%, or next open/available open on SMA20 cross. Max 10 concurrent equal-risk slots. Short leg not tested because local execution route is long-only first pass.</p><p><b>Costs:</b> 5 bps per side included; stop/target assumed fillable at level on daily bars; if both stop and target touched, stop is assumed first.</p><div class='metrics'><span>Total 12.80%</span><span>CAGR 2.37%</span><span>Max DD -4.87%</span><span>Trades 312</span><span>Win rate 46.15%</span><span>Avg trade 0.40%</span></div><h3>Recent trades</h3><pre>[
+  {
+    &quot;symbol&quot;: &quot;GRASIM&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-16&quot;,
+    &quot;entry_price&quot;: 2571.285,
+    &quot;exit_date&quot;: &quot;2026-03-17&quot;,
+    &quot;exit_price&quot;: 2697.1507500000002,
+    &quot;return&quot;: 0.048950524737631396,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;JIOFIN&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-10&quot;,
+    &quot;entry_price&quot;: 237.0684719467163,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 248.67309804725647,
+    &quot;return&quot;: 0.048950524737631174,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;LT&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-16&quot;,
+    &quot;entry_price&quot;: 3455.22675,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 3624.3619125000005,
+    &quot;return&quot;: 0.048950524737631396,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;MARUTI&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-16&quot;,
+    &quot;entry_price&quot;: 12538.266,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 13152.020700000001,
+    &quot;return&quot;: 0.048950524737631396,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;TMPV&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-16&quot;,
+    &quot;entry_price&quot;: 313.1565,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 328.48567500000007,
+    &quot;return&quot;: 0.048950524737631396,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;ULTRACEMCO&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-16&quot;,
+    &quot;entry_price&quot;: 10675.335,
+    &quot;exit_date&quot;: &quot;2026-03-18&quot;,
+    &quot;exit_price&quot;: 11197.89825,
+    &quot;return&quot;: 0.048950524737631396,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;target&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;BAJFINANCE&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-13&quot;,
+    &quot;entry_price&quot;: 861.4304999999999,
+    &quot;exit_date&quot;: &quot;2026-03-19&quot;,
+    &quot;exit_price&quot;: 834.752415,
+    &quot;return&quot;: -0.030969515242378676,
+    &quot;win_loss&quot;: &quot;loss&quot;,
+    &quot;reason&quot;: &quot;stop&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;KOTAKBANK&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-13&quot;,
+    &quot;entry_price&quot;: 373.18649999999997,
+    &quot;exit_date&quot;: &quot;2026-03-23&quot;,
+    &quot;exit_price&quot;: 361.629095,
+    &quot;return&quot;: -0.030969515242378676,
+    &quot;win_loss&quot;: &quot;loss&quot;,
+    &quot;reason&quot;: &quot;stop&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;HDFCBANK&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-03-23&quot;,
+    &quot;entry_price&quot;: 763.5315994262695,
+    &quot;exit_date&quot;: &quot;2026-03-30&quot;,
+    &quot;exit_price&quot;: 739.8853959197999,
+    &quot;return&quot;: -0.030969515242378676,
+    &quot;win_loss&quot;: &quot;loss&quot;,
+    &quot;reason&quot;: &quot;stop&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;SBILIFE&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-04-01&quot;,
+    &quot;entry_price&quot;: 1829.3142244262694,
+    &quot;exit_date&quot;: &quot;2026-04-02&quot;,
+    &quot;exit_price&quot;: 1772.6612496697999,
+    &quot;return&quot;: -0.030969515242378676,
+    &quot;win_loss&quot;: &quot;loss&quot;,
+    &quot;reason&quot;: &quot;stop&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;HCLTECH&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-04-27&quot;,
+    &quot;entry_price&quot;: 1209.6045,
+    &quot;exit_date&quot;: &quot;2026-05-11&quot;,
+    &quot;exit_price&quot;: 1194.3025744018555,
+    &quot;return&quot;: -0.012650354391162022,
+    &quot;win_loss&quot;: &quot;loss&quot;,
+    &quot;reason&quot;: &quot;final_close&quot;
+  },
+  {
+    &quot;symbol&quot;: &quot;INFY&quot;,
+    &quot;side&quot;: &quot;LONG&quot;,
+    &quot;entry_date&quot;: &quot;2026-04-27&quot;,
+    &quot;entry_price&quot;: 1155.1772755737304,
+    &quot;exit_date&quot;: &quot;2026-05-11&quot;,
+    &quot;exit_price&quot;: 1176.4115000000002,
+    &quot;return&quot;: 0.018381788557711776,
+    &quot;win_loss&quot;: &quot;win&quot;,
+    &quot;reason&quot;: &quot;final_close&quot;
+  }
+]</pre></section></body></html>
