@@ -1,5 +1,26 @@
 [
   {
+    "id": "2026-05-22-hermes-desktop-community-signal",
+    "title": "Hermes Desktop community signal",
+    "summary": "External comments from GitHub, X/Twitter, and Reddit on whether Hermes Desktop is useful and where it is rough.",
+    "category": "research",
+    "tags": [
+      "hermes",
+      "desktop",
+      "community",
+      "x",
+      "reddit",
+      "github"
+    ],
+    "status": "saved",
+    "created_at": "2026-05-22T15:14:23.647806+05:30",
+    "updated_at": "2026-05-22T15:14:23.647806+05:30",
+    "expires_at": null,
+    "path": "research/2026-05-22-hermes-desktop-community-signal.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-hermes-desktop-community-signal.html",
+    "template": "14-research-feature-explainer.html"
+  },
+  {
     "id": "2026-05-22-hermes-desktop-repo-review",
     "title": "Hermes Desktop repo review",
     "summary": "What fathah/hermes-desktop is, how it works, and whether it is useful for Ishan’s Hermes workflow.",
