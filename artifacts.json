@@ -1,26 +1,5 @@
 [
   {
-    "id": "2026-05-22-delhi-allergy-dashboard",
-    "title": "Delhi allergy dashboard",
-    "summary": "Reusable dashboard for Delhi allergy symptoms, air purifier setup, medication cautions, and red flags.",
-    "category": "health",
-    "tags": [
-      "delhi",
-      "allergy",
-      "air-purifier",
-      "health"
-    ],
-    "status": "dashboard",
-    "created_at": "2026-05-22T19:24:47.308885+05:30",
-    "updated_at": "2026-05-22T19:24:47.308885+05:30",
-    "expires_at": null,
-    "importance": "reference",
-    "superseded_by": null,
-    "path": "health/delhi-allergy-dashboard.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/health/delhi-allergy-dashboard.html",
-    "template": "14-research-feature-explainer.html"
-  },
-  {
     "id": "2026-05-22-shreyaggarwall-may-2026-pnl",
     "title": "ShreyAggarwall cached P&L audit",
     "summary": "ShreyAggarwall saved P&L audit with all cached monthly totals and every parsed daily return linked to its source tweet.",
