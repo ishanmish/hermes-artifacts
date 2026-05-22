@@ -2,7 +2,7 @@
   {
     "id": "2026-05-22-shreyaggarwall-may-2026-pnl",
     "title": "ShreyAggarwall cached P&L audit",
-    "summary": "ShreyAggarwall all cached monthly P&L audit: Jun 2024–May 2026 MTD; headline updated to cached-range inferred total.",
+    "summary": "ShreyAggarwall all cached monthly P&L audit: Jun 2024–May 2026 MTD; headline updated to cached-range inferred total. Permanent saved page; update this same HTML in place.",
     "category": "trading",
     "tags": [
       "twitter",
@@ -11,11 +11,11 @@
       "may-2026",
       "ShreyAggarwall"
     ],
-    "status": "temp",
+    "status": "saved",
     "created_at": "2026-05-22T16:05:45.549885+05:30",
-    "updated_at": "2026-05-22T16:32:07.403032+05:30",
-    "expires_at": "2026-06-05T16:05:45.549885+05:30",
-    "importance": "scratch",
+    "updated_at": "2026-05-22T16:44:47.818349+05:30",
+    "expires_at": null,
+    "importance": "reference",
     "superseded_by": null,
     "path": "temp/2026-05-22-shreyaggarwall-may-2026-pnl.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/temp/2026-05-22-shreyaggarwall-may-2026-pnl.html",
@@ -24,7 +24,7 @@
   {
     "id": "2026-05-22-traderiit-may-2026-pnl",
     "title": "TraderIit cached P&L audit",
-    "summary": "TraderIit all cached monthly P&L audit: Dec 2024–May 2026 MTD; headline updated to cached-range total.",
+    "summary": "TraderIit all cached monthly P&L audit: Dec 2024–May 2026 MTD; headline updated to cached-range total. Permanent saved page; update this same HTML in place.",
     "category": "temp",
     "tags": [
       "twitter",
@@ -33,11 +33,11 @@
       "may-2026",
       "TraderIit"
     ],
-    "status": "temp",
+    "status": "saved",
     "created_at": "2026-05-22T15:53:54.699823+05:30",
-    "updated_at": "2026-05-22T16:32:07.403032+05:30",
-    "expires_at": "2026-06-05T16:00:45.154299+05:30",
-    "importance": "scratch",
+    "updated_at": "2026-05-22T16:44:47.818349+05:30",
+    "expires_at": null,
+    "importance": "reference",
     "superseded_by": null,
     "path": "temp/2026-05-22-traderiit-may-2026-pnl.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/temp/2026-05-22-traderiit-may-2026-pnl.html",
