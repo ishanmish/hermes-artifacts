@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<title>South America Travel Research — Bolivia, Peru, Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070b; --panel:#0f1015; --panel2:#151720; --card:rgba(255,255,255,.035);
+  --card2:rgba(255,255,255,.055); --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.14);
+  --text:#f7f8ff; --muted:#9aa3b5; --soft:#687083;
+  --violet:#7c7cff; --cyan:#6ee7ff; --green:#71f5ad; --amber:#ffd166; --rose:#ff7a90; --orange:#ffb86b;
+  --shadow:0 30px 80px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 15% -10%,rgba(124,124,255,.20),transparent 35%),radial-gradient(circle at 86% 6%,rgba(110,231,255,.13),transparent 30%),linear-gradient(180deg,#06070b,#090b12 46%,#05060a);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-feature-settings:"cv01","ss03";}
+body:before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.6),transparent 70%);pointer-events:none;z-index:-1}
+a{color:inherit;text-decoration:none}.wrap{max-width:1240px;margin:auto;padding:28px 22px 80px}.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(18px);background:rgba(6,7,11,.74);border-bottom:1px solid var(--line)}.nav{max-width:1240px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em}.orb{width:28px;height:28px;border-radius:50%;background:conic-gradient(from 140deg,var(--violet),var(--cyan),var(--green),var(--amber),var(--violet));box-shadow:0 0 40px rgba(124,124,255,.38)}.navlinks{display:flex;gap:8px;flex-wrap:wrap}.navlinks a{font-size:12px;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.025);padding:7px 10px;border-radius:999px}.hero{padding:62px 0 34px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:end}.eyebrow{font-family:JetBrains Mono,monospace;color:var(--cyan);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.94;letter-spacing:-.07em;margin:0 0 20px;font-weight:600}.hero p{font-size:18px;line-height:1.65;color:var(--muted);max-width:680px}.heroCard{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.026));border-radius:24px;padding:22px;box-shadow:var(--shadow)}.scoregrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.metric{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.025)}.metric b{display:block;font-size:26px;letter-spacing:-.04em}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:6px}.callout{margin-top:12px;border:1px solid rgba(113,245,173,.18);background:rgba(113,245,173,.07);border-radius:16px;padding:14px;color:#c8ffe1;font-size:14px;line-height:1.5}.section{margin-top:38px}.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}.section h2{font-size:28px;letter-spacing:-.04em;margin:0}.sectionHead p{margin:0;color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:18px;min-height:240px;position:relative;overflow:hidden}.card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 0%,var(--glow,rgba(124,124,255,.18)),transparent 36%);pointer-events:none}.card>*{position:relative}.tag{display:inline-flex;gap:6px;align-items:center;font-family:JetBrains Mono,monospace;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px;background:rgba(255,255,255,.03)}.card h3{font-size:20px;line-height:1.18;margin:14px 0 10px;letter-spacing:-.035em}.card p,.card li{color:var(--muted);font-size:14px;line-height:1.55}.card ul{padding-left:18px;margin:10px 0 0}.risk{margin-top:12px;font-size:12px;color:#ffdba5;border-top:1px solid var(--line);padding-top:12px}.route{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025));border-radius:22px;padding:20px}.panel h3{margin:0 0 12px;font-size:20px}.day{display:grid;grid-template-columns:70px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.day:first-of-type{border-top:0}.day .k{font-family:JetBrains Mono,monospace;color:var(--cyan);font-size:12px}.day .v{color:var(--muted);font-size:14px;line-height:1.55}.decision{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.decision .panel{min-height:190px}.pill{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;font-family:JetBrains Mono,monospace;border:1px solid var(--line);color:var(--muted)}.green{color:var(--green);border-color:rgba(113,245,173,.25);background:rgba(113,245,173,.07)}.amber{color:var(--amber);border-color:rgba(255,209,102,.28);background:rgba(255,209,102,.07)}.rose{color:var(--rose);border-color:rgba(255,122,144,.28);background:rgba(255,122,144,.07)}.sources{display:grid;grid-template-columns:1fr 1fr;gap:10px}.source{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:14px;padding:12px;color:var(--muted);font-size:13px;line-height:1.45}.source:hover{border-color:var(--line2);background:rgba(255,255,255,.045)}.footer{margin-top:38px;color:var(--soft);font-size:12px;line-height:1.6;border-top:1px solid var(--line);padding-top:18px}
+@media(max-width:900px){.hero,.route,.decision{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.sources{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}.hero{padding-top:34px}}
+@media(max-width:620px){.grid,.scoregrid{grid-template-columns:1fr}.wrap{padding:20px 14px 60px}.card{min-height:0}.hero h1{font-size:42px}.day{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top"><nav class="nav"><div class="brand"><span class="orb"></span><span>South America Research</span></div><div class="navlinks"><a href="#shortlist">Shortlist</a><a href="#routes">Routes</a><a href="#bolivia">Bolivia risk</a><a href="#sources">Sources</a></div></nav></header>
+<main class="wrap">
+<section class="hero">
+  <div>
+    <div class="eyebrow">Bolivia · Peru · Colombia · offbeat travel</div>
+    <h1>Readable travel intelligence, not a chat wall.</h1>
+    <p>This is how I would present the South America research under the new artifact-first format: visual shortlist, country cards, route ideas, risk calls, and source links — with Telegram only carrying the summary + link.</p>
+  </div>
+  <aside class="heroCard">
+    <div class="scoregrid">
+      <div class="metric"><b>3</b><span>countries tracked</span></div>
+      <div class="metric"><b>16</b><span>offbeat leads surfaced</span></div>
+      <div class="metric"><b>4</b><span>saved into travel KB</span></div>
+      <div class="metric"><b>1</b><span>active Bolivia risk monitor</span></div>
+    </div>
+    <div class="callout"><strong>Recommendation:</strong> keep Peru + Colombia flexible/fun; treat Bolivia as modular until roadblock/protest risk clears.</div>
+  </aside>
+</section>
+
+<section id="shortlist" class="section">
+  <div class="sectionHead"><h2>Priority shortlist</h2><p>Best candidates by weirdness, payoff, and itinerary usefulness.</p></div>
+  <div class="grid">
+    <article class="card" style="--glow:rgba(113,245,173,.18)"><span class="tag">COLOMBIA · WEIRD TRANSPORT</span><h3>San Cipriano “brujitas” rail carts</h3><p>Wooden motorbike-powered carts on railway tracks through jungle into a river reserve. Very Colombia-specific; slightly informal and memorable.</p><ul><li>Pair with river tubing + birding.</li><li>Go daytime; verify local logistics.</li></ul><div class="risk">Risk: informal transport; manageable with daylight/common-sense.</div></article>
+    <article class="card" style="--glow:rgba(124,124,255,.18)"><span class="tag">COLOMBIA · REMOTE JUNGLE</span><h3>Cerros de Mavecure</h3><p>Remote granite hills rising from jungle/savanna near the Inírida River. Feels outside the standard Colombia loop.</p><ul><li>Best for “end of the map” energy.</li><li>Needs operator/logistics verification.</li></ul><div class="risk">Risk: remote access + permits/operators need checking.</div></article>
+    <article class="card" style="--glow:rgba(110,231,255,.18)"><span class="tag">PERU · NEAR LIMA</span><h3>Marcahuasi / Markawasi</h3><p>Mystery-plateau vibe near Lima with strange rock formations, lagoons, donkeys, and eerie high-altitude landscapes.</p><ul><li>Good if you want weird near Lima.</li><li>Needs altitude/access research.</li></ul><div class="risk">Risk: altitude + route logistics unclear.</div></article>
+    <article class="card" style="--glow:rgba(255,209,102,.18)"><span class="tag">BOLIVIA · SURREAL ANCHOR</span><h3>Salar de Uyuni + Eduardo Avaroa</h3><p>Not hidden, but too otherworldly to skip: salt flats, red/green lagoons, flamingos, geysers, volcanoes, high-altitude deserts.</p><ul><li>3–4 day jeep circuit is the anchor.</li><li>Chile/Atacama exit can be backup.</li></ul><div class="risk">Risk: current Bolivia roadblock/protest uncertainty.</div></article>
+    <article class="card" style="--glow:rgba(255,122,144,.16)"><span class="tag">COLOMBIA · PACIFIC COAST</span><h3>Nuquí / Bahía Solano</h3><p>Remote Pacific Chocó coast: black beaches, rainforest, whale season, turtles, diving, eco-lodges, no-road feeling.</p><ul><li>Fly from Medellín; boat onward.</li><li>Stay outside town for the real version.</li></ul><div class="risk">Risk: seasonality, rooms/flights, rain, boat logistics.</div></article>
+    <article class="card" style="--glow:rgba(255,184,107,.18)"><span class="tag">COLOMBIA · DESERT EDGE</span><h3>La Guajira / Punta Gallinas</h3><p>Desert dunes into Caribbean sea; northernmost South America. Raw, remote, bumpy-road, high visual payoff.</p><ul><li>Choose Wayuu-run/respectful operators.</li><li>Expect poverty and rough logistics.</li></ul><div class="risk">Risk: harsh conditions + ethical/operator choice.</div></article>
+  </div>
+</section>
+
+<section id="routes" class="section">
+  <div class="sectionHead"><h2>Route ideas</h2><p>Instead of dumping notes, the artifact turns research into choices.</p></div>
+  <div class="route">
+    <div class="panel"><h3>Max weird per effort: Colombia</h3><div class="day"><div class="k">D1–2</div><div class="v"><strong>Bogotá → Sogamoso/Monguí</strong><br>Tejo + Páramo de Ocetá + Laguna de Tota. Weird nature + local game with explosives.</div></div><div class="day"><div class="k">D3–5</div><div class="v"><strong>Bucaramanga / San Gil</strong><br>Chicamocha canyon, caves, paragliding, adventure-town oddball cluster.</div></div><div class="day"><div class="k">D6–9</div><div class="v"><strong>Medellín → Nuquí/Bahía Solano</strong><br>Pacific rainforest coast, whales in season, eco-lodges, black beaches.</div></div></div>
+    <div class="panel"><h3>Surreal Andes plan</h3><div class="day"><div class="k">PERU</div><div class="v"><strong>Lima + Marcahuasi</strong><br>Use as a weird Lima-side add-on if logistics/altitude check out.</div></div><div class="day"><div class="k">BOLIVIA</div><div class="v"><strong>Uyuni circuit</strong><br>Only lock if protests/roadblocks settle. Prefer refundable bookings.</div></div><div class="day"><div class="k">BACKUP</div><div class="v"><strong>Peru → Chile/Atacama → Uyuni</strong><br>Alternative if La Paz / Oruro / Potosí corridors remain unreliable.</div></div></div>
+  </div>
+</section>
+
+<section id="bolivia" class="section">
+  <div class="sectionHead"><h2>Bolivia disruption lens</h2><p>Presented as decision support, not a paragraph blob.</p></div>
+  <div class="decision">
+    <div class="panel"><span class="pill rose">NEXT 1–2 WEEKS</span><h3>High disruption risk</h3><p>Assume overland Bolivia is unreliable. Avoid fixed buses/transfers through La Paz, El Alto, Oruro, Potosí corridors.</p></div>
+    <div class="panel"><span class="pill amber">3–4 WEEKS</span><h3>Possible but modular</h3><p>Could improve, but book refundable. Decide near the date using current road/airport/fuel reports.</p></div>
+    <div class="panel"><span class="pill green">1+ MONTH</span><h3>Monitor, don’t cancel</h3><p>Keep Bolivia in the plan, but preserve backup through Chile/Atacama if roadblocks return.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sectionHead"><h2>Research queue</h2><p>Open questions the artifact should track next.</p></div>
+  <div class="grid">
+    <article class="card"><span class="tag">LOGISTICS</span><h3>Marcahuasi</h3><p>Check access route, best season, altitude/overnight requirements, guided vs self-guided.</p></article>
+    <article class="card"><span class="tag">BOOKING</span><h3>Uyuni operator shortlist</h3><p>Compare 3-day vs 4-day circuits, cold/weather, start/end points, Chile border option.</p></article>
+    <article class="card"><span class="tag">SAFETY</span><h3>Colombia remote zones</h3><p>Verify Chocó, Guainía, Putumayo, Guaviare security/logistics before committing.</p></article>
+  </div>
+</section>
+
+<section id="sources" class="section">
+  <div class="sectionHead"><h2>Source trail</h2><p>Clickable breadcrumbs so the chat does not need to hold everything.</p></div>
+  <div class="sources">
+    <a class="source" href="https://reddit.com/r/digitalnomad/comments/wer2cv/off_the_beaten_path_itinerary_for_colombia/">Reddit: off the beaten path Colombia</a>
+    <a class="source" href="https://reddit.com/r/travel/comments/93yc00/colombia_off_the_tourist_trail/">Reddit: Colombia off the tourist trail</a>
+    <a class="source" href="https://reddit.com/r/travel/comments/1d6066b/off_the_beaten_path_colombia_in_rainy_season/">Reddit: rainy-season/offbeat Colombia</a>
+    <a class="source" href="https://reddit.com/r/solotravel/comments/1qg84nz/alternatives_to_lost_city_trek_in_colombia/">Reddit: Lost City alternatives / El Cocuy</a>
+    <a class="source" href="https://reddit.com/r/leticiaAmazon/comments/1gabskd/booking_a_24_day_trip_in_the_amazon_rainforest/">Reddit: Leticia Amazon local guide</a>
+    <a class="source" href="https://reddit.com/r/Colombia/comments/1ht2g3j/pacific_region_colombia_bahia_solano_nuqui/">Reddit: Pacific Chocó / Nuquí / Bahía Solano</a>
+    <a class="source" href="https://reddit.com/r/Colombia/comments/fgpwni/viajar_a_cerros_de_mavecure_guainia/">Reddit: Cerros de Mavecure</a>
+    <a class="source" href="file:///Users/ishanmishra/wiki/travel.md">Local KB: ~/wiki/travel.md</a>
+  </div>
+</section>
+
+<div class="footer">Generated as a prototype Hermes artifact. Intended Telegram message: 4-bullet summary + this artifact link/file, not the full research dump. Stored at <code>~/.hermes/artifacts/travel/</code>.</div>
+</main>
+</body>
+</html>
