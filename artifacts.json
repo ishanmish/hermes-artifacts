@@ -1,8 +1,8 @@
 [
   {
     "id": "2026-05-22-shreyaggarwall-may-2026-pnl",
-    "title": "ShreyAggarwall May 2026 reported P&L",
-    "summary": "ShreyAggarwall all cached monthly P&L bars plus May daily breakdown; rupee P&L inferred from return × capital.",
+    "title": "ShreyAggarwall cached P&L audit",
+    "summary": "ShreyAggarwall all cached monthly P&L audit: Jun 2024–May 2026 MTD; headline updated to cached-range inferred total.",
     "category": "trading",
     "tags": [
       "twitter",
@@ -13,7 +13,7 @@
     ],
     "status": "temp",
     "created_at": "2026-05-22T16:05:45.549885+05:30",
-    "updated_at": "2026-05-22T16:28:40.519135+05:30",
+    "updated_at": "2026-05-22T16:32:07.403032+05:30",
     "expires_at": "2026-06-05T16:05:45.549885+05:30",
     "importance": "scratch",
     "superseded_by": null,
@@ -23,8 +23,8 @@
   },
   {
     "id": "2026-05-22-traderiit-may-2026-pnl",
-    "title": "TraderIit May 2026 reported P&L",
-    "summary": "TraderIit all cached monthly P&L bars plus May daily breakdown; no fresh Twitter pull used for history expansion.",
+    "title": "TraderIit cached P&L audit",
+    "summary": "TraderIit all cached monthly P&L audit: Dec 2024–May 2026 MTD; headline updated to cached-range total.",
     "category": "temp",
     "tags": [
       "twitter",
@@ -35,7 +35,7 @@
     ],
     "status": "temp",
     "created_at": "2026-05-22T15:53:54.699823+05:30",
-    "updated_at": "2026-05-22T16:28:40.519135+05:30",
+    "updated_at": "2026-05-22T16:32:07.403032+05:30",
     "expires_at": "2026-06-05T16:00:45.154299+05:30",
     "importance": "scratch",
     "superseded_by": null,
