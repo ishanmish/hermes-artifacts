@@ -17,7 +17,9 @@
     "expires_at": null,
     "path": "research/2026-05-22-andrej-karpathy-skills-repo-review.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-andrej-karpathy-skills-repo-review.html",
-    "template": "14-research-feature-explainer.html"
+    "template": "14-research-feature-explainer.html",
+    "importance": "reference",
+    "superseded_by": null
   },
   {
     "id": "2026-05-22-hermes-desktop-community-signal",
@@ -38,7 +40,9 @@
     "expires_at": null,
     "path": "research/2026-05-22-hermes-desktop-community-signal.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-hermes-desktop-community-signal.html",
-    "template": "14-research-feature-explainer.html"
+    "template": "14-research-feature-explainer.html",
+    "importance": "reference",
+    "superseded_by": null
   },
   {
     "id": "2026-05-22-hermes-desktop-repo-review",
@@ -57,7 +61,9 @@
     "expires_at": null,
     "path": "research/2026-05-22-hermes-desktop-repo-review.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-hermes-desktop-repo-review.html",
-    "template": "14-research-feature-explainer.html"
+    "template": "14-research-feature-explainer.html",
+    "importance": "reference",
+    "superseded_by": null
   },
   {
     "id": "2026-05-22-hermes-artifact-system-implementation",
@@ -76,7 +82,9 @@
     "expires_at": null,
     "path": "system/2026-05-22-hermes-artifact-system-implementation.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/system/2026-05-22-hermes-artifact-system-implementation.html",
-    "template": "16-implementation-plan.html"
+    "template": "16-implementation-plan.html",
+    "importance": "reference",
+    "superseded_by": null
   },
   {
     "id": "2026-05-22-south-america-offbeat-research",
@@ -95,6 +103,8 @@
     "expires_at": null,
     "path": "travel/2026-05-22-south-america-offbeat-research.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/travel/2026-05-22-south-america-offbeat-research.html",
-    "template": "14-research-feature-explainer.html"
+    "template": "14-research-feature-explainer.html",
+    "importance": "reference",
+    "superseded_by": null
   }
 ]
