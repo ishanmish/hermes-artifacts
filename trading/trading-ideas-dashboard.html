@@ -1,0 +1,292 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Trading Ideas Dashboard</title>
+<style>
+:root{--bg:#080b12;--panel:#101827;--panel2:#0d1320;--ink:#e7eefc;--muted:#8d9bb2;--line:#243247;--green:#34d399;--red:#fb7185;--amber:#fbbf24;--blue:#60a5fa;--violet:#a78bfa}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#172554 0,#080b12 38%,#05070c 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif}main{max-width:1220px;margin:auto;padding:42px 18px 80px}.top{border:1px solid var(--line);background:linear-gradient(135deg,rgba(16,24,39,.92),rgba(2,6,23,.92));border-radius:28px;padding:30px;box-shadow:0 20px 80px rgba(0,0,0,.35)}.eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}h1{font-size:clamp(38px,6vw,72px);line-height:.92;margin:12px 0 16px;letter-spacing:-.055em}.lede{max-width:850px;color:var(--muted);font-size:20px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.card,.idea{border:1px solid var(--line);background:rgba(16,24,39,.88);border-radius:22px;padding:18px}.label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.big{font-size:34px;font-weight:850;letter-spacing:-.04em;margin-top:5px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}button{background:#0b1220;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:9px 13px;cursor:pointer}button:hover,button.active{border-color:var(--blue);color:#bfdbfe}.ideas{display:grid;grid-template-columns:1fr;gap:14px}.idea-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}h3{font-size:22px;margin:4px 0 12px;letter-spacing:-.025em}.micro{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);font-size:12px}.badge{border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}.badge.watch{background:rgba(52,211,153,.14);color:var(--green);border:1px solid rgba(52,211,153,.35)}.badge.reject{background:rgba(251,113,133,.13);color:var(--red);border:1px solid rgba(251,113,133,.35)}.badge.review{background:rgba(251,191,36,.13);color:var(--amber);border:1px solid rgba(251,191,36,.35)}.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:12px 0}.metrics div{background:var(--panel2);border:1px solid #1f2a3b;border-radius:14px;padding:10px}.metrics span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.metrics b{display:block;font-size:18px;margin-top:3px}details{margin-top:10px;color:#cbd5e1}summary{cursor:pointer;color:#bfdbfe;font-weight:700}a{color:#93c5fd}code{color:#c4b5fd;white-space:pre-wrap;word-break:break-word}.note{border-left:4px solid var(--amber);padding:12px 14px;background:rgba(251,191,36,.08);border-radius:10px;margin:18px 0;color:#fde68a}@media(max-width:850px){.cards,.metrics{grid-template-columns:1fr 1fr}.idea-head{display:block}}@media(max-width:520px){.cards,.metrics{grid-template-columns:1fr}}
+</style></head><body><main><section class='top'><div class='eyebrow'>Persistent research surface · not chat-only</div><h1>Trading Ideas Dashboard</h1><p class='lede'>Permanent dashboard for systematic trading ideas Ishan has asked Hermes to scout/backtest. Each card keeps the source URL, exact rules, data coverage, metrics, verdict, caveats, and local report path so ideas don’t disappear in Telegram history.</p><div class='note'><b>Status:</b> dashboard. This URL should stay stable and be updated by future daily idea scout runs.</div><div class='cards'><div class='card'><div class='label'>Backtested cards</div><div class='big'>12</div></div><div class='card'><div class='label'>Run days captured</div><div class='big'>4</div></div><div class='card'><div class='label'>Watch / promising</div><div class='big'>3</div></div><div class='card'><div class='label'>Reject / weak</div><div class='big'>9</div></div></div></section><div class='toolbar'><button class='active' onclick="f('all',this)">All</button><button onclick="f('watch',this)">Watch</button><button onclick="f('reject',this)">Reject</button><button onclick="f('review',this)">Review</button></div><section class='ideas'>
+    <article class='idea reject' data-run='2026-05-22' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-22 · ITIS-20260522-3</div><h3>Golden Cross 50/200 SMA trend following on NIFTY index proxy</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>46.45%</b></div>
+        <div><span>CAGR</span><b>3.57%</b></div>
+        <div><span>Max DD</span><b>-41.80%</b></div>
+        <div><span>Trades</span><b>8</b></div>
+        <div><span>Win rate</span><b>50.00%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://chartschool.stockcharts.com/table-of-contents/trading-strategies-and-models/trading-strategies/moving-average-trading-strategies' target='_blank'>https://chartschool.stockcharts.com/table-of-contents/trading-strategies-and-models/trading-strategies/moving-average-trading-strategies</a></p>
+        <p><b>Instrument/universe:</b> India-adaptable; tested on clean local NIFTY index daily OHLC as signal-validation proxy</p>
+        <p><b>Coverage:</b> 2015-06-26→2026-05-12</p>
+        <p><b>Rules:</b> Go long when 50-DMA crosses above 200-DMA; enter next open; exit next open when 50-DMA crosses below 200-DMA; 100% index exposure; 5 bps per side.</p>
+        <p><b>Verdict:</b> Reject / not deployment-ready</p>
+        <p><b>Caveats:</b> First-pass daily-bar research; benchmark comparison included; local data caveats apply.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260522/ITIS-20260522-3_report.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-22' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-22 · ITIS-20260522-2</div><h3>Donchian channel breakout / Turtle-style trend following, adapted to NIFTY 50 stocks</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>35.98%</b></div>
+        <div><span>CAGR</span><b>6.03%</b></div>
+        <div><span>Max DD</span><b>-10.18%</b></div>
+        <div><span>Trades</span><b>1464</b></div>
+        <div><span>Win rate</span><b>41.53%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://www.thinkmarkets.com/en/trading-academy/indicators-and-patterns/how-to-use-the-donchian-channel-indicator-for-breakouts/' target='_blank'>https://www.thinkmarkets.com/en/trading-academy/indicators-and-patterns/how-to-use-the-donchian-channel-indicator-for-breakouts/</a></p>
+        <p><b>Instrument/universe:</b> India-adaptable; tested on local NIFTY 50 stock daily OHLC</p>
+        <p><b>Coverage:</b> 2021-02-10→2026-05-11</p>
+        <p><b>Rules:</b> 20-day Donchian breakout: close crosses above prior 20-day high; enter next open; exit next open after close crosses below prior 10-day low; equal 1/50 slots; 5 bps per side.</p>
+        <p><b>Verdict:</b> Reject / not deployment-ready</p>
+        <p><b>Caveats:</b> First-pass daily-bar research; benchmark comparison included; local data caveats apply.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260522/ITIS-20260522-2_report.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-22' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-22 · ITIS-20260522-1</div><h3>Larry Connors 2-period RSI mean reversion, adapted to NIFTY 50 stocks</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>9.76%</b></div>
+        <div><span>CAGR</span><b>1.79%</b></div>
+        <div><span>Max DD</span><b>-3.78%</b></div>
+        <div><span>Trades</span><b>1609</b></div>
+        <div><span>Win rate</span><b>64.20%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.elearnmarkets.com/how-to-trade-larry-connors-2-period-rsi/' target='_blank'>https://blog.elearnmarkets.com/how-to-trade-larry-connors-2-period-rsi/</a></p>
+        <p><b>Instrument/universe:</b> India-direct source site; India-adapted rule on local NIFTY 50 stock daily OHLC</p>
+        <p><b>Coverage:</b> 2021-02-10→2026-05-11</p>
+        <p><b>Rules:</b> Long only when close &gt; 200-DMA and RSI(2) &lt; 10; enter next open; exit next open after close &gt; 5-DMA; equal 1/50 symbol slots; 5 bps per side.</p>
+        <p><b>Verdict:</b> Reject / not deployment-ready</p>
+        <p><b>Caveats:</b> First-pass daily-bar research; benchmark comparison included; local data caveats apply.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260522/ITIS-20260522-1_report.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea watch' data-run='2026-05-21' data-status='watch'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-21 · ITIS-20260521-3</div><h3>NIFTY50 stock basket 30-day Bollinger lower-to-upper reversal</h3></div>
+        <span class='badge watch'>WATCH</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>221.20%</b></div>
+        <div><span>CAGR</span><b>24.91%</b></div>
+        <div><span>Max DD</span><b>-15.72%</b></div>
+        <div><span>Trades</span><b>482</b></div>
+        <div><span>Win rate</span><b>78.22%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.quantinsti.com/bollinger-bands/' target='_blank'>https://blog.quantinsti.com/bollinger-bands/</a></p>
+        <p><b>Instrument/universe:</b> locally available NIFTY50 stock daily OHLC universe, equal-weight all active signals</p>
+        <p><b>Coverage:</b> 2021-02-10→2026-05-11</p>
+        <p><b>Rules:</b> Universe/instrument: locally available NIFTY50 stock daily OHLC universe, equal-weight all active signals. Signal: 30-day Bollinger Bands, middle=SMA30, upper/lower=±2 rolling std. Entry: next session open after close crosses below lower band. Exit: next session open after close crosses above upper band. Sizing: equal-weight among active names, no leverage. Costs/slippage: 5 bps on portfolio turnover. Data: local NIFTY50 stock cache. Benchmarks over comparable span: NIFTY buy-and-hold ~9.1% CAGR / -17.2% DD; daily rebalanced equal-weight local stock universe ~20.0% CAGR / -16.9% DD.</p>
+        <p><b>Verdict:</b> Promising but not deployment-ready: beat local equal-weight stock buy-and-hold in this survivorship-prone sample, with similar drawdown; needs PIT constituents, liquidity checks, and train/test validation.</p>
+        <p><b>Caveats:</b> Survivorship/constituent cache caveat; all active signals equally weighted. Filtered bad OHLC rows across stocks: 0.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260521/ITIS-20260521-3.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-21' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-21 · ITIS-20260521-2</div><h3>NIFTY 50 RSI(14) oversold-to-overbought reversal proxy</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>23.83%</b></div>
+        <div><span>CAGR</span><b>1.98%</b></div>
+        <div><span>Max DD</span><b>-32.14%</b></div>
+        <div><span>Trades</span><b>8</b></div>
+        <div><span>Win rate</span><b>75.00%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.quantinsti.com/rsi-indicator/' target='_blank'>https://blog.quantinsti.com/rsi-indicator/</a></p>
+        <p><b>Instrument/universe:</b> NIFTY 50 index daily OHLC signal-validation proxy</p>
+        <p><b>Coverage:</b> 2015-06-26→2026-05-12</p>
+        <p><b>Rules:</b> Universe/instrument: NIFTY 50 index daily OHLC signal-validation proxy. Signal: 14-day Wilder RSI; oversold threshold 30, overbought threshold 70. Entry: next session open after RSI crosses below 30. Exit: next session open after RSI crosses above 70. Sizing: 100% notional while long. Costs/slippage: 5 bps per side. Data: local NIFTY index cache, positive OHLC validated. Benchmark: NIFTY buy-and-hold over same span returned ~179% / 9.9% CAGR / -38.4% max DD.</p>
+        <p><b>Verdict:</b> Reject as standalone rule: high trade win rate but very low CAGR versus buy-and-hold; strict RSI 70 exit creates long idle/holding regimes.</p>
+        <p><b>Caveats:</b> Index is not directly tradable; no stop/time exit added beyond sourced 30/70 thresholds. Filtered bad OHLC rows: 0.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260521/ITIS-20260521-2.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-21' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-21 · ITIS-20260521-1</div><h3>NIFTY 50 50/200 SMA golden-cross trend proxy</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>45.28%</b></div>
+        <div><span>CAGR</span><b>3.49%</b></div>
+        <div><span>Max DD</span><b>-41.97%</b></div>
+        <div><span>Trades</span><b>8</b></div>
+        <div><span>Win rate</span><b>50.00%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.quantinsti.com/moving-average-trading-strategies/' target='_blank'>https://blog.quantinsti.com/moving-average-trading-strategies/</a></p>
+        <p><b>Instrument/universe:</b> NIFTY 50 index daily OHLC signal-validation proxy</p>
+        <p><b>Coverage:</b> 2015-06-26→2026-05-12</p>
+        <p><b>Rules:</b> Universe/instrument: NIFTY 50 index daily OHLC signal-validation proxy. Signal: 50-day SMA crossing above/below 200-day SMA on close. Entry: next session open after 50SMA crosses above 200SMA. Exit: next session open after 50SMA crosses below 200SMA. Sizing: 100% notional while long. Costs/slippage: 5 bps on entry and 5 bps on exit/turnover. Data: local NIFTY index cache, positive OHLC validated. Benchmark: NIFTY buy-and-hold over same span returned ~179% / 9.9% CAGR / -38.4% max DD.</p>
+        <p><b>Verdict:</b> Reject as standalone index rule: it materially underperformed NIFTY buy-and-hold and had slightly worse drawdown, despite low turnover.</p>
+        <p><b>Caveats:</b> Index is not directly tradable; use futures/ETF execution validation. Filtered bad OHLC rows: 0. Close-derived signals fill at next open.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260521/ITIS-20260521-1.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-20' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-20 · IND-SCOUT-20260520-03</div><h3>NIFTY 50 Bollinger+RSI mean reversion</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>12.87%</b></div>
+        <div><span>CAGR</span><b>2.38%</b></div>
+        <div><span>Max DD</span><b>-4.87%</b></div>
+        <div><span>Trades</span><b>312</b></div>
+        <div><span>Win rate</span><b>46.15%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://www.algomaya.com/blog/mean-reversion-nifty-50' target='_blank'>https://www.algomaya.com/blog/mean-reversion-nifty-50</a></p>
+        <p><b>Instrument/universe:</b> NIFTY 50 constituents daily OHLC basket</p>
+        <p><b>Coverage:</b> 2021-02-10 to 2026-05-11</p>
+        <p><b>Rules:</b> Long next open when prior close is below 20-day lower Bollinger Band, RSI14&lt;30, and volume &gt;1.5x 20-day average. Exit via conservative intraday stop -3%, target +5%, or next open on close crossing above SMA20. Max 10 concurrent equal-risk slots.</p>
+        <p><b>Verdict:</b> Reject / weak first pass</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-20/daily_indian_trading_idea_scout_2026-05-20.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea watch' data-run='2026-05-20' data-status='watch'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-20 · IND-SCOUT-20260520-02</div><h3>20/60 SMA crossover on NIFTY</h3></div>
+        <span class='badge watch'>WATCH</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>206.31%</b></div>
+        <div><span>CAGR</span><b>11.10%</b></div>
+        <div><span>Max DD</span><b>-12.96%</b></div>
+        <div><span>Trades</span><b>16</b></div>
+        <div><span>Win rate</span><b>75.00%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/' target='_blank'>https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/</a></p>
+        <p><b>Instrument/universe:</b> NIFTY index proxy (QuantInsti discusses Nifty/options; tested underlying index rule)</p>
+        <p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p>
+        <p><b>Rules:</b> Buy next open when SMA20 crosses above SMA60; exit next open when SMA20 crosses below SMA60. Long-only, one position at a time.</p>
+        <p><b>Verdict:</b> Promising / revisit</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-20/daily_indian_trading_idea_scout_2026-05-20.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-20' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-20 · IND-SCOUT-20260520-01</div><h3>2-period RSI mean reversion on NIFTY</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>-20.80%</b></div>
+        <div><span>CAGR</span><b>-2.12%</b></div>
+        <div><span>Max DD</span><b>-34.80%</b></div>
+        <div><span>Trades</span><b>183</b></div>
+        <div><span>Win rate</span><b>54.64%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html' target='_blank'>https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html</a></p>
+        <p><b>Instrument/universe:</b> NIFTY index proxy (signal validation; index not directly tradable)</p>
+        <p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p>
+        <p><b>Rules:</b> Long next open after RSI(2)&lt;5, exit next open after RSI(2)&gt;50; short next open after RSI(2)&gt;95, cover next open after RSI(2)&lt;50. One position at a time.</p>
+        <p><b>Verdict:</b> Reject / weak first pass</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-20/daily_indian_trading_idea_scout_2026-05-20.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-19' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-19 · IND-SCOUT-20260519-03</div><h3>NIFTY 50 Bollinger+RSI mean reversion</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>12.80%</b></div>
+        <div><span>CAGR</span><b>2.37%</b></div>
+        <div><span>Max DD</span><b>-4.87%</b></div>
+        <div><span>Trades</span><b>312</b></div>
+        <div><span>Win rate</span><b>46.15%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://www.algomaya.com/blog/mean-reversion-nifty-50' target='_blank'>https://www.algomaya.com/blog/mean-reversion-nifty-50</a></p>
+        <p><b>Instrument/universe:</b> NIFTY 50 constituents daily OHLC basket</p>
+        <p><b>Coverage:</b> 2021-02-10 to 2026-05-11</p>
+        <p><b>Rules:</b> Long next open when prior close is below 20-day lower Bollinger Band, RSI14&lt;30, and volume &gt;1.5x 20-day average. Exit via conservative intraday stop -3%, target +5%, or next open/available open on SMA20 cross. Max 10 concurrent equal-risk slots. Short leg not tested because local execution route is long-only first pass.</p>
+        <p><b>Verdict:</b> Reject / weak first pass</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-19/daily_indian_trading_idea_scout_2026-05-19.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea watch' data-run='2026-05-19' data-status='watch'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-19 · IND-SCOUT-20260519-02</div><h3>20/60 SMA crossover on NIFTY</h3></div>
+        <span class='badge watch'>WATCH</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>206.31%</b></div>
+        <div><span>CAGR</span><b>11.10%</b></div>
+        <div><span>Max DD</span><b>-12.96%</b></div>
+        <div><span>Trades</span><b>16</b></div>
+        <div><span>Win rate</span><b>75.00%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/' target='_blank'>https://blog.quantinsti.com/moving-average-crossover-trade-nifty-options/</a></p>
+        <p><b>Instrument/universe:</b> NIFTY index proxy (QuantInsti discusses Nifty/options; tested underlying index rule)</p>
+        <p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p>
+        <p><b>Rules:</b> Buy next open when SMA20 crosses above SMA60; exit next open when SMA20 crosses below SMA60. Long-only, one position at a time.</p>
+        <p><b>Verdict:</b> Promising / revisit</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-19/daily_indian_trading_idea_scout_2026-05-19.html</code></p>
+      </details>
+    </article>
+    
+    <article class='idea reject' data-run='2026-05-19' data-status='reject'>
+      <div class='idea-head'>
+        <div><div class='micro'>2026-05-19 · IND-SCOUT-20260519-01</div><h3>2-period RSI mean reversion on NIFTY</h3></div>
+        <span class='badge reject'>REJECT</span>
+      </div>
+      <div class='metrics'>
+        <div><span>Total</span><b>-20.80%</b></div>
+        <div><span>CAGR</span><b>-2.12%</b></div>
+        <div><span>Max DD</span><b>-34.80%</b></div>
+        <div><span>Trades</span><b>183</b></div>
+        <div><span>Win rate</span><b>54.64%</b></div>
+      </div>
+      <details>
+        <summary>Rules, source, caveats</summary>
+        <p><b>Source:</b> <a href='https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html' target='_blank'>https://www.marketcalls.in/nifty-technicals/2-period-rsi-trading-systems-for-nifty.html</a></p>
+        <p><b>Instrument/universe:</b> NIFTY index proxy (signal validation; index not directly tradable)</p>
+        <p><b>Coverage:</b> 2015-06-26 to 2026-05-12</p>
+        <p><b>Rules:</b> Long next open after RSI(2)&lt;5, exit next open after RSI(2)&gt;50; short next open after RSI(2)&gt;95, cover next open after RSI(2)&lt;50. One position at a time.</p>
+        <p><b>Verdict:</b> Reject / weak first pass</p>
+        <p><b>Caveats:</b> Parsed from prior daily scout HTML; first-pass daily-bar research.</p>
+        <p><b>Local report:</b> <code>/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-19/daily_indian_trading_idea_scout_2026-05-19.html</code></p>
+      </details>
+    </article>
+    </section></main><script>function f(kind,btn){document.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.idea').forEach(el=>{el.style.display=(kind==='all'||el.dataset.status===kind)?'block':'none'})}</script></body></html>
