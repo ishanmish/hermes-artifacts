@@ -3,7 +3,7 @@
     "id": "2026-05-22-traderiit-may-2026-pnl",
     "title": "TraderIit May 2026 reported P&L",
     "summary": "Month-to-date May 2026 P&L totals from @TraderIit’s daily reported Profit/Loss and ROI tweets.",
-    "category": "trading",
+    "category": "temp",
     "tags": [
       "twitter",
       "trading",
@@ -11,14 +11,14 @@
       "may-2026",
       "TraderIit"
     ],
-    "status": "saved",
+    "status": "temp",
     "created_at": "2026-05-22T15:53:54.699823+05:30",
     "updated_at": "2026-05-22T15:53:54.699823+05:30",
-    "expires_at": null,
-    "importance": "reference",
+    "expires_at": "2026-06-05T16:00:45.154299+05:30",
+    "importance": "scratch",
     "superseded_by": null,
-    "path": "trading/2026-05-22-traderiit-may-2026-pnl.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/trading/2026-05-22-traderiit-may-2026-pnl.html",
+    "path": "temp/2026-05-22-traderiit-may-2026-pnl.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/temp/2026-05-22-traderiit-may-2026-pnl.html",
     "template": "14-research-feature-explainer.html"
   },
   {
