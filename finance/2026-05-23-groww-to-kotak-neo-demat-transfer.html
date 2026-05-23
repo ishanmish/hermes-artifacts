@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Groww → Kotak Neo demat transfer guide</title>
+<link rel="stylesheet" href="../assets/unified-dashboard.css">
+<meta name="color-scheme" content="light">
+</head>
+<body class="artifact-page">
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Broker transfer guide · updated 2026-05-23 20:58 IST</div>
+    <h1>Transfer equity holdings from Groww to Kotak Neo without selling</h1>
+    <p class="lead">A digital-first checklist for moving shares directly from one demat account to another using CDSL Easiest / broker-supported demat transfer routes, while preserving holdings instead of selling and rebuying.</p>
+    <div class="note"><strong>Verdict:</strong> First confirm whether Kotak Neo is CDSL or NSDL. If both Groww and Kotak are CDSL, use CDSL Easiest with Kotak added as a trusted account. If Kotak is NSDL, ask both brokers for the supported inter-depository route before initiating.</div>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <div class="meta"><span>Best case</span><span>CDSL → CDSL</span></div>
+      <h2>Mostly digital via CDSL Easiest</h2>
+      <p>Register on CDSL Easiest with the Groww demat BO ID, add Kotak Neo as trusted beneficiary, then transfer each holding by ISIN and quantity.</p>
+    </article>
+    <article class="card">
+      <div class="meta"><span>Timeline</span><span>practical</span></div>
+      <h2>3–7 working days end-to-end</h2>
+      <p>Registration/beneficiary approval usually takes 1–3 working days. The actual securities transfer often completes same day to 2 working days after successful submission.</p>
+    </article>
+    <article class="card">
+      <div class="meta"><span>Tax</span><span>same PAN</span></div>
+      <h2>No sale if it is your own demat</h2>
+      <p>For same-owner transfers, it is generally not a capital-gains event. Keep buy dates, contract notes, and transfer confirmations so Kotak and tax records remain correct.</p>
+    </article>
+  </section>
+
+  <section class="section">
+    <h2>Recommended path</h2>
+    <ol class="steps">
+      <li><strong>Get both demat details.</strong> From Groww, note BO ID and depository. From Kotak Neo, note depository, BO ID or DP ID + Client ID.</li>
+      <li><strong>Check if Kotak is CDSL or NSDL.</strong> CDSL accounts use a 16-digit numeric BO ID. NSDL accounts usually have a DP ID starting with <code>IN</code> plus Client ID.</li>
+      <li><strong>If Kotak is CDSL:</strong> register at CDSL Easiest, add Kotak as trusted account, wait for approval, then transfer holdings ISIN-wise.</li>
+      <li><strong>If Kotak is NSDL:</strong> ask Kotak/Groww whether online CDSL-to-NSDL inter-depository transfer is supported for your account. If not, use their DIS / digitally assisted DIS route.</li>
+      <li><strong>Transfer only settled and unpledged holdings.</strong> Avoid shares pending settlement, pledged shares, and securities near messy corporate action dates unless you track them carefully.</li>
+      <li><strong>After credit in Kotak:</strong> verify quantities, import/update acquisition price if needed, and save evidence for taxes.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>Route decision table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Source → target</th><th>Likely route</th><th>Ease</th><th>Expected time</th><th>Watch-outs</th></tr></thead>
+        <tbody>
+          <tr><td>Groww CDSL → Kotak CDSL</td><td>CDSL Easiest trusted account transfer</td><td>Best / mostly digital</td><td>3–7 working days total incl. setup</td><td>Beneficiary approval; cut-off time; ISIN-wise transfer charges</td></tr>
+          <tr><td>Groww CDSL → Kotak NSDL</td><td>Inter-depository transfer via CDSL Easiest Account of Choice or DIS route</td><td>Medium friction</td><td>Often 3–7+ working days</td><td>May require extra authentication, DP approval, or offline/digitally assisted DIS</td></tr>
+          <tr><td>Pledged / unsettled holdings</td><td>Not ready for transfer</td><td>Blocked until cleaned up</td><td>Depends on unpledge/settlement</td><td>Unpledge first; wait for shares to be free in demat</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Detailed checklist</h2>
+    <div class="grid">
+      <article class="card"><h3>Before starting</h3><ul><li>Download Groww holdings statement.</li><li>Download Groww trade/contract notes for original acquisition cost.</li><li>Confirm Kotak demat is active and KYC/PAN matches.</li><li>List each ISIN and quantity to transfer.</li></ul></article>
+      <article class="card"><h3>CDSL Easiest setup</h3><ul><li>Go to CDSL Easiest from CDSL’s site.</li><li>Register using your Groww CDSL BO ID.</li><li>Complete OTP/TPIN/authentication.</li><li>Wait for DP/CDSL activation if required.</li></ul></article>
+      <article class="card"><h3>Beneficiary setup</h3><ul><li>Add Kotak Neo demat as trusted beneficiary if it is CDSL.</li><li>Verify exact BO ID; a wrong BO ID can send shares to the wrong account.</li><li>Wait for trusted-account approval/cooling period.</li></ul></article>
+      <article class="card"><h3>Transfer submission</h3><ul><li>Select Groww source demat and Kotak destination.</li><li>Enter ISIN and quantity for each stock.</li><li>Use own-account/off-market/self-transfer reason where available.</li><li>Authenticate and save confirmation.</li></ul></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Charges and tax notes</h2>
+    <div class="callout">
+      <p><strong>Charges:</strong> Expect Groww/CDSL/DP debit charges, commonly per ISIN or per instruction. Check Groww’s latest DP tariff before executing; receiving shares at Kotak is often free but should still be confirmed.</p>
+      <p><strong>Tax:</strong> A transfer between your own demat accounts under the same PAN is generally not a sale. Your original purchase date and cost should carry forward. Kotak may not automatically know your old cost basis, so manually fix/import acquisition values if the platform allows.</p>
+      <p><strong>Records to preserve:</strong> Groww holdings before transfer, contract notes, CDSL transfer acknowledgement, Kotak holdings after transfer, and any broker support emails.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Messages to send brokers</h2>
+    <details open><summary>Kotak Neo support</summary><pre><code>I want to transfer my existing equity holdings from my Groww demat account to Kotak Neo without selling them.
+
+Please confirm:
+1. Is my Kotak Neo demat account with CDSL or NSDL?
+2. What is my full BO ID / DP ID + Client ID for receiving shares?
+3. If my source account is Groww CDSL, can I add Kotak Neo as a beneficiary/trusted account in CDSL Easiest?
+4. If Kotak is NSDL, do you support CDSL-to-NSDL inter-depository transfer digitally, or do I need a DIS slip?
+5. Are there any inward transfer charges or specific instructions I should follow?</code></pre></details>
+    <details><summary>Groww support</summary><pre><code>I want to transfer my equity holdings from Groww demat to my own Kotak Neo demat account without selling.
+
+Please confirm:
+1. My Groww demat BO ID and depository.
+2. Whether my account is enabled for CDSL Easiest.
+3. Whether I can transfer to a Kotak Neo demat digitally through CDSL Easiest.
+4. Charges for off-market transfer, including per ISIN / per instruction charges.
+5. Cut-off time and expected processing time.
+6. Process if target Kotak demat is NSDL instead of CDSL.</code></pre></details>
+  </section>
+
+  <section class="section">
+    <h2>Sources checked</h2>
+    <ul>
+      <li><a href="https://www.cdslindia.com/Footer/Easiest.html">CDSL Easiest</a> — official CDSL description of Easiest, trusted account transfers, account-of-choice transfers, and inter-depository/off-market capabilities.</li>
+      <li><a href="https://www.kotakneo.com/support/how-to-transfer-shares-from-one-demat-account-to-other/">Kotak Neo support: transfer shares from one demat to another</a> — demat transfer concepts, online/offline routes, and 3–5 day processing guidance.</li>
+      <li><a href="https://groww.in/blog/how-to-transfer-shares-from-one-demat-account-to-another">Groww guide: transfer shares from one demat account to another</a> — online CDSL/NSDL route, 1–2 day login setup note, 3–5 day transfer expectation, and Groww same-day cut-off caution.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
