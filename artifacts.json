@@ -1,5 +1,26 @@
 [
   {
+    "id": "2026-05-23-trading-ideas-dashboard",
+    "title": "Indian Trading Ideas Dashboard",
+    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
+    "category": "trading",
+    "tags": [
+      "trading",
+      "india",
+      "backtests",
+      "systematic"
+    ],
+    "status": "dashboard",
+    "created_at": "2026-05-23T19:04:57.543983+05:30",
+    "updated_at": "2026-05-23T19:04:57.543983+05:30",
+    "expires_at": null,
+    "importance": null,
+    "superseded_by": null,
+    "path": "trading/trading-ideas-dashboard.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
+    "template": null
+  },
+  {
     "id": "2026-05-23-leticia-iquitos-fast-boat-briefing",
     "title": "Leticia → Iquitos fast boat route briefing",
     "summary": "Traveler-ready briefing for Bogotá/Medellín → Leticia → Santa Rosa → Iquitos, including CONFLUAM/Ferry Amazonas, Zoe Alexa backup, border logistics, boat experience, timings, pros/cons, and Leticia overview.",
@@ -51,28 +72,6 @@
     "template": "unified-dashboard",
     "temp": false,
     "retention_days": null
-  },
-  {
-    "id": "2026-05-22-trading-ideas-dashboard",
-    "title": "Trading Ideas Dashboard",
-    "summary": "Persistent dashboard of systematic trading ideas scouted and backtested, with source URLs, rules, metrics, verdicts, caveats, and local report paths.",
-    "category": "trading",
-    "tags": [
-      "trading",
-      "ideas",
-      "backtests",
-      "scout",
-      "india"
-    ],
-    "status": "dashboard",
-    "created_at": "2026-05-22T19:44:37.087342+05:30",
-    "updated_at": "2026-05-22T19:44:37.087342+05:30",
-    "expires_at": null,
-    "importance": "reference",
-    "superseded_by": null,
-    "path": "trading/trading-ideas-dashboard.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
-    "template": "18-editor-triage-board.html"
   },
   {
     "id": "2026-05-22-shreyaggarwall-may-2026-pnl",
