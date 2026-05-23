@@ -231,32 +231,5 @@
     "superseded_by": null,
     "temp": false,
     "retention_days": null
-  },
-  {
-    "id": "2026-05-23-leticia-iquitos-fast-boat-route",
-    "title": "Leticia → Iquitos fast boat route briefing",
-    "summary": "Traveler-ready route briefing for Bogotá/Medellín → Leticia → Santa Rosa, Peru → Iquitos by fast boat, including operators, border steps, timing, cautions, and source links.",
-    "category": "travel",
-    "tags": [
-      "travel",
-      "south-america",
-      "colombia",
-      "peru",
-      "amazon",
-      "leticia",
-      "iquitos",
-      "fast-boat"
-    ],
-    "status": "saved",
-    "created_at": "2026-05-23T17:25:00+05:30",
-    "updated_at": "2026-05-23T17:25:00+05:30",
-    "expires_at": null,
-    "path": "travel/leticia-iquitos-fast-boat-route-briefing-2026-05-23.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/travel/leticia-iquitos-fast-boat-route-briefing-2026-05-23.html",
-    "template": "unified-dashboard",
-    "importance": "reference",
-    "superseded_by": null,
-    "temp": false,
-    "retention_days": null
   }
 ]
