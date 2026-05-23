@@ -1,5 +1,425 @@
 [
   {
+    "run_date": "2026-05-23",
+    "id": "ITIS-20260523-1",
+    "title": "StockCharts RSI(2) pullback in uptrend, adapted to NIFTY 50 stocks",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/trading-strategies-and-models/trading-strategies/rsi-2",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/trading-strategies-and-models/trading-strategies/rsi-2",
+    "market_fit": "India-adaptable",
+    "instrument": "local PIT-ish NIFTY50 stock daily OHLC",
+    "data_required": "Daily open/high/low/close/volume; 200-DMA, 5-DMA, 2-period RSI",
+    "signal_rule": "Close > 200-DMA and RSI(2) < 5.",
+    "entry_timing": "Enter next session open after signal.",
+    "exit_timing": "Exit next session open after close > 5-DMA.",
+    "sizing_risk": "Equal-weight across active stock signals; no leverage; 5 bps per side.",
+    "data_coverage": "2020-06-25→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side via turnover",
+    "benchmark": {
+      "total_return": 2.929972685616394,
+      "cagr": 0.26217100885935896,
+      "max_drawdown": -0.1794138908948516,
+      "win_rate": 0.0,
+      "trade_count": 0,
+      "start": "2020-06-25",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.26217100885935896,
+    "benchmark_total": 2.929972685616394,
+    "benchmark_dd": -0.1794138908948516,
+    "benchmark_comparison": "Strategy CAGR 1.38%, total 8.37%, max DD -28.73%; same-span equal-weight local stock benchmark CAGR 26.22%, total 293.00%, max DD -17.94%.",
+    "verdict": "Reject / not deployment-ready: underperformed the same-span equal-weight stock benchmark.",
+    "caveats": "Data coverage 2020-06-25→2026-05-12. OHLC validation filtered 0 stock rows (benchmark filtered 0). Local stock cache is PIT-ish by symbols present in cache but still may have survivorship/constituent/history issues; daily bars only; close-derived signals filled at next open; no liquidity/impact cap; no train/test optimization; benchmark is daily equal-weight all available cached stocks, not NIFTY index.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; 200-DMA, 5-DMA, 2-period RSI\nSignal rule: Close > 200-DMA and RSI(2) < 5.\nEntry rule and timing: Enter next session open after signal.\nExit rule and timing: Exit next session open after close > 5-DMA.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; 200-DMA, 5-DMA, 2-period RSI\nSignal rule: Close > 200-DMA and RSI(2) < 5.\nEntry rule and timing: Enter next session open after signal.\nExit rule and timing: Exit next session open after close > 5-DMA.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "total_return": 0.08365676233185693,
+    "cagr": 0.013761565953101407,
+    "max_dd": -0.28725141688921485,
+    "win_rate": 0.6473988439306358,
+    "trades": 1211,
+    "trade_count": 1211,
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-1_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-1_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260523-1_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-1_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-1_trades.csv",
+    "trades_sample": [
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-05-17",
+        "entry_price": 1227.0194,
+        "exit_date": "2021-05-18",
+        "exit_price": 1311.7636,
+        "return": 0.068065040329646,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-07-05",
+        "entry_price": 1424.4582,
+        "exit_date": "2021-07-09",
+        "exit_price": 1423.36,
+        "return": -0.0017709251930599903,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-07-22",
+        "entry_price": 1372.5508,
+        "exit_date": "2021-07-23",
+        "exit_price": 1427.4528,
+        "return": 0.038999969463672346,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-09-15",
+        "entry_price": 1521.2854,
+        "exit_date": "2021-09-24",
+        "exit_price": 1480.3584,
+        "return": -0.027902888385505475,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-12-21",
+        "entry_price": 1618.2123,
+        "exit_date": "2021-12-23",
+        "exit_price": 1671.7168,
+        "return": 0.032063939011217735,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-01-25",
+        "entry_price": 1665.0291,
+        "exit_date": "2022-02-01",
+        "exit_price": 1724.872,
+        "return": 0.03494109091027864,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-05-10",
+        "entry_price": 2186.099,
+        "exit_date": "2022-05-17",
+        "exit_price": 2129.2507,
+        "return": -0.02700446132800538,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-09-30",
+        "entry_price": 3443.2267,
+        "exit_date": "2022-10-11",
+        "exit_price": 3253.0877,
+        "return": -0.05622119572186823,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2023-01-24",
+        "entry_price": 3442.7274,
+        "exit_date": "2023-02-08",
+        "exit_price": 1867.2886,
+        "return": -0.45861356307036727,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2023-10-20",
+        "entry_price": 2395.9251,
+        "exit_date": "2023-10-31",
+        "exit_price": 2317.9441,
+        "return": -0.03354736765069022,
+        "win_loss": "loss"
+      }
+    ],
+    "largest_equity_moves": {
+      "worst": -0.13383337177985555,
+      "best": 0.06380337090483867
+    }
+  },
+  {
+    "run_date": "2026-05-23",
+    "id": "ITIS-20260523-2",
+    "title": "CCI(20) -100/+100 reversal, adapted to NIFTY 50 stocks",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "market_fit": "India-adaptable",
+    "instrument": "local PIT-ish NIFTY50 stock daily OHLC",
+    "data_required": "Daily open/high/low/close/volume; typical price CCI(20)",
+    "signal_rule": "CCI(20) crosses upward through -100 after being below -100.",
+    "entry_timing": "Enter next session open after cross.",
+    "exit_timing": "Exit next session open after CCI(20) crosses downward through +100.",
+    "sizing_risk": "Equal-weight across active stock signals; no leverage; 5 bps per side.",
+    "data_coverage": "2020-06-25→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side via turnover",
+    "benchmark": {
+      "total_return": 2.929972685616394,
+      "cagr": 0.26217100885935896,
+      "max_drawdown": -0.1794138908948516,
+      "win_rate": 0.0,
+      "trade_count": 0,
+      "start": "2020-06-25",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.26217100885935896,
+    "benchmark_total": 2.929972685616394,
+    "benchmark_dd": -0.1794138908948516,
+    "benchmark_comparison": "Strategy CAGR 23.17%, total 240.43%, max DD -19.56%; same-span equal-weight local stock benchmark CAGR 26.22%, total 293.00%, max DD -17.94%.",
+    "verdict": "Reject / not deployment-ready: underperformed the same-span equal-weight stock benchmark.",
+    "caveats": "Data coverage 2020-06-25→2026-05-12. OHLC validation filtered 0 stock rows (benchmark filtered 0). Local stock cache is PIT-ish by symbols present in cache but still may have survivorship/constituent/history issues; daily bars only; close-derived signals filled at next open; no liquidity/impact cap; no train/test optimization; benchmark is daily equal-weight all available cached stocks, not NIFTY index.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; typical price CCI(20)\nSignal rule: CCI(20) crosses upward through -100 after being below -100.\nEntry rule and timing: Enter next session open after cross.\nExit rule and timing: Exit next session open after CCI(20) crosses downward through +100.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; typical price CCI(20)\nSignal rule: CCI(20) crosses upward through -100 after being below -100.\nEntry rule and timing: Enter next session open after cross.\nExit rule and timing: Exit next session open after CCI(20) crosses downward through +100.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "total_return": 2.404289914569841,
+    "cagr": 0.23171133892094598,
+    "max_dd": -0.19561884012088182,
+    "win_rate": 0.714572864321608,
+    "trades": 995,
+    "trade_count": 995,
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-2_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-2_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260523-2_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-2_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-2_trades.csv",
+    "trades_sample": [
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-07-07",
+        "entry_price": 1417.4708,
+        "exit_date": "2021-08-11",
+        "exit_price": 1452.4083,
+        "return": 0.02364782981760538,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-08-25",
+        "entry_price": 1441.6775,
+        "exit_date": "2021-09-09",
+        "exit_price": 1558.8185,
+        "return": 0.08025325599740396,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-09-23",
+        "entry_price": 1450.4118,
+        "exit_date": "2021-10-20",
+        "exit_price": 1571.1963,
+        "return": 0.08227599815858577,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-11-03",
+        "entry_price": 1471.3745,
+        "exit_date": "2021-11-22",
+        "exit_price": 1688.3873,
+        "return": 0.1464898618185836,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-12-23",
+        "entry_price": 1671.7168,
+        "exit_date": "2021-12-30",
+        "exit_price": 1710.9469,
+        "return": 0.022466976256780735,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-02-24",
+        "entry_price": 1623.1037,
+        "exit_date": "2022-03-25",
+        "exit_price": 1832.2806,
+        "return": 0.12787463383134978,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-05-30",
+        "entry_price": 2116.2239,
+        "exit_date": "2022-07-27",
+        "exit_price": 2556.4931,
+        "return": 0.20704470561414123,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-12-30",
+        "entry_price": 3824.4536,
+        "exit_date": "2023-05-04",
+        "exit_price": 1836.5308,
+        "return": -0.5207926284552207,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2023-09-04",
+        "entry_price": 2451.8255,
+        "exit_date": "2023-09-13",
+        "exit_price": 2543.4443,
+        "return": 0.03636757378720035,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2023-10-05",
+        "entry_price": 2475.7541,
+        "exit_date": "2023-12-01",
+        "exit_price": 2367.9,
+        "return": -0.044564139997994134,
+        "win_loss": "loss"
+      }
+    ],
+    "largest_equity_moves": {
+      "worst": -0.07844330341525507,
+      "best": 0.05617907102175801
+    }
+  },
+  {
+    "run_date": "2026-05-23",
+    "id": "ITIS-20260523-3",
+    "title": "ADX/+DI trend-strength crossover, adapted to NIFTY 50 stocks",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/average-directional-index-adx",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/average-directional-index-adx",
+    "market_fit": "India-adaptable",
+    "instrument": "local PIT-ish NIFTY50 stock daily OHLC",
+    "data_required": "Daily open/high/low/close/volume; ADX(14), +DI, -DI",
+    "signal_rule": "ADX(14) > 25 and +DI crosses above -DI.",
+    "entry_timing": "Enter next session open after signal.",
+    "exit_timing": "Exit next session open after +DI crosses below -DI or ADX falls below 20.",
+    "sizing_risk": "Equal-weight across active stock signals; no leverage; 5 bps per side.",
+    "data_coverage": "2020-06-25→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side via turnover",
+    "benchmark": {
+      "total_return": 2.929972685616394,
+      "cagr": 0.26217100885935896,
+      "max_drawdown": -0.1794138908948516,
+      "win_rate": 0.0,
+      "trade_count": 0,
+      "start": "2020-06-25",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.26217100885935896,
+    "benchmark_total": 2.929972685616394,
+    "benchmark_dd": -0.1794138908948516,
+    "benchmark_comparison": "Strategy CAGR 10.27%, total 77.62%, max DD -39.72%; same-span equal-weight local stock benchmark CAGR 26.22%, total 293.00%, max DD -17.94%.",
+    "verdict": "Reject / not deployment-ready: underperformed the same-span equal-weight stock benchmark.",
+    "caveats": "Data coverage 2020-06-25→2026-05-12. OHLC validation filtered 0 stock rows (benchmark filtered 0). Local stock cache is PIT-ish by symbols present in cache but still may have survivorship/constituent/history issues; daily bars only; close-derived signals filled at next open; no liquidity/impact cap; no train/test optimization; benchmark is daily equal-weight all available cached stocks, not NIFTY index.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; ADX(14), +DI, -DI\nSignal rule: ADX(14) > 25 and +DI crosses above -DI.\nEntry rule and timing: Enter next session open after signal.\nExit rule and timing: Exit next session open after +DI crosses below -DI or ADX falls below 20.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: local PIT-ish NIFTY50 stock daily OHLC\nData required: Daily open/high/low/close/volume; ADX(14), +DI, -DI\nSignal rule: ADX(14) > 25 and +DI crosses above -DI.\nEntry rule and timing: Enter next session open after signal.\nExit rule and timing: Exit next session open after +DI crosses below -DI or ADX falls below 20.\nRisk/sizing rule: Equal-weight across active stock signals; no leverage; 5 bps per side.\nHolding period: daily bars; variable until exit signal.\nCosts/slippage: 5 bps per entry/exit side via turnover.\nWhy systematic/non-discretionary: all signals are formulaic indicator threshold/crossing rules from the public source; no chart reading.",
+    "total_return": 0.776222401688915,
+    "cagr": 0.10266797701818686,
+    "max_dd": -0.3972012185697359,
+    "win_rate": 0.3613138686131387,
+    "trades": 548,
+    "trade_count": 548,
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-3_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-3_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260523-3_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-3_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260523/ITIS-20260523-3_trades.csv",
+    "trades_sample": [
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2020-09-24",
+        "entry_price": 277.2765,
+        "exit_date": "2020-09-25",
+        "exit_price": 275.2315,
+        "return": -0.008375482186756877,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2020-09-29",
+        "entry_price": 299.1733,
+        "exit_date": "2021-01-01",
+        "exit_price": 475.8442,
+        "return": 0.589530360704629,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2021-01-05",
+        "entry_price": 490.8078,
+        "exit_date": "2021-01-27",
+        "exit_price": 511.8566,
+        "return": 0.04188613051940304,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2022-05-23",
+        "entry_price": 2227.7747,
+        "exit_date": "2022-05-26",
+        "exit_price": 2073.3004,
+        "return": -0.07034020649845618,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2023-11-29",
+        "entry_price": 2466.5123,
+        "exit_date": "2024-03-07",
+        "exit_price": 3237.129,
+        "return": 0.3114317188801051,
+        "win_loss": "win"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2024-04-02",
+        "entry_price": 3256.0622,
+        "exit_date": "2024-04-05",
+        "exit_price": 3208.2546,
+        "return": -0.01568263707787565,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2024-05-16",
+        "entry_price": 3062.284,
+        "exit_date": "2024-05-17",
+        "exit_price": 3038.3554,
+        "return": -0.00881398028122471,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2024-05-21",
+        "entry_price": 3065.1814,
+        "exit_date": "2024-06-05",
+        "exit_price": 3027.3149,
+        "return": -0.013353758080619227,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2024-09-26",
+        "entry_price": 3083.4713,
+        "exit_date": "2024-10-08",
+        "exit_price": 3017.0043,
+        "return": -0.022555898355021697,
+        "win_loss": "loss"
+      },
+      {
+        "symbol": "ADANIENT",
+        "entry_date": "2024-12-31",
+        "entry_price": 2573.7241,
+        "exit_date": "2025-01-10",
+        "exit_price": 2478.7712,
+        "return": -0.03789320950927633,
+        "win_loss": "loss"
+      }
+    ],
+    "largest_equity_moves": {
+      "worst": -0.12755956724014494,
+      "best": 0.10046736579811166
+    }
+  },
+  {
     "run_date": "2026-05-22",
     "id": "ITIS-20260522-3",
     "title": "Golden Cross 50/200 SMA trend following on NIFTY index proxy",
