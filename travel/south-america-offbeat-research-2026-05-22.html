@@ -3,45 +3,153 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>South America offbeat travel research</title>
+<title>South America: 42-day itinerary + offbeat research</title>
 <style>
-  /* Template basis: anthropics/html-effectiveness/14-research-feature-explainer.html */
-  :root { --ivory:#FAF9F5; --slate:#141413; --clay:#D97757; --oat:#E3DACC; --olive:#788C5D; --gray-150:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F; --gray-700:#3D3D3A; --serif:ui-serif,Georgia,"Times New Roman",serif; --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace; }
-  *{box-sizing:border-box;margin:0;padding:0} body{background:var(--ivory);color:var(--gray-700);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding:56px 24px 120px}.page{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:48px}@media(max-width:920px){.page{grid-template-columns:1fr}nav{display:none}}
-  nav{position:sticky;top:32px;align-self:start;font-size:13px}.label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:12px}nav a{display:block;padding:5px 0 5px 12px;border-left:2px solid var(--gray-300);color:var(--gray-700);text-decoration:none}nav a:hover{color:var(--slate);border-color:var(--slate)}nav a.l2{padding-left:24px;font-size:12.5px;color:var(--gray-500)}nav .files{margin-top:28px;border-top:1px solid var(--gray-300);padding-top:16px}nav .files code{display:block;font-family:var(--mono);font-size:11px;color:var(--gray-500);padding:3px 0}
-  header{margin-bottom:12px}.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px}h1{font-family:var(--serif);font-weight:500;font-size:36px;line-height:1.12;color:var(--slate);letter-spacing:-.01em;margin-bottom:14px}.tldr{border:1.5px solid var(--gray-300);border-left:3px solid var(--clay);border-radius:10px;background:#fff;padding:16px 18px;margin-bottom:18px}.tldr b{color:var(--slate)}h2{font-family:var(--serif);font-weight:500;font-size:23px;color:var(--slate);margin:40px 0 14px;scroll-margin-top:24px}p{margin-bottom:12px;max-width:720px}code{font-family:var(--mono);font-size:13px}
-  .callout{display:flex;gap:12px;border:1.5px solid var(--oat);background:rgba(227,218,204,.35);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14px}.callout .ico{color:var(--clay);font-weight:600}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 10px}@media(max-width:860px){.grid{grid-template-columns:1fr}}.card{background:#fff;border:1.5px solid var(--gray-300);border-radius:10px;padding:16px}.card .k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500);margin-bottom:6px}.card .v{font-family:var(--serif);font-size:19px;color:var(--slate);line-height:1.2}.card p{font-size:14px;margin-top:8px;margin-bottom:0}
-  details{border:1.5px solid var(--gray-300);border-radius:10px;background:#fff;margin:14px 0;overflow:hidden}summary{list-style:none;cursor:pointer;padding:14px 16px;font-family:var(--serif);font-size:17px;color:var(--slate);display:flex;align-items:baseline;gap:10px}summary::-webkit-details-marker{display:none}summary:before{content:"▸";color:var(--clay);font-family:var(--sans);font-size:12px;transition:transform 120ms}details[open] summary:before{transform:rotate(90deg)}summary .where{font-family:var(--mono);font-size:11px;color:var(--gray-500);margin-left:auto}.body{padding:0 16px 16px}.body p,.body li{font-size:14px}.body ul{margin-left:18px;margin-top:8px}
-  .tabs{border:1.5px solid var(--gray-300);border-radius:10px;background:#fff;margin:16px 0 8px;overflow:hidden}.tabbar{display:flex;border-bottom:1px solid var(--gray-300);background:var(--gray-150);flex-wrap:wrap}.tabbar button{appearance:none;border:none;background:none;font-family:var(--mono);font-size:12px;color:var(--gray-500);padding:10px 16px;cursor:pointer;border-right:1px solid var(--gray-300)}.tabbar button.on{background:#fff;color:var(--slate);border-bottom:2px solid var(--clay);margin-bottom:-1px}.tabpane{display:none;padding:16px 18px}.tabpane.on{display:block}.route{font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--slate);white-space:pre-wrap}dl.faq{margin-top:8px}dl.faq dt{font-family:var(--serif);font-size:16px;color:var(--slate);margin-top:18px}dl.faq dd{font-size:14px;margin:4px 0 0;max-width:680px}footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--gray-300);font-family:var(--mono);font-size:12px;color:var(--gray-500)}
+  :root{
+    --bg:#0b0d12;--panel:#11141b;--panel2:#161a24;--ink:#f4f1ea;--muted:#a6adbb;--line:#2a3040;
+    --gold:#f4c76a;--clay:#e67e5f;--green:#75d6a1;--blue:#7fb4ff;--purple:#b89cff;--red:#ff7b7b;
+    --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--serif:ui-serif,Georgia,"Times New Roman",serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(244,199,106,.13),transparent 32%),radial-gradient(circle at 90% 10%,rgba(127,180,255,.12),transparent 34%),var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;font-size:15px}
+  a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}.wrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:240px 1fr;gap:36px;padding:36px 24px 96px}@media(max-width:980px){.wrap{display:block;padding:22px 14px 72px}nav{display:none}}
+  nav{position:sticky;top:24px;height:calc(100vh - 48px);align-self:start;padding:18px;border:1px solid var(--line);border-radius:20px;background:rgba(17,20,27,.76);backdrop-filter:blur(18px);overflow:auto}.nav-title{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}nav a{display:block;color:#dce3f1;padding:7px 0 7px 12px;border-left:2px solid var(--line);font-size:13px}nav a:hover{border-color:var(--gold);color:white;text-decoration:none}nav a.sub{font-size:12px;color:var(--muted);padding-left:24px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:11px;color:var(--muted);margin:3px 5px 3px 0}
+  header{padding:34px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));box-shadow:0 30px 90px rgba(0,0,0,.35)}.eyebrow{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:12px}h1{font-family:var(--serif);font-weight:520;letter-spacing:-.03em;font-size:clamp(36px,6vw,72px);line-height:.98;margin:0 0 18px}.dek{max-width:860px;color:#d7dce8;font-size:18px}.meta{margin-top:20px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}@media(max-width:880px){.grid{grid-template-columns:1fr}}
+  .card{border:1px solid var(--line);border-radius:20px;background:rgba(17,20,27,.78);padding:18px}.k{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}.v{font-family:var(--serif);font-size:24px;line-height:1.15}.card p{color:#c6ccd8;margin:9px 0 0}.section{margin-top:38px;padding:28px;border:1px solid var(--line);border-radius:26px;background:rgba(17,20,27,.68)}h2{font-family:var(--serif);font-weight:520;letter-spacing:-.02em;font-size:34px;margin:0 0 16px}h3{font-size:20px;margin:24px 0 10px}.note{border-left:3px solid var(--gold);background:rgba(244,199,106,.08);padding:14px 16px;border-radius:12px;color:#e8dfc9}.route{font-family:var(--mono);font-size:13px;color:#eef2fa;background:#0a0c11;border:1px solid var(--line);border-radius:16px;padding:16px;overflow:auto;white-space:normal}
+  table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 22px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03)}th,td{text-align:left;vertical-align:top;padding:12px 13px;border-bottom:1px solid var(--line)}th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#d9e2f0;background:rgba(255,255,255,.06)}td{color:#d5dae5}tr:last-child td{border-bottom:0}.day{font-family:var(--mono);white-space:nowrap;color:var(--gold)}.country{font-weight:700}.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-family:var(--mono);font-size:11px;margin:2px 4px 2px 0;border:1px solid var(--line);background:rgba(255,255,255,.05)}.colombia{color:#7fb4ff}.peru{color:#75d6a1}.bolivia{color:#b89cff}.yes{color:var(--green)}.no{color:var(--red)}ul{padding-left:20px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:880px){.cols{grid-template-columns:1fr}table{font-size:13px}th,td{padding:10px 9px}.day{white-space:normal}}
+  details{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.035);margin:12px 0;overflow:hidden}summary{cursor:pointer;padding:15px 17px;font-weight:700;list-style:none}summary::-webkit-details-marker{display:none}summary:before{content:'▸';color:var(--gold);margin-right:8px}details[open] summary:before{content:'▾'}.body{padding:0 17px 17px;color:#cbd2de}.footer{margin-top:34px;color:var(--muted);font-family:var(--mono);font-size:12px}
 </style>
-</head><body><div class="page">
-<nav><div class="label">South America research</div><a href="#summary">Summary</a><a href="#picks">Priority picks</a><a class="l2" href="#peru">Peru</a><a class="l2" href="#bolivia">Bolivia</a><a class="l2" href="#colombia">Colombia</a><a href="#routes">Route options</a><a href="#queue">Research queue</a><div class="files"><div class="label">Template</div><code>14-research-feature-explainer.html</code><code>source: ~/wiki/travel.md</code></div></nav>
+</head>
+<body><div class="wrap">
+<nav>
+  <div class="nav-title">South America</div>
+  <a href="#top">Overview</a>
+  <a href="#itinerary">42-day itinerary</a>
+  <a class="sub" href="#daybyday">Day-by-day table</a>
+  <a class="sub" href="#countryblocks">Country blocks</a>
+  <a class="sub" href="#ending">Bolivia ending choice</a>
+  <a href="#balance">Balance / cuts</a>
+  <a href="#devang">Devang route mapping</a>
+  <a href="#offbeat">Offbeat research layer</a>
+  <a href="#research">Research queue</a>
+</nav>
 <main>
-<header id="summary"><div class="eyebrow">Travel research explainer · saved artifact</div><h1>South America offbeat shortlist: Peru, Bolivia, Colombia</h1><div class="tldr"><b>TL;DR:</b> Use Colombia for weird, logistically flexible experiences; use Bolivia only if the road/protest situation is clean; keep Peru as a near-Lima mystery/altitude candidate that needs logistics verification before booking.</div></header>
-<section class="grid"><div class="card"><div class="k">Best weirdness / friction ratio</div><div class="v">San Cipriano</div><p>Motorbike-powered rail carts through jungle, plus river reserve. Strong “only-in-Colombia” energy.</p></div><div class="card"><div class="k">Most surreal anchor</div><div class="v">Uyuni + Eduardo Avaroa</div><p>Not hidden, but the landscape is too alien to ignore if Bolivia logistics are stable.</p></div><div class="card"><div class="k">Needs verification</div><div class="v">Marcahuasi + Mavecure</div><p>High upside but requires checks on access, guides, seasonality, safety, and time needed.</p></div></section>
-<div class="callout"><div class="ico">!</div><div><b>Decision framing:</b> this artifact is not a final itinerary. It is a ranked research surface: what to keep, what to verify, and what not to book until logistics are known.</div></div>
-<h2 id="picks">Priority picks</h2>
-<details open id="colombia"><summary>San Cipriano “brujitas” rail carts <span class="where">Colombia · Valle del Cauca</span></summary><div class="body"><p><b>What it is:</b> a jungle river reserve reached by informal wooden carts powered by motorbikes on rail tracks.</p><ul><li><b>Why it made the list:</b> very Colombia-specific, memorable, and strange without needing a remote expedition.</li><li><b>Pair with:</b> river tubing, reserve walk, birding.</li><li><b>Caveat:</b> informal transport; go daytime and re-check current safety/logistics.</li></ul></div></details>
-<details open id="bolivia"><summary>Salar de Uyuni + Eduardo Avaroa jeep circuit <span class="where">Bolivia · Southwest</span></summary><div class="body"><p><b>What it is:</b> a 3–4 day high-altitude jeep circuit through salt flats, lagoons, flamingos, geysers, deserts, volcanoes, and remote terrain.</p><ul><li><b>Why it made the list:</b> not undiscovered, but still probably the strongest surreal/offbeat anchor in Bolivia.</li><li><b>Main caveat:</b> altitude, cold, operator quality, roads, and any protest/roadblock disruptions.</li><li><b>Booking posture:</b> keep modular until route stability is confirmed.</li></ul></div></details>
-<details id="peru"><summary>Marcahuasi / Markawasi mystery plateau <span class="where">Peru · Lima region</span></summary><div class="body"><p><b>What it is:</b> a high plateau near Lima with strange rock formations and an archaeological-mystery vibe.</p><ul><li><b>Why it made the list:</b> good weird alternative to polished Peru tourism if you want something eerie near Lima.</li><li><b>Open questions:</b> access route, altitude/overnight needs, safety, season, guided vs self-guided.</li></ul></div></details>
-<details><summary>Cerros de Mavecure <span class="where">Colombia · Guainía</span></summary><div class="body"><p><b>What it is:</b> remote granite hills in the Amazon-Orinoco region, surfaced in offbeat Colombia research.</p><ul><li><b>Why it made the list:</b> unusual and far from the mainstream Colombia itinerary.</li><li><b>Open questions:</b> access point, permits/guides, safety, seasonality, how many days needed.</li></ul></div></details>
-<h2 id="routes">Route options</h2><div class="tabs"><div class="tabbar"><button class="on" data-tab="safe">Lower-friction</button><button data-tab="surreal">Surreal anchor</button><button data-tab="deep">Deep offbeat</button></div><div class="tabpane on" id="safe"><div class="route">Colombia-first route
-→ Cali / Buenaventura logistics
-→ San Cipriano day trip
-→ Add one safer mainland offbeat pick after current-source verification
+<header id="top">
+  <div class="eyebrow">Travel artifact · updated 2026-05-23 11:52 IST</div>
+  <h1>South America 42-day itinerary + offbeat research</h1>
+  <p class="dek">A readable version of the suggested Colombia → Peru → Bolivia route, layered onto the earlier Hermes offbeat-research shortlist. The itinerary is preserved as a planning surface, not treated as a final booking plan.</p>
+  <div class="meta"><span class="pill">Total: 42 days</span><span class="pill">Colombia: 14</span><span class="pill">Peru: 19</span><span class="pill">Bolivia: 9</span><span class="pill">Best ending: Sucre</span></div>
+</header>
 
-Use when: you want weirdness without committing to Bolivia road risk.</div></div><div class="tabpane" id="surreal"><div class="route">Peru + Bolivia modular route
-→ Lima
-→ optional Marcahuasi if verified
-→ La Paz / Uyuni only if road/protest situation is clean
-→ Uyuni + Eduardo Avaroa 3–4 day circuit
+<section class="grid">
+  <div class="card"><div class="k">Core route</div><div class="v">Colombia → Peru → Bolivia</div><p>Nightlife and soft landing first, Amazon/spiritual middle, surreal high-altitude ending.</p></div>
+  <div class="card"><div class="k">Must-not-cut</div><div class="v">Medellín · Iquitos · Cusco · La Paz · Uyuni</div><p>These are the route’s identity: nightlife, Amazon, ruins, chaos, and alien landscapes.</p></div>
+  <div class="card"><div class="k">Main risk</div><div class="v">Altitude + Bolivia logistics</div><p>Cusco/La Paz/Uyuni all need buffers. Bolivia overland legs should remain flexible.</p></div>
+</section>
 
-Use when: Bolivia is stable and surreal landscape is the main goal.</div></div><div class="tabpane" id="deep"><div class="route">Colombia remote route
-→ Bogotá / Villavicencio / Inírida research
-→ Cerros de Mavecure with guide/logistics verification
-→ Keep San Cipriano as easier weird counterweight
+<section class="section" id="itinerary">
+  <h2>42-day suggested itinerary</h2>
+  <p class="note"><b>Source note:</b> This section formats the unstructured itinerary you pasted. Days 1–31 are available as city/range summaries from the text; Days 32–42 have more detailed pasted notes.</p>
+  <div class="route"><b>Final route map:</b><br>NYC → Cartagena → Medellín → Salento / Cocora Valley → Bogotá → Lima → Iquitos / Ayahuasca → Lima → Cusco → Sacred Valley / Machu Picchu → La Paz → Uyuni → Sucre or Copacabana → La Paz / Santa Cruz → NYC</div>
 
-Use when: you are comfortable with remote logistics and extra planning.</div></div></div>
-<h2 id="queue">Research queue</h2><dl class="faq"><dt>What should be verified before booking?</dt><dd>Bolivia road/protest status, Uyuni operator reliability, Marcahuasi access/altitude needs, San Cipriano safety/logistics, Mavecure guide/permit/seasonality.</dd><dt>What is the current recommendation?</dt><dd>Do not lock Bolivia overland segments until disruption risk is updated. Keep Colombia as the flexible offbeat track.</dd><dt>What source trail exists?</dt><dd>Saved travel KB at <code>~/wiki/travel.md</code>, plus earlier Reddit/Redlib offbeat travel research and Bolivia disruption research.</dd></dl>
-<footer>Generated by Hermes · Anthropic html-effectiveness format: research feature explainer · canonical artifact hub URL maintained by publisher.</footer>
-</main></div><script>document.querySelectorAll('.tabbar button').forEach(b=>b.onclick=()=>{let box=b.closest('.tabs');box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));box.querySelectorAll('.tabpane').forEach(x=>x.classList.remove('on'));b.classList.add('on');box.querySelector('#'+b.dataset.tab).classList.add('on')});</script></body></html>
+  <h3 id="daybyday">Day-by-day / range table</h3>
+  <table>
+    <thead><tr><th>Days</th><th>Country</th><th>Base</th><th>Vibe / purpose</th><th>Key things to do</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="day">1–3</td><td class="country colombia">Colombia</td><td>Cartagena</td><td>Caribbean entry, colour, nightlife, old-town energy.</td><td>Old city, Getsemaní, beaches/islands, bars.</td><td>Can cut to 2 days if schedule gets tight.</td></tr>
+      <tr><td class="day">4–8</td><td class="country colombia">Colombia</td><td>Medellín</td><td>Best nightlife anchor and modern Colombia base.</td><td>El Poblado/Laureles, Comuna 13, Guatapé day trip, nightlife.</td><td>Must-not-cut.</td></tr>
+      <tr><td class="day">9–11</td><td class="country colombia">Colombia</td><td>Salento / Cocora Valley</td><td>Nature break, coffee region, wax palms.</td><td>Cocora Valley, coffee farms, town wandering.</td><td>Good contrast after Medellín.</td></tr>
+      <tr><td class="day">12–14</td><td class="country colombia">Colombia</td><td>Bogotá</td><td>Capital, food, museums, grittier urban culture.</td><td>La Candelaria, museums, Monserrate, nightlife.</td><td>First cut candidate: 3 → 2 days.</td></tr>
+      <tr><td class="day">15–17</td><td class="country peru">Peru</td><td>Lima</td><td>Food, coastal city, recovery between countries.</td><td>Miraflores, Barranco, restaurants, coastline.</td><td>Sets up Iquitos flight.</td></tr>
+      <tr><td class="day">18–24</td><td class="country peru">Peru</td><td>Iquitos / Amazon / Ayahuasca</td><td>Deep offbeat Amazon/spiritual block.</td><td>Amazon lodge/river, Iquitos, ayahuasca retreat if chosen.</td><td>Must-not-cut, but choose operator carefully.</td></tr>
+      <tr><td class="day">25</td><td class="country peru">Peru</td><td>Lima</td><td>Transit / recovery day.</td><td>Fly back from Iquitos, reset, laundry, rest.</td><td>Important buffer before altitude.</td></tr>
+      <tr><td class="day">26–31</td><td class="country peru">Peru</td><td>Cusco / Sacred Valley</td><td>Altitude acclimatization, Inca sites, Machu Picchu setup.</td><td>Cusco, San Blas, Sacsayhuamán, Sacred Valley, Ollantaytambo, Machu Picchu.</td><td>First day in Cusco should be light.</td></tr>
+      <tr><td class="day">32</td><td class="country peru">Peru</td><td>Cusco</td><td>Return to Cusco / nightlife.</td><td>Cusco Plaza de Armas, San Blas, bars/restaurants.</td><td>Use as decompression after Machu Picchu/Sacred Valley.</td></tr>
+      <tr><td class="day">33</td><td class="country peru">Peru</td><td>Cusco</td><td>Humantay Lake or Rainbow Mountain / buffer.</td><td>Humantay Lake preferred; Rainbow Mountain optional.</td><td>Altitude is real. Keep this flexible.</td></tr>
+      <tr><td class="day">34–37</td><td class="country bolivia">Bolivia</td><td>La Paz</td><td>Chaotic, high-altitude, weird, indigenous, markets, cable cars, dramatic geography.</td><td>Mi Teleférico, Witches’ Market, Cholita wrestling, Valle de la Luna, Death Road biking, Sopocachi bars.</td><td>Stay: Sopocachi. One of the most offbeat cities in South America.</td></tr>
+      <tr><td class="day">38–40</td><td class="country bolivia">Bolivia</td><td>Uyuni Salt Flats</td><td>Remote, surreal, desert, salt flats, lagoons, stars.</td><td>3-day Salar tour, mirror flats if season supports it, train cemetery, Incahuasi Island, red/green lagoons, flamingos, stargazing.</td><td>Non-negotiable Bolivia highlight.</td></tr>
+      <tr><td class="day">41–42</td><td class="country bolivia">Bolivia</td><td>Sucre or Copacabana / Isla del Sol</td><td>Choose city-culture ending or peaceful lake/nature ending.</td><td>See option table below.</td><td>Recommendation from pasted itinerary: choose Sucre.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section" id="countryblocks">
+  <h2>Country blocks</h2>
+  <table>
+    <thead><tr><th>Country</th><th>Days</th><th>Route block</th><th>Role in trip</th></tr></thead>
+    <tbody>
+      <tr><td class="country colombia">Colombia</td><td class="day">14</td><td>Days 1–3 Cartagena · Days 4–8 Medellín · Days 9–11 Salento/Cocora · Days 12–14 Bogotá</td><td>Nightlife, colour, coffee/nature, urban culture.</td></tr>
+      <tr><td class="country peru">Peru</td><td class="day">19</td><td>Days 15–17 Lima · Days 18–24 Iquitos/Amazon/Ayahuasca · Day 25 Lima recovery · Days 26–33 Cusco/Sacred Valley/Machu Picchu</td><td>Food, Amazon/spiritual block, altitude/ruins, iconic Peru.</td></tr>
+      <tr><td class="country bolivia">Bolivia</td><td class="day">9</td><td>Days 34–37 La Paz · Days 38–40 Uyuni · Days 41–42 Sucre or Copacabana/Isla del Sol</td><td>Weird city, surreal landscapes, offbeat closing note.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section" id="ending">
+  <h2>Bolivia ending choice</h2>
+  <table>
+    <thead><tr><th>Option</th><th>Vibe</th><th>Why choose it</th><th>What to do</th><th>Best if</th></tr></thead>
+    <tbody>
+      <tr><td><b>Option A: Sucre</b><br><span class="tag yes">Recommended</span></td><td>Beautiful, relaxed, colonial, student-town energy.</td><td>Devang visited Sucre. It gives a softer Bolivia ending after La Paz/Uyuni and adds a new kind of city culture.</td><td>Colonial center, cafés, local markets, chill nightlife, optional Potosí stop if travelling overland.</td><td>You want one more offbeat city.</td></tr>
+      <tr><td><b>Option B: Copacabana + Isla del Sol</b></td><td>Peaceful Lake Titicaca, slow, spiritual, scenic.</td><td>Devang did Copacabana carnival + Isla del Sol. Good lake/island finish.</td><td>Copacabana town, Isla del Sol, Lake Titicaca boat ride, sunset over the lake.</td><td>You want peaceful nature after Uyuni.</td></tr>
+    </tbody>
+  </table>
+  <p class="note"><b>My formatted read:</b> choose <b>Option A: Sucre</b>. You already get enough nature from Salento, Amazon, Cusco, and Uyuni. Sucre adds a different vibe and may make onward flight logistics via Santa Cruz easier.</p>
+  <div class="route"><b>Final ending:</b> La Paz → Uyuni → Sucre → Santa Cruz/La Paz → NYC</div>
+</section>
+
+<section class="section" id="balance">
+  <h2>Best balance for your style</h2>
+  <div class="cols">
+    <div>
+      <h3>Best nightlife</h3>
+      <table><thead><tr><th>Rank</th><th>Place</th></tr></thead><tbody><tr><td>1</td><td>Medellín</td></tr><tr><td>2</td><td>Cartagena</td></tr><tr><td>3</td><td>Bogotá</td></tr><tr><td>4</td><td>Lima</td></tr><tr><td>5</td><td>Cusco</td></tr><tr><td>6</td><td>La Paz</td></tr></tbody></table>
+    </div>
+    <div>
+      <h3>Best offbeat</h3>
+      <table><thead><tr><th>Rank</th><th>Place</th></tr></thead><tbody><tr><td>1</td><td>Iquitos / Ayahuasca</td></tr><tr><td>2</td><td>Uyuni</td></tr><tr><td>3</td><td>La Paz</td></tr><tr><td>4</td><td>Salento / Cocora</td></tr><tr><td>5</td><td>Sucre or Isla del Sol</td></tr></tbody></table>
+    </div>
+  </div>
+  <h3>Must-not-cut</h3>
+  <p><span class="tag">Medellín</span><span class="tag">Iquitos / Ayahuasca</span><span class="tag">Cusco / Machu Picchu</span><span class="tag">La Paz</span><span class="tag">Uyuni</span></p>
+  <h3>If you need to cut 3–4 days</h3>
+  <table><thead><tr><th>Cut order</th><th>Change</th><th>Reason</th></tr></thead><tbody><tr><td>1</td><td>Bogotá: 3 days → 2 days</td><td>Useful, but not the route identity.</td></tr><tr><td>2</td><td>Cartagena: 3 days → 2 days</td><td>Keeps the Caribbean opener but trims slack.</td></tr><tr><td>3</td><td>Cusco block: 8 days → 7 days</td><td>Possible only if altitude and logistics are going well.</td></tr><tr><td>4</td><td>Remove Sucre/Copacabana ending</td><td>Last resort; cleanest way to compress the end.</td></tr></tbody></table>
+</section>
+
+<section class="section" id="devang">
+  <h2>Places mapped from Devang’s route</h2>
+  <div class="cols">
+    <div><h3>Included</h3><table><thead><tr><th>Place</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Cartagena</td><td class="yes">Included</td></tr><tr><td>Medellín</td><td class="yes">Included</td></tr><tr><td>Guatapé</td><td class="yes">Included via Medellín</td></tr><tr><td>Salento / Cocora Valley</td><td class="yes">Included</td></tr><tr><td>Bogotá</td><td class="yes">Included</td></tr><tr><td>Lima</td><td class="yes">Included</td></tr><tr><td>Iquitos / Amazon</td><td class="yes">Included</td></tr><tr><td>Ayahuasca</td><td class="yes">Included as option/block</td></tr><tr><td>Cusco / Sacred Valley / Ollantaytambo</td><td class="yes">Included</td></tr><tr><td>Machu Picchu</td><td class="yes">Included</td></tr><tr><td>Humantay / Rainbow Mountain</td><td class="yes">Included as option</td></tr><tr><td>La Paz</td><td class="yes">Included</td></tr><tr><td>Uyuni</td><td class="yes">Included</td></tr><tr><td>Sucre or Copacabana / Isla del Sol</td><td class="yes">Included as ending choice</td></tr>
+    </tbody></table></div>
+    <div><h3>Not included</h3><table><thead><tr><th>Place</th><th>Reason</th></tr></thead><tbody>
+      <tr><td>Chile / Patagonia</td><td>Amazing, but separate trip.</td></tr><tr><td>Peru Amazon boat Pucallpa → Iquitos</td><td>Too slow.</td></tr><tr><td>Ayacucho</td><td>Interesting but lower priority.</td></tr><tr><td>Huacachina / Paracas</td><td>Fun but not essential.</td></tr><tr><td>Toro Toro / Cochabamba</td><td>Offbeat but logistically extra.</td></tr><tr><td>Cali</td><td>Mentioned by Devang, but lower priority for this route.</td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section class="section" id="offbeat">
+  <h2>Existing Hermes offbeat research layer</h2>
+  <p>This is the earlier shortlist that stays attached to the itinerary page as optional texture / research leads.</p>
+  <div class="grid">
+    <div class="card"><div class="k">Best weirdness / friction ratio</div><div class="v">San Cipriano</div><p>Motorbike-powered rail carts through jungle, plus river reserve. Strong “only-in-Colombia” energy.</p></div>
+    <div class="card"><div class="k">Most surreal anchor</div><div class="v">Uyuni + Eduardo Avaroa</div><p>Not hidden, but the landscape is too alien to ignore if Bolivia logistics are stable.</p></div>
+    <div class="card"><div class="k">Needs verification</div><div class="v">Marcahuasi + Mavecure</div><p>High upside but requires checks on access, guides, seasonality, safety, and time needed.</p></div>
+  </div>
+  <details open><summary>San Cipriano “brujitas” rail carts · Colombia</summary><div class="body">Jungle river reserve reached by informal wooden carts powered by motorbikes on rail tracks. Pair with river tubing and birding. Caveat: informal transport; go daytime and re-check current safety/logistics.</div></details>
+  <details open><summary>Salar de Uyuni + Eduardo Avaroa · Bolivia</summary><div class="body">3–4 day high-altitude jeep circuit through salt flats, lagoons, flamingos, geysers, deserts, volcanoes, and remote terrain. Main caveats: altitude, cold, operator quality, roads, and protest/roadblock disruptions.</div></details>
+  <details><summary>Marcahuasi / Markawasi mystery plateau · Peru</summary><div class="body">High plateau near Lima with strange rock formations and archaeological-mystery vibe. Needs verification on access route, altitude/overnight needs, safety, season, and guided vs self-guided.</div></details>
+  <details><summary>Cerros de Mavecure · Colombia</summary><div class="body">Remote granite hills in the Amazon-Orinoco region. Unusual and far from the mainstream Colombia itinerary. Needs access/permit/guide/safety/seasonality verification.</div></details>
+</section>
+
+<section class="section" id="research">
+  <h2>Research queue before booking</h2>
+  <table><thead><tr><th>Topic</th><th>Question to resolve</th><th>Why it matters</th></tr></thead><tbody>
+    <tr><td>Bolivia roads/protests</td><td>Are La Paz → Uyuni / Uyuni → Sucre roads and airport transfers stable?</td><td>Bolivia is the highest logistics-risk part.</td></tr>
+    <tr><td>Ayahuasca operator</td><td>Which retreat/operator is safe, ethical, and aligned with your risk tolerance?</td><td>This is not a casual activity; vetting matters.</td></tr>
+    <tr><td>Cusco altitude</td><td>How many light days are needed before big hikes?</td><td>Bad altitude planning can ruin the Peru block.</td></tr>
+    <tr><td>Uyuni operator</td><td>Which 3-day tour has reliable vehicles, heating, food, and safety?</td><td>Operator quality drives experience quality.</td></tr>
+    <tr><td>Flights</td><td>Best open-jaw / internal-flight structure: NYC → Cartagena and Bolivia → NYC?</td><td>Can make or break the 42-day feasibility.</td></tr>
+  </tbody></table>
+  <div class="footer">Generated by Hermes · Source: pasted 42-day itinerary + saved travel KB at ~/wiki/travel.md · Published in artifact hub.</div>
+</section>
+</main></div></body></html>
