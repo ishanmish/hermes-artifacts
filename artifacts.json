@@ -232,8 +232,8 @@
   },
   {
     "id": "2026-05-22-south-america-offbeat-research",
-    "title": "South America: 42-day itinerary + Reddit traveller opinions",
-    "summary": "42-day Colombia/Peru/Bolivia itinerary with offbeat research, Reddit traveller pros/cons/cautions for each stop, and best transfer legs between destinations.",
+    "title": "South America: 42-day itinerary + Reddit traveller opinions + stay hot spots",
+    "summary": "42-day Colombia/Peru/Bolivia itinerary with Reddit traveller pros/cons, best transfer legs, and centre-of-action stay hotspots for every recommended base.",
     "category": "travel",
     "tags": [
       "travel",
@@ -243,11 +243,13 @@
       "transfers",
       "colombia",
       "peru",
-      "bolivia"
+      "bolivia",
+      "stay-hotspots",
+      "neighbourhoods"
     ],
     "status": "saved",
     "created_at": "2026-05-22T14:46:12.391192+05:30",
-    "updated_at": "2026-05-23T17:10:31+05:30",
+    "updated_at": "2026-05-24T09:08:04+05:30",
     "expires_at": null,
     "path": "travel/south-america-offbeat-research-2026-05-22.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/travel/south-america-offbeat-research-2026-05-22.html",
