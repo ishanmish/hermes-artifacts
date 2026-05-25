@@ -758,6 +758,13 @@
         'es-en:comprar': 'to buy',
         'es-en:tomar': 'to take / to drink / to have',
         'es-en:tomo': 'I take / I drink / I have',
+        'es-en:todos': 'all / everyone',
+        'es-en:todas': 'all',
+        'es-en:todo': 'all / everything',
+        'es-en:toda': 'all / whole',
+        'en-es:all': 'todos',
+        'en-es:everyone': 'todos',
+        'en-es:everything': 'todo',
         'en-es:i take': 'tomo',
         'en-es:i drink': 'tomo',
         'en-es:i have': 'tomo',
@@ -805,22 +812,49 @@
           firstEn: 'Thanks for the help.',
           secondEs: '¿Pasas por aquí?',
           secondEn: 'Are you passing by here?'
+        },
+        'todos': {
+          firstEs: 'Todos mis amigos están aquí.',
+          firstEn: 'All my friends are here.',
+          secondEs: '¿Todos vienen conmigo?',
+          secondEn: 'Is everyone coming with me?'
+        },
+        'todas': {
+          firstEs: 'Todas las habitaciones están llenas.',
+          firstEn: 'All the rooms are full.',
+          secondEs: '¿Todas tus cosas están aquí?',
+          secondEn: 'Are all your things here?'
+        },
+        'todo': {
+          firstEs: 'Todo está bien.',
+          firstEn: 'Everything is fine.',
+          secondEs: '¿Todo está listo?',
+          secondEn: 'Is everything ready?'
+        },
+        'toda': {
+          firstEs: 'Toda la comida está buena.',
+          firstEn: 'All the food is good.',
+          secondEs: '¿Toda la gente viene?',
+          secondEn: 'Are all the people coming?'
         }
       };
       if (specific[nEs]) return specific[nEs];
-      if (direction === 'en-es') {
+      const nEn = normalizeText(en);
+      const looksLikeVerb = nEn.startsWith('to ') || /(?:ar|er|ir)$/.test(nEs);
+      if (looksLikeVerb) {
         return {
-          firstEs: `Uso “${es}” en una frase.`,
-          firstEn: `I use “${en}” in a sentence.`,
-          secondEs: `¿Puedes usar “${es}” en una frase?`,
-          secondEn: `Can you use “${en}” in a sentence?`
+          firstEs: `Quiero ${es}.`,
+          firstEn: `I want to ${en.replace(/^to\s+/i, '')}.`,
+          secondEs: `¿Quieres ${es}?`,
+          secondEn: `Do you want to ${en.replace(/^to\s+/i, '')}?`
         };
       }
+      const article = nEs.endsWith('a') ? 'una' : 'un';
       return {
-        firstEs: `Uso “${es}” en una frase.`,
-        firstEn: `I use “${en}” in a sentence.`,
-        secondEs: `¿Puedes decir “${es}”?`,
-        secondEn: `Can you say “${en}”?`
+        firstEs: `Busco ${article} ${es}.`,
+        firstEn: `I am looking for a ${en}.`,
+        secondEs: `¿Tienes ${article} ${es}?`,
+        secondEn: `Do you have a ${en}?`
       };
     }
     async function lookupAndAddFromInput(source='lookup') {
