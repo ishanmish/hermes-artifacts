@@ -245,7 +245,7 @@
         <div class="panel">
           <div class="eyebrow">Add words you find outside</div>
           <h2>Lookup a Spanish word or phrase</h2>
-          <p class="muted">Type a Spanish word/phrase. If it is already in the deck, it shows the existing cards. If not, the page pulls an English translation online, generates first-person and second-person usage examples, and saves it as a custom card in this browser.</p>
+          <p class="muted">Type a Spanish word/phrase. If the exact card is already in the deck, it shows that card. If not, the page pulls a translation online, generates first-person and second-person usage examples, then shows a preview — it only saves after you click Add this card.</p>
           <div class="controls" style="grid-template-columns:minmax(200px,1fr) 180px 180px;">
             <input id="lookupInput" placeholder="e.g. playa, una mesa, caminar" />
             <select id="lookupLang">
@@ -542,6 +542,14 @@
       if (!q) return [];
       return allCards().filter(c => normalizeText([c.category, c.base, ...c.spanish, ...c.english, c.literal, c.exampleSpanish, c.exampleEnglish].join(' ')).includes(q));
     }
+    function findExactCards(term) {
+      const q = normalizeText(term);
+      if (!q) return [];
+      return allCards().filter(c => {
+        const direct = [...(c.spanish || []), ...(c.english || [])].map(normalizeText);
+        return direct.includes(q);
+      });
+    }
     function progressFor(id) {
       if (!state.progress[id]) state.progress[id] = {attempts:0, correct:0, close:0, wrong:0, known:false, difficult:false, lastSeen:null};
       return state.progress[id];
@@ -741,9 +749,13 @@
       const map = {
         'en-es:because': 'porque',
         'en-es:why': 'por qué',
+        'en-es:buy': 'comprar',
+        'en-es:to buy': 'comprar',
         'es-en:porque': 'because',
         'es-en:por que': 'why',
-        'es-en:por qué': 'why'
+        'es-en:por qué': 'why',
+        'es-en:por': 'for / by / because of',
+        'es-en:comprar': 'to buy'
       };
       return map[`${langPair}:${n}`] || null;
     }
@@ -783,11 +795,11 @@
       if (!raw) return;
       switchTab('lookup');
       $('lookupInput').value = raw;
-      const existing = findMatchingCards(raw);
+      const existing = findExactCards(raw);
       if (existing.length) {
         result.style.display = 'block';
         result.className = 'feedback close';
-        result.innerHTML = `<strong>Already in deck.</strong><br>${existing.slice(0, 6).map(c => `${escapeHtml(displaySpanish(c))} = ${escapeHtml(displayEnglish(c))}`).join('<br>')}`;
+        result.innerHTML = `<strong>Exact card already in deck.</strong><br>${existing.slice(0, 6).map(c => `${escapeHtml(displaySpanish(c))} = ${escapeHtml(displayEnglish(c))}`).join('<br>')}`;
         return;
       }
       const direction = $('lookupLang').value;
