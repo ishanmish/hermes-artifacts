@@ -755,7 +755,14 @@
         'es-en:por que': 'why',
         'es-en:por qué': 'why',
         'es-en:por': 'for / by / because of',
-        'es-en:comprar': 'to buy'
+        'es-en:comprar': 'to buy',
+        'es-en:tomar': 'to take / to drink / to have',
+        'es-en:tomo': 'I take / I drink / I have',
+        'en-es:i take': 'tomo',
+        'en-es:i drink': 'tomo',
+        'en-es:i have': 'tomo',
+        'en-es:to take': 'tomar',
+        'en-es:to drink': 'tomar'
       };
       return map[`${langPair}:${n}`] || null;
     }
@@ -773,6 +780,34 @@
     function generatedExamples(spanish, english, direction) {
       const es = spanish.trim();
       const en = english.trim();
+      const nEs = normalizeText(es);
+      const specific = {
+        'tomo': {
+          firstEs: 'Tomo café.',
+          firstEn: 'I drink / have coffee.',
+          secondEs: '¿Tomas café?',
+          secondEn: 'Do you drink / have coffee?'
+        },
+        'tomar': {
+          firstEs: 'Voy a tomar café.',
+          firstEn: 'I am going to drink / have coffee.',
+          secondEs: '¿Quieres tomar café?',
+          secondEn: 'Do you want to drink / have coffee?'
+        },
+        'comprar': {
+          firstEs: 'Voy a comprar esto.',
+          firstEn: 'I am going to buy this.',
+          secondEs: '¿Quieres comprar esto?',
+          secondEn: 'Do you want to buy this?'
+        },
+        'por': {
+          firstEs: 'Gracias por la ayuda.',
+          firstEn: 'Thanks for the help.',
+          secondEs: '¿Pasas por aquí?',
+          secondEn: 'Are you passing by here?'
+        }
+      };
+      if (specific[nEs]) return specific[nEs];
       if (direction === 'en-es') {
         return {
           firstEs: `Uso “${es}” en una frase.`,
