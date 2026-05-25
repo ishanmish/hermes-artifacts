@@ -245,7 +245,7 @@
         <div class="panel">
           <div class="eyebrow">Add words you find outside</div>
           <h2>Lookup a Spanish word or phrase</h2>
-          <p class="muted">Type a Spanish word/phrase. If the exact card is already in the deck, it shows that card. If not, the page pulls a translation online, generates first-person and second-person usage examples, then shows a preview — it only saves after you click Add this card.</p>
+          <p class="muted">Type any Spanish word/phrase. The dashboard asks Gemini Flash for the correct meaning and natural sentences, parses the JSON, then shows a preview — it only saves after you click Add this card.</p>
           <div class="controls" style="grid-template-columns:minmax(200px,1fr) 180px 180px;">
             <input id="lookupInput" placeholder="e.g. playa, una mesa, caminar" />
             <select id="lookupLang">
@@ -254,6 +254,15 @@
             </select>
             <button class="btn primary" id="lookupWordBtn">Lookup / Add</button>
           </div>
+          <details style="margin-top:14px;">
+            <summary class="muted">Gemini lookup settings</summary>
+            <div class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
+              <input id="geminiApiKey" type="password" placeholder="Gemini API key — saved only in this browser" autocomplete="off" />
+              <input id="geminiModel" placeholder="gemini-2.5-flash" />
+              <button class="btn" id="saveGeminiSettings">Save</button>
+            </div>
+            <p class="muted">I cannot hardcode a secret into the public dashboard. The key is stored in your browser localStorage only. If no Gemini key is set, lookup will stop and ask for one — no fake/local fallback cards.</p>
+          </details>
           <div id="lookupResult" class="feedback close" style="display:none;"></div>
         </div>
         <div class="panel">
@@ -501,7 +510,8 @@
       quizCard: null,
       quizDirection: 'es-en',
       quizAnswered: false,
-      progress: loadProgress()
+      progress: loadProgress(),
+      gemini: loadGeminiSettings()
     };
 
     const $ = (id) => document.getElementById(id);
@@ -512,6 +522,30 @@
       catch { return {}; }
     }
     function saveProgress() { localStorage.setItem('spanishCrashProgress', JSON.stringify(state.progress)); updateStats(); }
+    function loadGeminiSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('spanishCrashGeminiSettings') || '{}');
+        return { apiKey: saved.apiKey || '', model: saved.model || 'gemini-2.5-flash' };
+      } catch {
+        return { apiKey: '', model: 'gemini-2.5-flash' };
+      }
+    }
+    function saveGeminiSettings() {
+      state.gemini = {
+        apiKey: $('geminiApiKey').value.trim(),
+        model: ($('geminiModel').value.trim() || 'gemini-2.5-flash')
+      };
+      localStorage.setItem('spanishCrashGeminiSettings', JSON.stringify(state.gemini));
+      const result = $('lookupResult');
+      result.style.display = 'block';
+      result.className = 'feedback correct';
+      result.innerHTML = '<strong>Gemini settings saved in this browser.</strong>';
+    }
+    function hydrateGeminiSettings() {
+      if (!$('geminiApiKey')) return;
+      $('geminiApiKey').value = state.gemini.apiKey || '';
+      $('geminiModel').value = state.gemini.model || 'gemini-2.5-flash';
+    }
     function loadCustomCards() {
       try {
         const raw = JSON.parse(localStorage.getItem('spanishCrashCustomCards') || '[]');
@@ -655,7 +689,7 @@
           <div class="spanish">${escapeHtml(displaySpanish(c))}</div>
           <div class="english">${escapeHtml(displayEnglish(c))}</div>
           <div class="literal">Literal/note: ${escapeHtml(c.literal || '—')}</div>
-          ${(() => { const pe = personExamples(c); return `<div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div>`; })()}
+          ${renderSentenceList(c) || (() => { const pe = personExamples(c); return `<div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div>`; })()}
           <div class="meta">Root/reference: ${escapeHtml(c.base || '—')} · Accepted: ${c.spanish.length + c.english.length}</div>
         </article>`).join('');
     }
@@ -677,7 +711,7 @@
       $('randomFront').textContent = esFirst ? displaySpanish(c) : displayEnglish(c);
       $('randomMeaning').textContent = esFirst ? displayEnglish(c) : displaySpanish(c);
       const pe = personExamples(c);
-      $('randomExample').innerHTML = `<strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}`;
+      $('randomExample').innerHTML = renderSentenceList(c).replace(/^<div class="example">|<\/div>$/g, '') || `<strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}`;
       $('randomMeta').textContent = `Category: ${c.category} · Root/reference: ${c.base || '—'} · Literal: ${c.literal || '—'}`;
       $('randomBack').classList.toggle('hidden', !state.randomRevealed);
     }
@@ -796,78 +830,156 @@
       if (!candidate || candidate.includes('<') || candidate.includes('>')) throw new Error('Bad translation response');
       return candidate;
     }
-    function generatedExamples(spanish, english, direction) {
-      const es = spanish.trim();
-      const en = english.trim();
-      const nEs = normalizeText(es);
-      const specific = {
-        'tomo': {
-          firstEs: 'Tomo café.',
-          firstEn: 'I drink / have coffee.',
-          secondEs: '¿Tomas café?',
-          secondEn: 'Do you drink / have coffee?'
-        },
-        'tomar': {
-          firstEs: 'Voy a tomar café.',
-          firstEn: 'I am going to drink / have coffee.',
-          secondEs: '¿Quieres tomar café?',
-          secondEn: 'Do you want to drink / have coffee?'
-        },
-        'comprar': {
-          firstEs: 'Voy a comprar esto.',
-          firstEn: 'I am going to buy this.',
-          secondEs: '¿Quieres comprar esto?',
-          secondEn: 'Do you want to buy this?'
-        },
-        'por': {
-          firstEs: 'Gracias por la ayuda.',
-          firstEn: 'Thanks for the help.',
-          secondEs: '¿Pasas por aquí?',
-          secondEn: 'Are you passing by here?'
-        },
-        'todos': {
-          firstEs: 'Todos mis amigos están aquí.',
-          firstEn: 'All my friends are here.',
-          secondEs: '¿Todos vienen conmigo?',
-          secondEn: 'Is everyone coming with me?'
-        },
-        'todas': {
-          firstEs: 'Todas las habitaciones están llenas.',
-          firstEn: 'All the rooms are full.',
-          secondEs: '¿Todas tus cosas están aquí?',
-          secondEn: 'Are all your things here?'
-        },
-        'todo': {
-          firstEs: 'Todo está bien.',
-          firstEn: 'Everything is fine.',
-          secondEs: '¿Todo está listo?',
-          secondEn: 'Is everything ready?'
-        },
-        'toda': {
-          firstEs: 'Toda la comida está buena.',
-          firstEn: 'All the food is good.',
-          secondEs: '¿Toda la gente viene?',
-          secondEn: 'Are all the people coming?'
-        }
-      };
-      if (specific[nEs]) return specific[nEs];
-      const nEn = normalizeText(en);
-      const looksLikeVerb = nEn.startsWith('to ') || /(?:ar|er|ir)$/.test(nEs);
-      if (looksLikeVerb) {
-        return {
-          firstEs: `Quiero ${es}.`,
-          firstEn: `I want to ${en.replace(/^to\s+/i, '')}.`,
-          secondEs: `¿Quieres ${es}?`,
-          secondEn: `Do you want to ${en.replace(/^to\s+/i, '')}?`
-        };
+    function geminiPrompt(raw, direction) {
+      const source = direction === 'es-en' ? 'Spanish' : 'English';
+      const target = direction === 'es-en' ? 'English' : 'Spanish';
+      return `You are Gemini Flash helping build a practical Spanish flashcard dashboard.
+
+Input ${source} word/phrase: "${raw}"
+Direction: ${source} to ${target}
+Audience: Indian English speaker learning travel Spanish quickly.
+
+Return ONLY valid JSON. No markdown fences. No commentary.
+
+Critical rules:
+- Do NOT invent a different phrase. Explain exactly the input phrase.
+- If the input is Spanish, preserve it exactly as the main spanish field unless it has a typo; if corrected, mention that in notes.
+- Give the natural meaning, not a word-by-word template. Example: "puedo pasar" means "I can pass / I can go through / I can come in" depending context — never turn it into "I want...".
+- Include 3 useful, natural example sentences for travel/conversation.
+- Sentences must be real Spanish, not filler templates.
+- Keep meanings concise but include nuance where needed.
+- acceptedEnglish should include short aliases that should count as correct in a quiz.
+- acceptedSpanish should include close Spanish aliases/forms if helpful.
+
+JSON schema exactly:
+{
+  "word": "canonical display word/phrase in the input language",
+  "spanish": "main Spanish word or phrase",
+  "meaning": "clear English meaning to display on the card",
+  "literal": "short literal note / nuance / conjugation note",
+  "root": "infinitive/root if useful, else empty string",
+  "acceptedSpanish": ["Spanish aliases"],
+  "acceptedEnglish": ["English aliases"],
+  "sentences": [
+    {"spanish": "natural sentence 1", "english": "translation 1"},
+    {"spanish": "natural sentence 2", "english": "translation 2"},
+    {"spanish": "natural sentence 3", "english": "translation 3"}
+  ]
+}`;
+    }
+    function parseGeminiJson(text) {
+      const cleaned = String(text || '').replace(/```json|```/g, '').trim();
+      const start = cleaned.indexOf('{');
+      const end = cleaned.lastIndexOf('}');
+      if (start < 0 || end < start) throw new Error('Gemini did not return JSON');
+      return JSON.parse(cleaned.slice(start, end + 1));
+    }
+    function cleanArray(value, fallback) {
+      const arr = Array.isArray(value) ? value : [fallback];
+      return [...new Set(arr.map(cleanLookupText).filter(Boolean))];
+    }
+    function normalizeGeminiSentences(value) {
+      const rows = Array.isArray(value) ? value : [];
+      return rows.map(row => ({
+        spanish: cleanLookupText(row?.spanish || row?.es || ''),
+        english: cleanLookupText(row?.english || row?.en || '')
+      })).filter(row => row.spanish && row.english).slice(0, 5);
+    }
+    async function lookupWithGemini(raw, direction) {
+      const settings = state.gemini || loadGeminiSettings();
+      if (!settings.apiKey) throw new Error('Add a Gemini API key in Gemini lookup settings first. I disabled the old fake translation fallback because it was creating wrong meanings.');
+      const model = settings.model || 'gemini-2.5-flash';
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(settings.apiKey)}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: geminiPrompt(raw, direction) }] }],
+          generationConfig: { temperature: 0.15, responseMimeType: 'application/json' }
+        })
+      });
+      if (!res.ok) {
+        let detail = '';
+        try { detail = (await res.json())?.error?.message || ''; } catch {}
+        throw new Error(`Gemini lookup failed (${res.status})${detail ? ': ' + detail : ''}`);
       }
-      const article = nEs.endsWith('a') ? 'una' : 'un';
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('\n') || '';
+      const obj = parseGeminiJson(text);
+      const spanish = cleanLookupText(obj.spanish || (direction === 'es-en' ? raw : ''));
+      const english = cleanLookupText(obj.meaning || obj.english || (direction === 'en-es' ? raw : ''));
+      const sentences = normalizeGeminiSentences(obj.sentences);
+      if (!spanish || !english) throw new Error('Gemini response missing Spanish or meaning');
+      if (!sentences.length) throw new Error('Gemini response missing useful sentences');
       return {
-        firstEs: `Busco ${article} ${es}.`,
-        firstEn: `I am looking for a ${en}.`,
-        secondEs: `¿Tienes ${article} ${es}?`,
-        secondEn: `Do you have a ${en}?`
+        spanish,
+        english,
+        root: cleanLookupText(obj.root || ''),
+        meaningNote: cleanLookupText(obj.literal || obj.meaningNote || 'Gemini lookup card'),
+        acceptedSpanish: cleanArray(obj.acceptedSpanish, spanish),
+        acceptedEnglish: cleanArray(obj.acceptedEnglish, english),
+        sentences
       };
+    }
+    function buildLookupCardFromGemini(payload) {
+      const first = payload.sentences[0] || { spanish: payload.spanish, english: payload.english };
+      const second = payload.sentences[1] || first;
+      const englishAnswers = cleanArray(payload.acceptedEnglish, payload.english);
+      if (!englishAnswers.includes(payload.english)) englishAnswers.unshift(payload.english);
+      return {
+        id: makeId(payload.spanish),
+        category: 'Custom Added Words',
+        priority: 'high',
+        base: payload.root || null,
+        spanish: cleanArray(payload.acceptedSpanish, payload.spanish),
+        english: englishAnswers,
+        literal: payload.meaningNote || 'Gemini lookup card',
+        sentences: payload.sentences,
+        exampleSpanish: first.spanish,
+        exampleEnglish: first.english,
+        firstPersonSpanish: first.spanish,
+        firstPersonEnglish: first.english,
+        secondPersonSpanish: second.spanish,
+        secondPersonEnglish: second.english,
+        custom: true,
+        lookupSource: 'gemini',
+        createdAt: new Date().toISOString()
+      };
+    }
+    function buildLookupCard(spanish, english, ex, source='translation', root='', note='Custom lookup card', acceptedSpanish=null, acceptedEnglish=null) {
+      return {
+        id: makeId(spanish),
+        category: 'Custom Added Words',
+        priority: 'high',
+        base: root || null,
+        spanish: cleanArray(acceptedSpanish, spanish),
+        english: cleanArray(acceptedEnglish, english),
+        literal: note || (source === 'gemini' ? 'Gemini lookup card' : 'Custom lookup card'),
+        exampleSpanish: ex.exampleSpanish || ex.firstEs || ex.firstPersonSpanish,
+        exampleEnglish: ex.exampleEnglish || ex.firstEn || ex.firstPersonEnglish,
+        firstPersonSpanish: ex.firstPersonSpanish || ex.firstEs,
+        firstPersonEnglish: ex.firstPersonEnglish || ex.firstEn,
+        secondPersonSpanish: ex.secondPersonSpanish || ex.secondEs,
+        secondPersonEnglish: ex.secondPersonEnglish || ex.secondEn,
+        sentences: ex.sentences || null,
+        custom: true,
+        lookupSource: source,
+        createdAt: new Date().toISOString()
+      };
+    }
+    function renderSentenceList(c) {
+      const rows = Array.isArray(c.sentences) ? c.sentences : [];
+      if (!rows.length) return '';
+      return `<div class="example"><strong>Sentences:</strong><br>${rows.map((s, i) => `${i + 1}. ${escapeHtml(s.spanish)}<br><span class="muted">${escapeHtml(s.english)}</span>`).join('<br>')}</div>`;
+    }
+    function previewLookupCard(card) {
+      state.pendingLookupCard = card;
+      const result = $('lookupResult');
+      result.className = 'feedback close';
+      result.style.display = 'block';
+      const sentences = renderSentenceList(card);
+      result.innerHTML = `<strong>Preview only — not added yet.</strong><br>${escapeHtml(displaySpanish(card))} = ${escapeHtml(displayEnglish(card))}<br><span class="muted">Note: ${escapeHtml(card.literal || '—')}</span>${sentences || `<br><span class="muted">First: ${escapeHtml(card.firstPersonSpanish)} → ${escapeHtml(card.firstPersonEnglish)}<br>Second: ${escapeHtml(card.secondPersonSpanish)} → ${escapeHtml(card.secondPersonEnglish)}</span>`}<div class="actions" style="justify-content:flex-start;margin-top:12px;"><button class="btn primary" id="confirmAddLookup">Add this card</button></div>`;
+      $('confirmAddLookup').addEventListener('click', confirmAddLookupCard);
     }
     async function lookupAndAddFromInput(source='lookup') {
       const inputEl = source === 'search' ? $('search') : $('lookupInput');
@@ -886,36 +998,14 @@
       const direction = $('lookupLang').value;
       result.style.display = 'block';
       result.className = 'feedback close';
-      result.innerHTML = 'Looking it up online...';
+      result.innerHTML = 'Asking Gemini Flash for meaning + natural sentences...';
       try {
-        const translated = await translateText(raw, direction);
-        const spanish = cleanLookupText(direction === 'es-en' ? raw : translated);
-        const english = cleanLookupText(direction === 'es-en' ? translated : raw);
-        const ex = generatedExamples(spanish, english, direction);
-        const card = {
-          id: makeId(spanish),
-          category: 'Custom Added Words',
-          priority: 'high',
-          base: null,
-          spanish: [spanish],
-          english: [english],
-          literal: 'Custom lookup card',
-          exampleSpanish: ex.firstEs,
-          exampleEnglish: ex.firstEn,
-          firstPersonSpanish: ex.firstEs,
-          firstPersonEnglish: ex.firstEn,
-          secondPersonSpanish: ex.secondEs,
-          secondPersonEnglish: ex.secondEn,
-          custom: true,
-          createdAt: new Date().toISOString()
-        };
-        state.pendingLookupCard = card;
-        result.className = 'feedback close';
-        result.innerHTML = `<strong>Preview only — not added yet.</strong><br>${escapeHtml(spanish)} = ${escapeHtml(english)}<br><span class="muted">First: ${escapeHtml(ex.firstEs)} → ${escapeHtml(ex.firstEn)}<br>Second: ${escapeHtml(ex.secondEs)} → ${escapeHtml(ex.secondEn)}</span><div class="actions" style="justify-content:flex-start;margin-top:12px;"><button class="btn primary" id="confirmAddLookup">Add this card</button></div>`;
-        $('confirmAddLookup').addEventListener('click', confirmAddLookupCard);
+        const payload = await lookupWithGemini(raw, direction);
+        previewLookupCard(buildLookupCardFromGemini(payload));
       } catch (err) {
+        state.pendingLookupCard = null;
         result.className = 'feedback wrong';
-        result.innerHTML = `<strong>Online lookup failed.</strong><br>You can still add it manually by trying again later. Error: ${escapeHtml(err.message || err)}`;
+        result.innerHTML = `<strong>Gemini lookup failed.</strong><br>${escapeHtml(err.message || err)}<br><span class="muted">No card was generated, so the dashboard will not save wrong template sentences.</span>`;
       }
     }
     function confirmAddLookupCard() {
@@ -937,7 +1027,8 @@
       }
       list.innerHTML = state.customCards.map(c => {
         const pe = personExamples(c);
-        return `<article class="card"><span class="pill">Custom</span><div class="spanish">${escapeHtml(displaySpanish(c))}</div><div class="english">${escapeHtml(displayEnglish(c))}</div><div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div><button class="btn bad small" data-delete-custom="${escapeHtml(c.id)}">Delete</button></article>`;
+        const examples = renderSentenceList(c) || `<div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div>`;
+        return `<article class="card"><span class="pill">Custom</span><div class="spanish">${escapeHtml(displaySpanish(c))}</div><div class="english">${escapeHtml(displayEnglish(c))}</div><div class="literal">Literal/note: ${escapeHtml(c.literal || '—')}</div>${examples}<button class="btn bad small" data-delete-custom="${escapeHtml(c.id)}">Delete</button></article>`;
       }).join('');
       list.querySelectorAll('[data-delete-custom]').forEach(btn => btn.addEventListener('click', () => {
         state.customCards = state.customCards.filter(c => c.id !== btn.dataset.deleteCustom);
@@ -979,6 +1070,7 @@
       $('shuffleStudy').addEventListener('click', () => { state.studyOrder = shuffle(state.studyOrder); renderStudy(); });
       $('lookupFromSearch').addEventListener('click', () => lookupAndAddFromInput('search'));
       $('lookupWordBtn').addEventListener('click', () => lookupAndAddFromInput('lookup'));
+      if ($('saveGeminiSettings')) $('saveGeminiSettings').addEventListener('click', saveGeminiSettings);
       $('lookupInput').addEventListener('keydown', e => { if (e.key === 'Enter') lookupAndAddFromInput('lookup'); });
       $('revealRandom').addEventListener('click', () => { state.randomRevealed = true; renderRandom(); });
       $('nextRandom').addEventListener('click', newRandom);
@@ -1009,7 +1101,7 @@
         URL.revokeObjectURL(url);
       });
     }
-    refreshStudyOrder(); initFilters(); bind(); renderStudy(); renderCustomCards(); updateStats();
+    refreshStudyOrder(); initFilters(); hydrateGeminiSettings(); bind(); renderStudy(); renderCustomCards(); updateStats();
   </script>
 </body>
 </html>
