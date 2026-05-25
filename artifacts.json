@@ -1,5 +1,26 @@
 [
   {
+    "id": "2026-05-25-trading-ideas-dashboard",
+    "title": "Indian Trading Ideas Dashboard",
+    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
+    "category": "trading",
+    "tags": [
+      "trading",
+      "india",
+      "backtests",
+      "systematic"
+    ],
+    "status": "dashboard",
+    "created_at": "2026-05-25T20:14:41.886576+05:30",
+    "updated_at": "2026-05-25T20:14:41.886576+05:30",
+    "expires_at": null,
+    "importance": null,
+    "superseded_by": null,
+    "path": "trading/trading-ideas-dashboard.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
+    "template": null
+  },
+  {
     "id": "2026-05-25-spanish-crash-course-dashboard",
     "title": "Spanish crash-course flashcard dashboard",
     "summary": "Interactive Spanish travel crash-course dashboard with 89 speakable chunks, first/second-person examples, preview-before-add word lookup, cleaned translations, custom card saving, random flashcards, fuzzy quiz, and local progress tracking.",
@@ -22,27 +43,6 @@
     "template": null,
     "temp": false,
     "retention_days": null
-  },
-  {
-    "id": "2026-05-24-trading-ideas-dashboard",
-    "title": "Indian Trading Ideas Dashboard",
-    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
-    "category": "trading",
-    "tags": [
-      "trading",
-      "india",
-      "backtests",
-      "systematic"
-    ],
-    "status": "dashboard",
-    "created_at": "2026-05-24T19:19:16.791078+05:30",
-    "updated_at": "2026-05-24T19:19:16.791078+05:30",
-    "expires_at": null,
-    "importance": null,
-    "superseded_by": null,
-    "path": "trading/trading-ideas-dashboard.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
-    "template": null
   },
   {
     "id": "2026-05-23-groww-to-kotak-neo-demat-transfer",
