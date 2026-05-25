@@ -255,11 +255,11 @@
             <button class="btn primary" id="lookupWordBtn">Lookup / Add</button>
           </div>
           <div id="geminiKeyHelp" class="feedback close" style="display:block;margin-top:14px;">
-            <strong>Gemini key required once:</strong> paste your Gemini API key below, keep model as <code>gemini-2.5-flash</code>, then click Save. The key stays only in this browser’s localStorage; it is not committed into this public GitHub Pages file.
+            <strong>Gemini key required once:</strong> paste your Gemini API key below, keep model as <code>gemini-3.5-flash</code>, then click Save. The key stays only in this browser’s localStorage; it is not committed into this public GitHub Pages file.
           </div>
           <div id="geminiControls" class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
             <input id="geminiApiKey" type="password" placeholder="Paste Gemini API key here — saved only in this browser" autocomplete="off" />
-            <input id="geminiModel" placeholder="gemini-2.5-flash" />
+            <input id="geminiModel" placeholder="gemini-3.5-flash" />
             <button class="btn" id="saveGeminiSettings">Save key</button>
           </div>
           <div id="geminiSavedBar" class="feedback correct" style="display:none;margin-top:14px;">
@@ -528,9 +528,10 @@
     function loadGeminiSettings() {
       try {
         const saved = JSON.parse(localStorage.getItem('spanishCrashGeminiSettings') || '{}');
-        return { apiKey: saved.apiKey || '', model: saved.model || 'gemini-2.5-flash' };
+        const savedModel = saved.model === 'gemini-2.5-flash' ? 'gemini-3.5-flash' : saved.model;
+        return { apiKey: saved.apiKey || '', model: savedModel || 'gemini-3.5-flash' };
       } catch {
-        return { apiKey: '', model: 'gemini-2.5-flash' };
+        return { apiKey: '', model: 'gemini-3.5-flash' };
       }
     }
     function setGeminiSettingsVisible(visible) {
@@ -542,7 +543,7 @@
     function saveGeminiSettings() {
       state.gemini = {
         apiKey: $('geminiApiKey').value.trim(),
-        model: ($('geminiModel').value.trim() || 'gemini-2.5-flash')
+        model: ($('geminiModel').value.trim() || 'gemini-3.5-flash')
       };
       localStorage.setItem('spanishCrashGeminiSettings', JSON.stringify(state.gemini));
       if (state.gemini.apiKey) setGeminiSettingsVisible(false);
@@ -554,7 +555,7 @@
     function hydrateGeminiSettings() {
       if (!$('geminiApiKey')) return;
       $('geminiApiKey').value = state.gemini.apiKey || '';
-      $('geminiModel').value = state.gemini.model || 'gemini-2.5-flash';
+      $('geminiModel').value = state.gemini.model || 'gemini-3.5-flash';
       setGeminiSettingsVisible(!state.gemini.apiKey);
     }
     function loadCustomCards() {
@@ -899,7 +900,7 @@ JSON schema exactly:
     async function lookupWithGemini(raw, direction) {
       const settings = state.gemini || loadGeminiSettings();
       if (!settings.apiKey) throw new Error('Add a Gemini API key in Gemini lookup settings first. I disabled the old fake translation fallback because it was creating wrong meanings.');
-      const model = settings.model || 'gemini-2.5-flash';
+      const model = settings.model || 'gemini-3.5-flash';
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(settings.apiKey)}`;
       const res = await fetch(url, {
         method: 'POST',
