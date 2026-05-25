@@ -151,7 +151,7 @@
       <section class="hero">
         <div class="eyebrow">Spanish crash course · 3 weeks</div>
         <h1>Speakable Spanish, not dictionary Spanish.</h1>
-        <p class="sub">A practical dashboard built around phrases and conjugated chunks you’ll actually use while travelling: <strong>tengo hambre</strong>, <strong>quiero esto</strong>, <strong>¿puedes repetir?</strong>. Root verbs are shown only as notes.</p>
+        <p class="sub">A practical dashboard built around phrases and conjugated chunks you’ll actually use while travelling: <strong>tengo hambre</strong>, <strong>quiero esto</strong>, <strong>¿puedes repetir?</strong>. Root verbs are shown only as notes. Every card includes one first-person and one second-person usage sentence.</p>
       </section>
       <aside class="stats-panel">
         <div class="eyebrow">Your progress</div>
@@ -357,6 +357,112 @@
       {id:'estas-libre-manana', category:'Social / Meeting People', priority:'high', base:'estar', spanish:['¿Estás libre mañana?','Estas libre manana','Estás libre mañana'], english:['Are you free tomorrow','Are you available tomorrow'], literal:'Are you free tomorrow?', exampleSpanish:'¿Estás libre mañana?', exampleEnglish:'Are you free tomorrow?'}
     ];
 
+    // Every card gets two usage sentences: first person (I/we) and second person (you).
+    // This keeps the deck practical: you learn both how to say something yourself and how to ask/understand it from someone else.
+    const personExampleData = {
+      'no-entiendo': ['No entiendo esta frase.', 'I don’t understand this phrase.', '¿Entiendes esta frase?', 'Do you understand this phrase?'],
+      'mas-despacio': ['Necesito hablar más despacio.', 'I need to speak more slowly.', '¿Puedes hablar más despacio?', 'Can you speak more slowly?'],
+      'hablas-ingles': ['Yo hablo inglés.', 'I speak English.', '¿Hablas inglés?', 'Do you speak English?'],
+      'aprendiendo-espanol': ['Estoy aprendiendo español.', 'I’m learning Spanish.', '¿Estás aprendiendo español?', 'Are you learning Spanish?'],
+      'que-significa-eso': ['No sé qué significa eso.', 'I don’t know what that means.', '¿Sabes qué significa eso?', 'Do you know what that means?'],
+      'puedes-repetir': ['Puedo repetir la frase.', 'I can repeat the phrase.', '¿Puedes repetir?', 'Can you repeat?'],
+      'quiero-esto': ['Quiero esto.', 'I want this.', '¿Quieres esto?', 'Do you want this?'],
+      'donde-esta': ['Estoy buscando el baño.', 'I’m looking for the bathroom.', '¿Dónde está el baño?', 'Where is the bathroom?'],
+      'cuanto-cuesta': ['Quiero saber cuánto cuesta.', 'I want to know how much it costs.', '¿Cuánto cuesta?', 'How much does it cost?'],
+      'necesito-ayuda': ['Necesito ayuda.', 'I need help.', '¿Necesitas ayuda?', 'Do you need help?'],
+      'tengo-hambre': ['Tengo hambre.', 'I’m hungry.', '¿Tienes hambre?', 'Are you hungry?'],
+      'tengo-sueno': ['Tengo sueño.', 'I’m sleepy.', '¿Tienes sueño?', 'Are you sleepy?'],
+      'tengo-sed': ['Tengo sed.', 'I’m thirsty.', '¿Tienes sed?', 'Are you thirsty?'],
+      'vamos': ['Voy contigo.', 'I’m going with you.', '¿Vamos?', 'Shall we go?'],
+      'no-se': ['No sé.', 'I don’t know.', '¿Sabes?', 'Do you know?'],
+      'tengo': ['Tengo una reserva.', 'I have a reservation.', '¿Tienes una reserva?', 'Do you have a reservation?'],
+      'tienes': ['Tengo agua.', 'I have water.', '¿Tienes agua?', 'Do you have water?'],
+      'quiero': ['Quiero agua.', 'I want water.', '¿Quieres agua?', 'Do you want water?'],
+      'quieres': ['Quiero café.', 'I want coffee.', '¿Quieres café?', 'Do you want coffee?'],
+      'quisiera': ['Quisiera una mesa.', 'I would like a table.', '¿Quisieras una mesa?', 'Would you like a table?'],
+      'puedo': ['Puedo pagar ahora.', 'I can pay now.', '¿Puedes pagar ahora?', 'Can you pay now?'],
+      'no-puedo': ['No puedo ahora.', 'I can’t right now.', '¿No puedes ahora?', 'Can’t you right now?'],
+      'puedes-ayudarme': ['Puedo ayudarte.', 'I can help you.', '¿Puedes ayudarme?', 'Can you help me?'],
+      'voy': ['Voy al centro.', 'I’m going downtown.', '¿Vas al centro?', 'Are you going downtown?'],
+      'voy-al-centro': ['Voy al centro.', 'I’m going downtown.', '¿Vas al centro?', 'Are you going downtown?'],
+      'vienes-conmigo': ['Vengo contigo.', 'I’m coming with you.', '¿Vienes conmigo?', 'Are you coming with me?'],
+      'que-haces': ['Hago una reserva.', 'I’m making a reservation.', '¿Qué haces?', 'What are you doing?'],
+      'estoy': ['Estoy aquí.', 'I’m here.', '¿Estás aquí?', 'Are you here?'],
+      'estoy-cansado': ['Estoy cansado.', 'I’m tired.', '¿Estás cansado?', 'Are you tired?'],
+      'estoy-bien': ['Estoy bien.', 'I’m good.', '¿Estás bien?', 'Are you okay?'],
+      'soy-de-india': ['Soy de India.', 'I’m from India.', '¿Eres de India?', 'Are you from India?'],
+      'hablo-un-poco': ['Hablo un poco de español.', 'I speak a little Spanish.', '¿Hablas español?', 'Do you speak Spanish?'],
+      'entiendo': ['Entiendo un poco.', 'I understand a little.', '¿Entiendes?', 'Do you understand?'],
+      'me-gusta': ['Me gusta este lugar.', 'I like this place.', '¿Te gusta este lugar?', 'Do you like this place?'],
+      'vamos-a-comer': ['Voy a comer ahora.', 'I’m going to eat now.', '¿Vas a comer ahora?', 'Are you going to eat now?'],
+      'voy-a-tomar-cafe': ['Voy a tomar café.', 'I’m going to drink coffee.', '¿Vas a tomar café?', 'Are you going to drink coffee?'],
+      'vivo-en': ['Vivo en Delhi.', 'I live in Delhi.', '¿Dónde vives?', 'Where do you live?'],
+      'cuando-llegas': ['Llego mañana.', 'I arrive tomorrow.', '¿Cuándo llegas?', 'When do you arrive?'],
+      'vamos-a-salir': ['Voy a salir esta noche.', 'I’m going out tonight.', '¿Vas a salir esta noche?', 'Are you going out tonight?'],
+      'busco-un-hotel': ['Busco un hotel.', 'I’m looking for a hotel.', '¿Buscas un hotel?', 'Are you looking for a hotel?'],
+      'voy-a-pagar': ['Voy a pagar.', 'I’ll pay.', '¿Vas a pagar?', 'Are you going to pay?'],
+      'si-claro': ['Sí, claro, puedo ir.', 'Yes, of course, I can go.', '¿Sí, claro?', 'Yes, of course?'],
+      'no-quiero': ['No quiero tequila.', 'I don’t want tequila.', '¿No quieres tequila?', 'Don’t you want tequila?'],
+      'por-favor': ['Quiero agua, por favor.', 'I want water, please.', '¿Puedes ayudarme, por favor?', 'Can you help me, please?'],
+      'gracias': ['Muchas gracias por tu ayuda.', 'Thank you very much for your help.', '¿Puedes decir gracias?', 'Can you say thank you?'],
+      'de-nada': ['Digo “de nada”.', 'I say “you’re welcome”.', 'Tú dices “de nada”.', 'You say “you’re welcome”.'],
+      'perdon': ['Perdón, tengo una pregunta.', 'Excuse me, I have a question.', 'Perdón, ¿tienes un minuto?', 'Excuse me, do you have a minute?'],
+      'hola-como-estas': ['Hola, estoy bien.', 'Hello, I’m good.', 'Hola, ¿cómo estás?', 'Hello, how are you?'],
+      'adios-amigo': ['Adiós, amigo; me voy.', 'Goodbye friend; I’m leaving.', 'Adiós, amigo; ¿te vas?', 'Goodbye friend; are you leaving?'],
+      'me-siento-mal': ['Me siento mal.', 'I feel bad.', '¿Te sientes mal?', 'Do you feel bad?'],
+      'estoy-aqui': ['Estoy aquí.', 'I’m here.', '¿Estás aquí?', 'Are you here?'],
+      'vamos-alla': ['Voy allá.', 'I’m going there.', '¿Vas allá?', 'Are you going there?'],
+      'no-ahora': ['No puedo ahora.', 'I can’t now.', '¿No puedes ahora?', 'Can’t you now?'],
+      'despues-hablamos': ['Después hablamos.', 'We’ll talk later.', '¿Después hablamos?', 'Shall we talk later?'],
+      'hoy-estoy-ocupado': ['Hoy estoy ocupado.', 'Today I’m busy.', '¿Hoy estás ocupado?', 'Are you busy today?'],
+      'manana-voy': ['Mañana voy.', 'I’m going tomorrow.', '¿Mañana vas?', 'Are you going tomorrow?'],
+      'llegue-ayer': ['Llegué ayer.', 'I arrived yesterday.', '¿Llegaste ayer?', 'Did you arrive yesterday?'],
+      'yo-tambien': ['Yo también quiero ir.', 'I also want to go.', '¿Tú también quieres ir?', 'Do you also want to go?'],
+      'que': ['¿Qué hago?', 'What do I do?', '¿Qué haces?', 'What are you doing?'],
+      'donde': ['¿Dónde estoy?', 'Where am I?', '¿Dónde estás?', 'Where are you?'],
+      'cuando': ['¿Cuándo salgo?', 'When do I leave?', '¿Cuándo sales?', 'When do you leave?'],
+      'quien': ['¿Quién soy?', 'Who am I?', '¿Quién eres?', 'Who are you?'],
+      'como': ['¿Cómo estoy?', 'How am I?', '¿Cómo estás?', 'How are you?'],
+      'cuanto': ['¿Cuánto pago?', 'How much do I pay?', '¿Cuánto pagas?', 'How much do you pay?'],
+      'por-que': ['¿Por qué voy?', 'Why am I going?', '¿Por qué vas?', 'Why are you going?'],
+      'donde-bano': ['Necesito el baño.', 'I need the bathroom.', '¿Dónde está el baño?', 'Where is the bathroom?'],
+      'quiero-agua': ['Quiero agua.', 'I want water.', '¿Quieres agua?', 'Do you want water?'],
+      'la-comida-esta-buena': ['Creo que la comida está buena.', 'I think the food is good.', '¿Crees que la comida está buena?', 'Do you think the food is good?'],
+      'una-cerveza': ['Quiero una cerveza, por favor.', 'I want a beer, please.', '¿Quieres una cerveza?', 'Do you want a beer?'],
+      'la-cuenta': ['Quiero la cuenta, por favor.', 'I want the bill, please.', '¿Quieres la cuenta?', 'Do you want the bill?'],
+      'necesito-habitacion': ['Necesito una habitación.', 'I need a room.', '¿Necesitas una habitación?', 'Do you need a room?'],
+      'que-calle-es': ['Quiero saber qué calle es.', 'I want to know what street this is.', '¿Sabes qué calle es?', 'Do you know what street this is?'],
+      'no-tengo-dinero': ['No tengo dinero.', 'I don’t have money.', '¿Tienes dinero?', 'Do you have money?'],
+      'aceptan-tarjeta': ['Quiero pagar con tarjeta.', 'I want to pay by card.', '¿Aceptan tarjeta?', 'Do you accept card?'],
+      'solo-efectivo': ['Solo tengo efectivo.', 'I only have cash.', '¿Tienes efectivo?', 'Do you have cash?'],
+      'necesito-taxi': ['Necesito un taxi.', 'I need a taxi.', '¿Necesitas un taxi?', 'Do you need a taxi?'],
+      'voy-aeropuerto': ['Voy al aeropuerto.', 'I’m going to the airport.', '¿Vas al aeropuerto?', 'Are you going to the airport?'],
+      'donde-esta-bus': ['Busco el bus.', 'I’m looking for the bus.', '¿Dónde está el bus?', 'Where is the bus?'],
+      'cuanto-entrada': ['Quiero saber cuánto cuesta la entrada.', 'I want to know how much the ticket costs.', '¿Cuánto cuesta la entrada?', 'How much is the ticket?'],
+      'hola-amigo': ['Hola amigo, estoy aquí.', 'Hello friend, I’m here.', 'Hola amigo, ¿estás aquí?', 'Hello friend, are you here?'],
+      'gente-amable': ['Creo que la gente es amable.', 'I think the people are friendly.', '¿Crees que la gente es amable?', 'Do you think the people are friendly?'],
+      'hay-fiesta-hoy': ['Quiero saber si hay fiesta hoy.', 'I want to know if there is a party today.', '¿Hay fiesta hoy?', 'Is there a party today?'],
+      'quieres-bailar': ['Quiero bailar.', 'I want to dance.', '¿Quieres bailar?', 'Do you want to dance?'],
+      'es-divertido': ['Creo que es muy divertido.', 'I think it’s very fun.', '¿Crees que es divertido?', 'Do you think it’s fun?'],
+      'que-bonito-lugar': ['Creo que es un lugar bonito.', 'I think it’s a beautiful place.', '¿Crees que es un lugar bonito?', 'Do you think it’s a beautiful place?'],
+      'increible': ['Creo que es increíble.', 'I think it’s incredible.', '¿Crees que es increíble?', 'Do you think it’s incredible?'],
+      'tranquilo-aqui': ['Estoy tranquilo aquí.', 'I’m calm here.', '¿Estás tranquilo aquí?', 'Are you calm here?'],
+      'estoy-feliz': ['Estoy feliz.', 'I’m happy.', '¿Estás feliz?', 'Are you happy?'],
+      'estas-libre-manana': ['Estoy libre mañana.', 'I’m free tomorrow.', '¿Estás libre mañana?', 'Are you free tomorrow?']
+    };
+
+    function personExamples(c) {
+      const ex = personExampleData[c.id];
+      if (ex) return { firstEs: ex[0], firstEn: ex[1], secondEs: ex[2], secondEn: ex[3] };
+      return {
+        firstEs: c.exampleSpanish || displaySpanish(c),
+        firstEn: c.exampleEnglish || displayEnglish(c),
+        secondEs: c.exampleSpanish || displaySpanish(c),
+        secondEn: c.exampleEnglish || displayEnglish(c)
+      };
+    }
+
+
     const state = {
       studyOrder: [...cards],
       randomCard: null,
@@ -478,7 +584,7 @@
           <div class="spanish">${escapeHtml(displaySpanish(c))}</div>
           <div class="english">${escapeHtml(displayEnglish(c))}</div>
           <div class="literal">Literal/note: ${escapeHtml(c.literal || '—')}</div>
-          <div class="example"><strong>${escapeHtml(c.exampleSpanish || '')}</strong><br>${escapeHtml(c.exampleEnglish || '')}</div>
+          ${(() => { const pe = personExamples(c); return `<div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div>`; })()}
           <div class="meta">Root/reference: ${escapeHtml(c.base || '—')} · Accepted: ${c.spanish.length + c.english.length}</div>
         </article>`).join('');
     }
@@ -499,7 +605,8 @@
       $('randomDirection').textContent = esFirst ? 'Spanish → English' : 'English → Spanish';
       $('randomFront').textContent = esFirst ? displaySpanish(c) : displayEnglish(c);
       $('randomMeaning').textContent = esFirst ? displayEnglish(c) : displaySpanish(c);
-      $('randomExample').innerHTML = `<strong>${escapeHtml(c.exampleSpanish || '')}</strong><br>${escapeHtml(c.exampleEnglish || '')}`;
+      const pe = personExamples(c);
+      $('randomExample').innerHTML = `<strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}`;
       $('randomMeta').textContent = `Category: ${c.category} · Root/reference: ${c.base || '—'} · Literal: ${c.literal || '—'}`;
       $('randomBack').classList.toggle('hidden', !state.randomRevealed);
     }
@@ -525,11 +632,13 @@
       const esFirst = state.quizDirection === 'es-en';
       $('quizDirection').textContent = esFirst ? 'Spanish → English' : 'English → Spanish';
       $('quizPrompt').textContent = esFirst ? displaySpanish(c) : displayEnglish(c);
+      const pe = personExamples(c);
       $('quizDetails').innerHTML = `
         <div class="mini-row"><span>Category</span><strong>${escapeHtml(c.category)}</strong></div>
         <div class="mini-row"><span>Root/reference</span><strong>${escapeHtml(c.base || '—')}</strong></div>
         <div class="mini-row"><span>Literal/note</span><strong>${escapeHtml(c.literal || '—')}</strong></div>
-        <div class="mini-row"><span>Example</span><strong>${escapeHtml(c.exampleSpanish || '—')}</strong></div>`;
+        <div class="mini-row"><span>First person</span><strong>${escapeHtml(pe.firstEs)}<br><span class="muted">${escapeHtml(pe.firstEn)}</span></strong></div>
+        <div class="mini-row"><span>Second person</span><strong>${escapeHtml(pe.secondEs)}<br><span class="muted">${escapeHtml(pe.secondEn)}</span></strong></div>`;
     }
     function checkQuiz(showOnly=false) {
       const c = state.quizCard;
@@ -553,7 +662,7 @@
       saveProgress();
       fb.className = `feedback ${result.status}`;
       const label = result.status === 'correct' ? '✅ Correct' : result.status === 'close' ? '🟡 Close enough' : '❌ Not quite';
-      fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(c.exampleSpanish || '')} → ${escapeHtml(c.exampleEnglish || '')}</span>`;
+      fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(personExamples(c).firstEs)} → ${escapeHtml(personExamples(c).firstEn)} · ${escapeHtml(personExamples(c).secondEs)} → ${escapeHtml(personExamples(c).secondEn)}</span>`;
       state.quizAnswered = true;
     }
     function updateStats() {

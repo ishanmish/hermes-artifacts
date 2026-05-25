@@ -71,11 +71,22 @@
   </section>
 
   <section class="section">
-    <h2>Charges and tax notes</h2>
+    <h2>Charges, pledge, margin, and tax notes</h2>
     <div class="callout">
       <p><strong>Charges:</strong> Expect Groww/CDSL/DP debit charges, commonly per ISIN or per instruction. Check Groww’s latest DP tariff before executing; receiving shares at Kotak is often free but should still be confirmed.</p>
+      <p><strong>Pledged shares / collateral margin:</strong> If shares are pledged at Groww, unpledge them first. The pledge and F&O collateral margin do not travel with the shares. After the shares are credited to Kotak, pledge them again at Kotak if you want collateral margin there.</p>
+      <p><strong>Normal concern:</strong> Yes — this is a common concern for people who use long-term holdings as collateral for F&O / option selling. The practical risk is the gap between unpledging at Groww, transfer completion, and re-pledging at Kotak, during which collateral margin may be unavailable.</p>
       <p><strong>Tax:</strong> A transfer between your own demat accounts under the same PAN is generally not a sale. Your original purchase date and cost should carry forward. Kotak may not automatically know your old cost basis, so manually fix/import acquisition values if the platform allows.</p>
-      <p><strong>Records to preserve:</strong> Groww holdings before transfer, contract notes, CDSL transfer acknowledgement, Kotak holdings after transfer, and any broker support emails.</p>
+      <p><strong>Records to preserve:</strong> Groww holdings before transfer, contract notes, CDSL transfer acknowledgement, Kotak holdings after transfer, pledge/unpledge confirmations, and any broker support emails.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Pledged holdings checklist</h2>
+    <div class="grid">
+      <article class="card"><h3>Before transfer</h3><ul><li>Check whether any Groww holdings are pledged or blocked for margin.</li><li>Unpledge the holdings you want to transfer.</li><li>Wait until they show as free / unpledged in demat.</li></ul></article>
+      <article class="card"><h3>During transfer</h3><ul><li>Assume collateral margin is unavailable for those shares.</li><li>Avoid relying on that collateral for open F&O positions during the transfer window.</li><li>Keep extra cash / alternate collateral if needed.</li></ul></article>
+      <article class="card"><h3>After credit at Kotak</h3><ul><li>Verify credited quantity and ISIN in Kotak holdings.</li><li>Pledge again from Kotak Neo if you need F&O collateral.</li><li>Confirm margin appears in Kotak before using it for trades.</li></ul></article>
     </div>
   </section>
 
