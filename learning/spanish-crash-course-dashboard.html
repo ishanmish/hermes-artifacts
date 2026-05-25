@@ -493,6 +493,7 @@
 
     const state = {
       customCards: loadCustomCards(),
+      pendingLookupCard: null,
       studyOrder: [],
       randomCard: null,
       randomDirection: 'es-en',
@@ -512,7 +513,12 @@
     }
     function saveProgress() { localStorage.setItem('spanishCrashProgress', JSON.stringify(state.progress)); updateStats(); }
     function loadCustomCards() {
-      try { return JSON.parse(localStorage.getItem('spanishCrashCustomCards') || '[]'); }
+      try {
+        const raw = JSON.parse(localStorage.getItem('spanishCrashCustomCards') || '[]');
+        const cleaned = raw.filter(c => !JSON.stringify(c).includes('<g id='));
+        if (cleaned.length !== raw.length) localStorage.setItem('spanishCrashCustomCards', JSON.stringify(cleaned));
+        return cleaned;
+      }
       catch { return []; }
     }
     function saveCustomCards() {
@@ -722,12 +728,35 @@
       fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(personExamples(c).firstEs)} → ${escapeHtml(personExamples(c).firstEn)} · ${escapeHtml(personExamples(c).secondEs)} → ${escapeHtml(personExamples(c).secondEn)}</span>`;
       state.quizAnswered = true;
     }
+    function cleanLookupText(text) {
+      const textarea = document.createElement('textarea');
+      textarea.innerHTML = String(text || '');
+      return textarea.value
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    function hardcodedTranslation(text, langPair) {
+      const n = normalizeText(text);
+      const map = {
+        'en-es:because': 'porque',
+        'en-es:why': 'por qué',
+        'es-en:porque': 'because',
+        'es-en:por que': 'why',
+        'es-en:por qué': 'why'
+      };
+      return map[`${langPair}:${n}`] || null;
+    }
     async function translateText(text, langPair) {
+      const forced = hardcodedTranslation(text, langPair);
+      if (forced) return forced;
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair === 'es-en' ? 'es|en' : 'en|es'}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error('Translation lookup failed');
       const data = await res.json();
-      return data?.responseData?.translatedText || '';
+      const candidate = cleanLookupText(data?.responseData?.translatedText || '');
+      if (!candidate || candidate.includes('<') || candidate.includes('>')) throw new Error('Bad translation response');
+      return candidate;
     }
     function generatedExamples(spanish, english, direction) {
       const es = spanish.trim();
@@ -767,8 +796,8 @@
       result.innerHTML = 'Looking it up online...';
       try {
         const translated = await translateText(raw, direction);
-        const spanish = direction === 'es-en' ? raw : translated;
-        const english = direction === 'es-en' ? translated : raw;
+        const spanish = cleanLookupText(direction === 'es-en' ? raw : translated);
+        const english = cleanLookupText(direction === 'es-en' ? translated : raw);
         const ex = generatedExamples(spanish, english, direction);
         const card = {
           id: makeId(spanish),
@@ -787,14 +816,24 @@
           custom: true,
           createdAt: new Date().toISOString()
         };
-        state.customCards.unshift(card);
-        saveCustomCards();
-        result.className = 'feedback correct';
-        result.innerHTML = `<strong>Added to dashboard.</strong><br>${escapeHtml(spanish)} = ${escapeHtml(english)}<br><span class="muted">First: ${escapeHtml(ex.firstEs)} → ${escapeHtml(ex.firstEn)}<br>Second: ${escapeHtml(ex.secondEs)} → ${escapeHtml(ex.secondEn)}</span>`;
+        state.pendingLookupCard = card;
+        result.className = 'feedback close';
+        result.innerHTML = `<strong>Preview only — not added yet.</strong><br>${escapeHtml(spanish)} = ${escapeHtml(english)}<br><span class="muted">First: ${escapeHtml(ex.firstEs)} → ${escapeHtml(ex.firstEn)}<br>Second: ${escapeHtml(ex.secondEs)} → ${escapeHtml(ex.secondEn)}</span><div class="actions" style="justify-content:flex-start;margin-top:12px;"><button class="btn primary" id="confirmAddLookup">Add this card</button></div>`;
+        $('confirmAddLookup').addEventListener('click', confirmAddLookupCard);
       } catch (err) {
         result.className = 'feedback wrong';
         result.innerHTML = `<strong>Online lookup failed.</strong><br>You can still add it manually by trying again later. Error: ${escapeHtml(err.message || err)}`;
       }
+    }
+    function confirmAddLookupCard() {
+      if (!state.pendingLookupCard) return;
+      state.customCards.unshift(state.pendingLookupCard);
+      state.pendingLookupCard = null;
+      saveCustomCards();
+      const result = $('lookupResult');
+      result.className = 'feedback correct';
+      result.style.display = 'block';
+      result.innerHTML = '<strong>Added to dashboard.</strong>';
     }
     function renderCustomCards() {
       const list = $('customCardsList');

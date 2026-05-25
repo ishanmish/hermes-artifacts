@@ -2,7 +2,7 @@
   {
     "id": "2026-05-25-spanish-crash-course-dashboard",
     "title": "Spanish crash-course flashcard dashboard",
-    "summary": "Interactive Spanish travel crash-course dashboard with 89 speakable chunks, first-person and second-person usage sentences, search-missing-word online lookup, custom card saving, random flashcards, fuzzy bidirectional quiz, and local progress tracking.",
+    "summary": "Interactive Spanish travel crash-course dashboard with 89 speakable chunks, first/second-person examples, preview-before-add word lookup, cleaned translations, custom card saving, random flashcards, fuzzy quiz, and local progress tracking.",
     "category": "learning",
     "tags": [
       "spanish",
@@ -13,7 +13,7 @@
     ],
     "status": "dashboard",
     "created_at": "2026-05-25T10:03:38+05:30",
-    "updated_at": "2026-05-25T10:24:11+05:30",
+    "updated_at": "2026-05-25T10:34:22+05:30",
     "expires_at": null,
     "importance": "reference",
     "superseded_by": null,
