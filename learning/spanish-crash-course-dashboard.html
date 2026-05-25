@@ -168,6 +168,7 @@
       <button class="tab-btn active" data-tab="study">Study</button>
       <button class="tab-btn" data-tab="random">Random Cards</button>
       <button class="tab-btn" data-tab="quiz">Flashcard Game</button>
+      <button class="tab-btn" data-tab="lookup">Add / Lookup Word</button>
       <button class="tab-btn" data-tab="stats">Stats</button>
     </nav>
 
@@ -185,6 +186,10 @@
           <button class="btn primary" id="shuffleStudy">Shuffle</button>
         </div>
         <div class="panel"><span id="cardCount"></span> · Tip: focus on “Very high” first for the crash course.</div>
+        <div id="missingSearchPanel" class="panel hidden">
+          <strong>No exact card found.</strong> Search online and add it to your dashboard:
+          <div class="actions" style="justify-content:flex-start;margin-top:10px;"><button class="btn primary" id="lookupFromSearch">Lookup this word</button></div>
+        </div>
         <div id="cardsGrid" class="cards-grid"></div>
       </section>
 
@@ -236,10 +241,32 @@
         </div>
       </section>
 
+      <section id="lookup" class="tab">
+        <div class="panel">
+          <div class="eyebrow">Add words you find outside</div>
+          <h2>Lookup a Spanish word or phrase</h2>
+          <p class="muted">Type a Spanish word/phrase. If it is already in the deck, it shows the existing cards. If not, the page pulls an English translation online, generates first-person and second-person usage examples, and saves it as a custom card in this browser.</p>
+          <div class="controls" style="grid-template-columns:minmax(200px,1fr) 180px 180px;">
+            <input id="lookupInput" placeholder="e.g. playa, una mesa, caminar" />
+            <select id="lookupLang">
+              <option value="es-en">Spanish → English</option>
+              <option value="en-es">English → Spanish</option>
+            </select>
+            <button class="btn primary" id="lookupWordBtn">Lookup / Add</button>
+          </div>
+          <div id="lookupResult" class="feedback close" style="display:none;"></div>
+        </div>
+        <div class="panel">
+          <h2>Your custom cards</h2>
+          <div id="customCardsList" class="cards-grid"></div>
+        </div>
+      </section>
+
       <section id="stats" class="tab">
         <div class="panel">
           <div class="actions" style="justify-content:flex-start;margin-top:0;">
             <button class="btn bad" id="resetProgress">Reset progress</button>
+            <button class="btn bad" id="clearCustomCards">Clear custom cards</button>
             <button class="btn" id="exportProgress">Export progress JSON</button>
           </div>
         </div>
@@ -452,6 +479,7 @@
     };
 
     function personExamples(c) {
+      if (c.firstPersonSpanish || c.secondPersonSpanish) return { firstEs: c.firstPersonSpanish || c.exampleSpanish || displaySpanish(c), firstEn: c.firstPersonEnglish || c.exampleEnglish || displayEnglish(c), secondEs: c.secondPersonSpanish || c.exampleSpanish || displaySpanish(c), secondEn: c.secondPersonEnglish || c.exampleEnglish || displayEnglish(c) };
       const ex = personExampleData[c.id];
       if (ex) return { firstEs: ex[0], firstEn: ex[1], secondEs: ex[2], secondEn: ex[3] };
       return {
@@ -464,7 +492,8 @@
 
 
     const state = {
-      studyOrder: [...cards],
+      customCards: loadCustomCards(),
+      studyOrder: [],
       randomCard: null,
       randomDirection: 'es-en',
       randomRevealed: false,
@@ -482,6 +511,31 @@
       catch { return {}; }
     }
     function saveProgress() { localStorage.setItem('spanishCrashProgress', JSON.stringify(state.progress)); updateStats(); }
+    function loadCustomCards() {
+      try { return JSON.parse(localStorage.getItem('spanishCrashCustomCards') || '[]'); }
+      catch { return []; }
+    }
+    function saveCustomCards() {
+      localStorage.setItem('spanishCrashCustomCards', JSON.stringify(state.customCards));
+      refreshStudyOrder();
+      initFilters();
+      renderStudy();
+      renderCustomCards();
+      updateStats();
+    }
+    function allCards() { return [...cards, ...state.customCards]; }
+    function refreshStudyOrder() {
+      const byId = new Map(state.studyOrder.map(c => [c.id, c]));
+      state.studyOrder = allCards().map(c => byId.get(c.id) || c);
+    }
+    function makeId(text) {
+      return 'custom-' + normalizeText(text).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) + '-' + Date.now().toString(36);
+    }
+    function findMatchingCards(term) {
+      const q = normalizeText(term);
+      if (!q) return [];
+      return allCards().filter(c => normalizeText([c.category, c.base, ...c.spanish, ...c.english, c.literal, c.exampleSpanish, c.exampleEnglish].join(' ')).includes(q));
+    }
     function progressFor(id) {
       if (!state.progress[id]) state.progress[id] = {attempts:0, correct:0, close:0, wrong:0, known:false, difficult:false, lastSeen:null};
       return state.progress[id];
@@ -554,7 +608,7 @@
     }
     function weightedCard() {
       const pool = [];
-      for (const c of cards) {
+      for (const c of allCards()) {
         const p = progressFor(c.id);
         let w = priorityWeight[c.priority] || 1;
         if (!p.attempts) w += 5;
@@ -574,9 +628,12 @@
       const cat = $('categoryFilter').value;
       const pri = $('priorityFilter').value;
       const filtered = state.studyOrder.filter(c => {
-        const blob = normalizeText([c.category, c.priority, c.base, ...c.spanish, ...c.english, c.literal, c.exampleSpanish, c.exampleEnglish].join(' '));
+        const pe = personExamples(c);
+        const blob = normalizeText([c.category, c.priority, c.base, ...c.spanish, ...c.english, c.literal, c.exampleSpanish, c.exampleEnglish, pe.firstEs, pe.firstEn, pe.secondEs, pe.secondEn].join(' '));
         return (!q || blob.includes(q)) && (cat === 'all' || c.category === cat) && (pri === 'all' || c.priority === pri);
       });
+      const exactMatches = q ? findMatchingCards($('search').value) : [];
+      $('missingSearchPanel').classList.toggle('hidden', !q || exactMatches.length > 0 || filtered.length > 0);
       $('cardCount').textContent = `${filtered.length} cards`;
       $('cardsGrid').innerHTML = filtered.map(c => `
         <article class="card">
@@ -590,7 +647,7 @@
     }
     function escapeHtml(s) { return String(s || '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
     function initFilters() {
-      const cats = [...new Set(cards.map(c => c.category))];
+      const cats = [...new Set(allCards().map(c => c.category))];
       $('categoryFilter').innerHTML = '<option value="all">All categories</option>' + cats.map(c => `<option>${escapeHtml(c)}</option>`).join('');
     }
     function newRandom() {
@@ -665,6 +722,97 @@
       fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(personExamples(c).firstEs)} → ${escapeHtml(personExamples(c).firstEn)} · ${escapeHtml(personExamples(c).secondEs)} → ${escapeHtml(personExamples(c).secondEn)}</span>`;
       state.quizAnswered = true;
     }
+    async function translateText(text, langPair) {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair === 'es-en' ? 'es|en' : 'en|es'}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Translation lookup failed');
+      const data = await res.json();
+      return data?.responseData?.translatedText || '';
+    }
+    function generatedExamples(spanish, english, direction) {
+      const es = spanish.trim();
+      const en = english.trim();
+      if (direction === 'en-es') {
+        return {
+          firstEs: `Uso “${es}” en una frase.`,
+          firstEn: `I use “${en}” in a sentence.`,
+          secondEs: `¿Puedes usar “${es}” en una frase?`,
+          secondEn: `Can you use “${en}” in a sentence?`
+        };
+      }
+      return {
+        firstEs: `Uso “${es}” en una frase.`,
+        firstEn: `I use “${en}” in a sentence.`,
+        secondEs: `¿Puedes decir “${es}”?`,
+        secondEn: `Can you say “${en}”?`
+      };
+    }
+    async function lookupAndAddFromInput(source='lookup') {
+      const inputEl = source === 'search' ? $('search') : $('lookupInput');
+      const raw = inputEl.value.trim();
+      const result = $('lookupResult');
+      if (!raw) return;
+      switchTab('lookup');
+      $('lookupInput').value = raw;
+      const existing = findMatchingCards(raw);
+      if (existing.length) {
+        result.style.display = 'block';
+        result.className = 'feedback close';
+        result.innerHTML = `<strong>Already in deck.</strong><br>${existing.slice(0, 6).map(c => `${escapeHtml(displaySpanish(c))} = ${escapeHtml(displayEnglish(c))}`).join('<br>')}`;
+        return;
+      }
+      const direction = $('lookupLang').value;
+      result.style.display = 'block';
+      result.className = 'feedback close';
+      result.innerHTML = 'Looking it up online...';
+      try {
+        const translated = await translateText(raw, direction);
+        const spanish = direction === 'es-en' ? raw : translated;
+        const english = direction === 'es-en' ? translated : raw;
+        const ex = generatedExamples(spanish, english, direction);
+        const card = {
+          id: makeId(spanish),
+          category: 'Custom Added Words',
+          priority: 'high',
+          base: null,
+          spanish: [spanish],
+          english: [english],
+          literal: 'Custom lookup card',
+          exampleSpanish: ex.firstEs,
+          exampleEnglish: ex.firstEn,
+          firstPersonSpanish: ex.firstEs,
+          firstPersonEnglish: ex.firstEn,
+          secondPersonSpanish: ex.secondEs,
+          secondPersonEnglish: ex.secondEn,
+          custom: true,
+          createdAt: new Date().toISOString()
+        };
+        state.customCards.unshift(card);
+        saveCustomCards();
+        result.className = 'feedback correct';
+        result.innerHTML = `<strong>Added to dashboard.</strong><br>${escapeHtml(spanish)} = ${escapeHtml(english)}<br><span class="muted">First: ${escapeHtml(ex.firstEs)} → ${escapeHtml(ex.firstEn)}<br>Second: ${escapeHtml(ex.secondEs)} → ${escapeHtml(ex.secondEn)}</span>`;
+      } catch (err) {
+        result.className = 'feedback wrong';
+        result.innerHTML = `<strong>Online lookup failed.</strong><br>You can still add it manually by trying again later. Error: ${escapeHtml(err.message || err)}`;
+      }
+    }
+    function renderCustomCards() {
+      const list = $('customCardsList');
+      if (!list) return;
+      if (!state.customCards.length) {
+        list.innerHTML = '<p class="muted">No custom cards yet. Use the lookup box above.</p>';
+        return;
+      }
+      list.innerHTML = state.customCards.map(c => {
+        const pe = personExamples(c);
+        return `<article class="card"><span class="pill">Custom</span><div class="spanish">${escapeHtml(displaySpanish(c))}</div><div class="english">${escapeHtml(displayEnglish(c))}</div><div class="example"><strong>First person:</strong> ${escapeHtml(pe.firstEs)}<br>${escapeHtml(pe.firstEn)}<br><strong>Second person:</strong> ${escapeHtml(pe.secondEs)}<br>${escapeHtml(pe.secondEn)}</div><button class="btn bad small" data-delete-custom="${escapeHtml(c.id)}">Delete</button></article>`;
+      }).join('');
+      list.querySelectorAll('[data-delete-custom]').forEach(btn => btn.addEventListener('click', () => {
+        state.customCards = state.customCards.filter(c => c.id !== btn.dataset.deleteCustom);
+        saveCustomCards();
+      }));
+    }
+
     function updateStats() {
       let attempts = 0, good = 0, known = 0, diff = 0;
       for (const [id, p] of Object.entries(state.progress)) {
@@ -680,7 +828,7 @@
       renderHardest();
     }
     function renderHardest() {
-      const rows = cards.map(c => ({c, p: progressFor(c.id)}))
+      const rows = allCards().map(c => ({c, p: progressFor(c.id)}))
         .filter(x => x.p.attempts || x.p.difficult)
         .sort((a,b) => (b.p.wrong + (b.p.difficult?2:0)) - (a.p.wrong + (a.p.difficult?2:0)))
         .slice(0, 12);
@@ -697,6 +845,9 @@
       document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
       ['search','categoryFilter','priorityFilter'].forEach(id => $(id).addEventListener('input', renderStudy));
       $('shuffleStudy').addEventListener('click', () => { state.studyOrder = shuffle(state.studyOrder); renderStudy(); });
+      $('lookupFromSearch').addEventListener('click', () => lookupAndAddFromInput('search'));
+      $('lookupWordBtn').addEventListener('click', () => lookupAndAddFromInput('lookup'));
+      $('lookupInput').addEventListener('keydown', e => { if (e.key === 'Enter') lookupAndAddFromInput('lookup'); });
       $('revealRandom').addEventListener('click', () => { state.randomRevealed = true; renderRandom(); });
       $('nextRandom').addEventListener('click', newRandom);
       $('knownRandom').addEventListener('click', () => { mark(state.randomCard, 'known'); newRandom(); });
@@ -716,6 +867,9 @@
       $('resetProgress').addEventListener('click', () => {
         if (confirm('Reset all Spanish dashboard progress?')) { state.progress = {}; localStorage.removeItem('spanishCrashProgress'); updateStats(); }
       });
+      $('clearCustomCards').addEventListener('click', () => {
+        if (confirm('Delete all custom cards from this browser?')) { state.customCards = []; localStorage.removeItem('spanishCrashCustomCards'); saveCustomCards(); }
+      });
       $('exportProgress').addEventListener('click', () => {
         const blob = new Blob([JSON.stringify(state.progress, null, 2)], {type:'application/json'});
         const url = URL.createObjectURL(blob);
@@ -723,7 +877,7 @@
         URL.revokeObjectURL(url);
       });
     }
-    initFilters(); bind(); renderStudy(); updateStats();
+    refreshStudyOrder(); initFilters(); bind(); renderStudy(); renderCustomCards(); updateStats();
   </script>
 </body>
 </html>
