@@ -688,6 +688,11 @@
       p.lastSeen = new Date().toISOString();
       saveProgress();
     }
+    function updateQuizControls() {
+      $('skipQuiz').textContent = state.quizAnswered ? 'Next card' : 'Skip';
+      $('skipQuiz').classList.toggle('primary', !!state.quizAnswered);
+      $('checkQuiz').textContent = state.quizAnswered ? 'Next card' : 'Check';
+    }
     function newQuiz() {
       state.quizCard = weightedCard();
       state.quizDirection = Math.random() < 0.5 ? 'es-en' : 'en-es';
@@ -696,6 +701,7 @@
       $('feedback').className = 'feedback';
       $('feedback').innerHTML = '';
       renderQuiz();
+      updateQuizControls();
       setTimeout(() => $('quizInput').focus(), 20);
     }
     function renderQuiz() {
@@ -716,10 +722,15 @@
       const expected = state.quizDirection === 'es-en' ? c.english : c.spanish;
       const reverse = state.quizDirection === 'es-en' ? c.spanish : c.english;
       const fb = $('feedback');
+      if (state.quizAnswered && !showOnly) {
+        newQuiz();
+        return;
+      }
       if (showOnly) {
         fb.className = 'feedback close';
         fb.innerHTML = `<strong>Answer:</strong> ${escapeHtml(expected[0])}<br><span class="muted">${escapeHtml(reverse[0])} · ${escapeHtml(c.exampleSpanish || '')} → ${escapeHtml(c.exampleEnglish || '')}</span>`;
         state.quizAnswered = true;
+        updateQuizControls();
         return;
       }
       const result = checkAnswer($('quizInput').value, expected);
@@ -735,6 +746,7 @@
       const label = result.status === 'correct' ? '✅ Correct' : result.status === 'close' ? '🟡 Close enough' : '❌ Not quite';
       fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(personExamples(c).firstEs)} → ${escapeHtml(personExamples(c).firstEn)} · ${escapeHtml(personExamples(c).secondEs)} → ${escapeHtml(personExamples(c).secondEn)}</span>`;
       state.quizAnswered = true;
+      updateQuizControls();
     }
     function cleanLookupText(text) {
       const textarea = document.createElement('textarea');
@@ -975,7 +987,7 @@
       $('checkQuiz').addEventListener('click', () => checkQuiz(false));
       $('skipQuiz').addEventListener('click', newQuiz);
       $('showQuizAnswer').addEventListener('click', () => checkQuiz(true));
-      $('quizInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkQuiz(false); });
+      $('quizInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); state.quizAnswered ? newQuiz() : checkQuiz(false); } });
       document.addEventListener('keydown', e => {
         if (e.code === 'Space' && document.activeElement !== $('quizInput')) {
           const quizVisible = $('quiz').classList.contains('active');
