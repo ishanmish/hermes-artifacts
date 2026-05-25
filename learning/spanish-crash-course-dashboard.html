@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spanish 3-Week Crash Course Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.075);
+      --panel2: rgba(255,255,255,0.11);
+      --text: #f6f7fb;
+      --muted: #aab2d5;
+      --accent: #ffcf5c;
+      --accent2: #6ee7f9;
+      --good: #60d394;
+      --warn: #ffd166;
+      --bad: #ff6b6b;
+      --line: rgba(255,255,255,0.14);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 22px;
+      --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      background:
+        radial-gradient(circle at top left, rgba(110,231,249,0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(255,207,92,0.18), transparent 32%),
+        linear-gradient(135deg, #090d1a, #111735 45%, #080b16);
+      color: var(--text);
+    }
+    button, input, select { font: inherit; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    header {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+    .hero, .stats-panel, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero { padding: 24px; }
+    .eyebrow { color: var(--accent2); font-weight: 750; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; }
+    h1 { margin: 8px 0 8px; font-size: clamp(30px, 5vw, 58px); line-height: 0.95; }
+    .sub { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 760px; }
+    .stats-panel { padding: 18px; display: grid; gap: 12px; align-content: center; }
+    .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat { background: rgba(255,255,255,0.07); border: 1px solid var(--line); border-radius: 16px; padding: 12px; }
+    .stat .num { font-size: 26px; font-weight: 850; }
+    .stat .label { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    nav { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0; }
+    .tab-btn, .btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 15px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+    .tab-btn:hover, .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,0.14); }
+    .tab-btn.active { background: var(--accent); color: #201700; border-color: transparent; font-weight: 800; }
+    .btn.primary { background: var(--accent); color: #201700; border-color: transparent; font-weight: 850; }
+    .btn.good { background: rgba(96,211,148,0.2); border-color: rgba(96,211,148,0.45); }
+    .btn.bad { background: rgba(255,107,107,0.16); border-color: rgba(255,107,107,0.45); }
+    .btn.small { padding: 8px 11px; font-size: 13px; }
+    .tab { display: none; }
+    .tab.active { display: block; }
+    .panel { padding: 18px; margin-bottom: 18px; }
+    .controls { display: grid; grid-template-columns: minmax(200px, 1fr) 220px 160px 160px; gap: 12px; align-items: center; }
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,0.22);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 13px;
+      outline: none;
+    }
+    select option { color: #111; }
+    .cards-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card {
+      background: rgba(255,255,255,0.075);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .pill { display: inline-flex; width: fit-content; padding: 5px 9px; border-radius: 999px; background: rgba(110,231,249,0.12); color: var(--accent2); font-size: 12px; border: 1px solid rgba(110,231,249,0.25); }
+    .spanish { font-size: 25px; font-weight: 850; line-height: 1.08; }
+    .english { color: var(--accent); font-size: 17px; font-weight: 750; }
+    .literal, .example, .meta { color: var(--muted); font-size: 14px; line-height: 1.4; }
+    .example strong { color: var(--text); }
+    .big-card {
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+    }
+    .big-word { font-size: clamp(42px, 9vw, 94px); font-weight: 900; line-height: 0.98; margin: 10px 0; }
+    .big-meaning { color: var(--accent); font-size: clamp(24px, 4vw, 42px); font-weight: 850; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+    .quiz-layout { display: grid; grid-template-columns: 1fr 360px; gap: 18px; align-items: start; }
+    .quiz-card { min-height: 430px; display: grid; align-content: center; text-align: center; }
+    .prompt-label { color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+    .answer-box { max-width: 620px; margin: 18px auto 0; }
+    .feedback { margin-top: 15px; padding: 14px; border-radius: 16px; border: 1px solid var(--line); display: none; text-align: left; line-height: 1.45; }
+    .feedback.correct { display: block; background: rgba(96,211,148,0.15); border-color: rgba(96,211,148,0.5); }
+    .feedback.close { display: block; background: rgba(255,209,102,0.15); border-color: rgba(255,209,102,0.55); }
+    .feedback.wrong { display: block; background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.48); }
+    .side-list { display: grid; gap: 10px; }
+    .mini-row { display: flex; justify-content: space-between; gap: 10px; padding: 10px; border-radius: 14px; background: rgba(255,255,255,0.065); border: 1px solid var(--line); }
+    .muted { color: var(--muted); }
+    .hidden { display: none !important; }
+    .kbd { border: 1px solid var(--line); background: rgba(255,255,255,0.08); border-radius: 6px; padding: 2px 6px; color: var(--muted); font-size: 12px; }
+    footer { color: var(--muted); text-align: center; padding: 20px; font-size: 13px; }
+
+    @media (max-width: 880px) {
+      .wrap { padding: 14px; }
+      header, .quiz-layout { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(4, 1fr); }
+      .stat .num { font-size: 20px; }
+      .big-card { min-height: 320px; }
+    }
+    @media (max-width: 520px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .actions { justify-content: stretch; }
+      .actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <section class="hero">
+        <div class="eyebrow">Spanish crash course · 3 weeks</div>
+        <h1>Speakable Spanish, not dictionary Spanish.</h1>
+        <p class="sub">A practical dashboard built around phrases and conjugated chunks you’ll actually use while travelling: <strong>tengo hambre</strong>, <strong>quiero esto</strong>, <strong>¿puedes repetir?</strong>. Root verbs are shown only as notes.</p>
+      </section>
+      <aside class="stats-panel">
+        <div class="eyebrow">Your progress</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="num" id="statAttempts">0</div><div class="label">Attempts</div></div>
+          <div class="stat"><div class="num" id="statAccuracy">0%</div><div class="label">Accuracy</div></div>
+          <div class="stat"><div class="num" id="statKnown">0</div><div class="label">Known</div></div>
+          <div class="stat"><div class="num" id="statDifficult">0</div><div class="label">Difficult</div></div>
+        </div>
+      </aside>
+    </header>
+
+    <nav aria-label="Dashboard tabs">
+      <button class="tab-btn active" data-tab="study">Study</button>
+      <button class="tab-btn" data-tab="random">Random Cards</button>
+      <button class="tab-btn" data-tab="quiz">Flashcard Game</button>
+      <button class="tab-btn" data-tab="stats">Stats</button>
+    </nav>
+
+    <main>
+      <section id="study" class="tab active">
+        <div class="panel controls">
+          <input id="search" placeholder="Search Spanish, English, example..." />
+          <select id="categoryFilter"><option value="all">All categories</option></select>
+          <select id="priorityFilter">
+            <option value="all">All priorities</option>
+            <option value="very-high">Very high</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+          </select>
+          <button class="btn primary" id="shuffleStudy">Shuffle</button>
+        </div>
+        <div class="panel"><span id="cardCount"></span> · Tip: focus on “Very high” first for the crash course.</div>
+        <div id="cardsGrid" class="cards-grid"></div>
+      </section>
+
+      <section id="random" class="tab">
+        <div class="panel big-card">
+          <div>
+            <div class="prompt-label" id="randomDirection">Spanish → English</div>
+            <div class="big-word" id="randomFront">—</div>
+            <div id="randomBack" class="hidden">
+              <div class="big-meaning" id="randomMeaning">—</div>
+              <p class="example" id="randomExample"></p>
+              <p class="meta" id="randomMeta"></p>
+            </div>
+            <div class="actions">
+              <button class="btn primary" id="revealRandom">Show answer</button>
+              <button class="btn good" id="knownRandom">I knew it</button>
+              <button class="btn bad" id="difficultRandom">Difficult</button>
+              <button class="btn" id="nextRandom">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="quiz" class="tab">
+        <div class="quiz-layout">
+          <div class="panel quiz-card">
+            <div>
+              <div class="prompt-label" id="quizDirection">Spanish → English</div>
+              <div class="big-word" id="quizPrompt">—</div>
+              <div class="answer-box">
+                <input id="quizInput" placeholder="Type your answer..." autocomplete="off" />
+                <div class="actions">
+                  <button class="btn primary" id="checkQuiz">Check</button>
+                  <button class="btn" id="skipQuiz">Skip</button>
+                  <button class="btn" id="showQuizAnswer">Show answer</button>
+                </div>
+              </div>
+              <div id="feedback" class="feedback"></div>
+            </div>
+          </div>
+          <aside class="panel">
+            <div class="eyebrow">Game rules</div>
+            <p class="muted">Answers are forgiving: accents, punctuation, minor spelling mistakes, and common aliases are accepted.</p>
+            <p class="muted"><span class="kbd">Enter</span> check · <span class="kbd">Space</span> next after result</p>
+            <hr style="border-color: var(--line); border-style: solid; border-width: 1px 0 0; margin: 16px 0;" />
+            <div class="eyebrow">Current card</div>
+            <div id="quizDetails" class="side-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="stats" class="tab">
+        <div class="panel">
+          <div class="actions" style="justify-content:flex-start;margin-top:0;">
+            <button class="btn bad" id="resetProgress">Reset progress</button>
+            <button class="btn" id="exportProgress">Export progress JSON</button>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Hardest cards</h2>
+          <div id="hardestCards" class="side-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>Built for quick travel Spanish: memorize usable chunks first, grammar second.</footer>
+  </div>
+
+  <script>
+    const cards = [
+      // Absolute gold phrases first
+      {id:'no-entiendo', category:'Absolute Gold Phrases', priority:'very-high', base:'entender', spanish:['No entiendo'], english:['I don’t understand','I do not understand','I dont understand'], literal:'I do not understand', exampleSpanish:'No entiendo.', exampleEnglish:'I don’t understand.'},
+      {id:'mas-despacio', category:'Absolute Gold Phrases', priority:'very-high', base:null, spanish:['Más despacio, por favor','Mas despacio por favor'], english:['Slower please','More slowly please','Slowly please'], literal:'More slowly, please', exampleSpanish:'Más despacio, por favor.', exampleEnglish:'Slower, please.'},
+      {id:'hablas-ingles', category:'Absolute Gold Phrases', priority:'very-high', base:'hablar', spanish:['¿Hablas inglés?','Hablas ingles'], english:['Do you speak English','You speak English'], literal:'Do you speak English?', exampleSpanish:'¿Hablas inglés?', exampleEnglish:'Do you speak English?'},
+      {id:'aprendiendo-espanol', category:'Absolute Gold Phrases', priority:'very-high', base:'aprender', spanish:['Estoy aprendiendo español','Estoy aprendiendo espanol'], english:['I am learning Spanish','I’m learning Spanish','Im learning Spanish'], literal:'I am learning Spanish', exampleSpanish:'Estoy aprendiendo español.', exampleEnglish:'I’m learning Spanish.'},
+      {id:'que-significa-eso', category:'Absolute Gold Phrases', priority:'very-high', base:'significar', spanish:['¿Qué significa eso?','Que significa eso'], english:['What does that mean','What does this mean'], literal:'What does that mean?', exampleSpanish:'¿Qué significa eso?', exampleEnglish:'What does that mean?'},
+      {id:'puedes-repetir', category:'Absolute Gold Phrases', priority:'very-high', base:'poder', spanish:['¿Puedes repetir?','Puedes repetir'], english:['Can you repeat','Can you say that again','Could you repeat'], literal:'Can you repeat?', exampleSpanish:'¿Puedes repetir?', exampleEnglish:'Can you repeat?'},
+      {id:'quiero-esto', category:'Absolute Gold Phrases', priority:'very-high', base:'querer', spanish:['Quiero esto'], english:['I want this','I would like this'], literal:'I want this', exampleSpanish:'Quiero esto.', exampleEnglish:'I want this.'},
+      {id:'donde-esta', category:'Absolute Gold Phrases', priority:'very-high', base:'estar', spanish:['¿Dónde está...?','Donde esta','¿Dónde está?'], english:['Where is','Where is it'], literal:'Where is...?', exampleSpanish:'¿Dónde está el baño?', exampleEnglish:'Where is the bathroom?'},
+      {id:'cuanto-cuesta', category:'Absolute Gold Phrases', priority:'very-high', base:'costar', spanish:['¿Cuánto cuesta?','Cuanto cuesta'], english:['How much does it cost','How much is it','How much'], literal:'How much does it cost?', exampleSpanish:'¿Cuánto cuesta?', exampleEnglish:'How much does it cost?'},
+      {id:'necesito-ayuda', category:'Absolute Gold Phrases', priority:'very-high', base:'necesitar', spanish:['Necesito ayuda'], english:['I need help','Need help'], literal:'I need help', exampleSpanish:'Necesito ayuda.', exampleEnglish:'I need help.'},
+      {id:'tengo-hambre', category:'Absolute Gold Phrases', priority:'very-high', base:'tener', spanish:['Tengo hambre'], english:['I am hungry','I’m hungry','Im hungry'], literal:'I have hunger', exampleSpanish:'Tengo hambre.', exampleEnglish:'I’m hungry.'},
+      {id:'tengo-sueno', category:'Absolute Gold Phrases', priority:'very-high', base:'tener', spanish:['Tengo sueño','Tengo sueno'], english:['I am sleepy','I’m sleepy','Im sleepy','I am tired'], literal:'I have sleepiness', exampleSpanish:'Tengo sueño.', exampleEnglish:'I’m sleepy.'},
+      {id:'tengo-sed', category:'Absolute Gold Phrases', priority:'very-high', base:'tener', spanish:['Tengo sed'], english:['I am thirsty','I’m thirsty','Im thirsty'], literal:'I have thirst', exampleSpanish:'Tengo sed.', exampleEnglish:'I’m thirsty.'},
+      {id:'vamos', category:'Absolute Gold Phrases', priority:'very-high', base:'ir', spanish:['Vamos'], english:['Let’s go','Lets go','We are going','We go'], literal:'We go / let’s go', exampleSpanish:'Vamos.', exampleEnglish:'Let’s go.'},
+      {id:'no-se', category:'Absolute Gold Phrases', priority:'very-high', base:'saber', spanish:['No sé','No se'], english:['I don’t know','I do not know','I dont know'], literal:'I do not know', exampleSpanish:'No sé.', exampleEnglish:'I don’t know.'},
+
+      // Essential spoken verbs
+      {id:'tengo', category:'Essential Spoken Verbs', priority:'high', base:'tener', spanish:['Tengo'], english:['I have'], literal:'I have', exampleSpanish:'Tengo hambre.', exampleEnglish:'I’m hungry.'},
+      {id:'tienes', category:'Essential Spoken Verbs', priority:'high', base:'tener', spanish:['Tienes'], english:['You have','Do you have'], literal:'You have', exampleSpanish:'¿Tienes agua?', exampleEnglish:'Do you have water?'},
+      {id:'quiero', category:'Essential Spoken Verbs', priority:'high', base:'querer', spanish:['Quiero'], english:['I want','I would like'], literal:'I want', exampleSpanish:'Quiero agua.', exampleEnglish:'I want water.'},
+      {id:'quieres', category:'Essential Spoken Verbs', priority:'high', base:'querer', spanish:['¿Quieres...?','Quieres'], english:['Do you want','You want'], literal:'Do you want...?', exampleSpanish:'¿Quieres café?', exampleEnglish:'Do you want coffee?'},
+      {id:'quisiera', category:'Essential Spoken Verbs', priority:'high', base:'querer', spanish:['Quisiera'], english:['I would like','I’d like','Id like'], literal:'I would like', exampleSpanish:'Quisiera una cerveza.', exampleEnglish:'I’d like a beer.'},
+      {id:'puedo', category:'Essential Spoken Verbs', priority:'high', base:'poder', spanish:['Puedo'], english:['I can','I am able to'], literal:'I can', exampleSpanish:'Puedo pagar.', exampleEnglish:'I can pay.'},
+      {id:'no-puedo', category:'Essential Spoken Verbs', priority:'high', base:'poder', spanish:['No puedo'], english:['I can’t','I cannot','I cant'], literal:'I cannot', exampleSpanish:'No puedo ahora.', exampleEnglish:'I can’t now.'},
+      {id:'puedes-ayudarme', category:'Essential Spoken Verbs', priority:'very-high', base:'poder', spanish:['¿Puedes ayudarme?','Puedes ayudarme'], english:['Can you help me','Could you help me'], literal:'Can you help me?', exampleSpanish:'¿Puedes ayudarme?', exampleEnglish:'Can you help me?'},
+      {id:'voy', category:'Essential Spoken Verbs', priority:'high', base:'ir', spanish:['Voy'], english:['I am going','I’m going','Im going','I go'], literal:'I go / I am going', exampleSpanish:'Voy al centro.', exampleEnglish:'I’m going downtown.'},
+      {id:'voy-al-centro', category:'Essential Spoken Verbs', priority:'high', base:'ir', spanish:['Voy al centro'], english:['I am going downtown','I’m going downtown','I am going to the center'], literal:'I go to the center', exampleSpanish:'Voy al centro.', exampleEnglish:'I’m going downtown.'},
+      {id:'vienes-conmigo', category:'Essential Spoken Verbs', priority:'high', base:'venir', spanish:['¿Vienes conmigo?','Vienes conmigo'], english:['Are you coming with me','You coming with me'], literal:'Are you coming with me?', exampleSpanish:'¿Vienes conmigo?', exampleEnglish:'Are you coming with me?'},
+      {id:'que-haces', category:'Essential Spoken Verbs', priority:'high', base:'hacer', spanish:['¿Qué haces?','Que haces'], english:['What are you doing','What do you do'], literal:'What are you doing?', exampleSpanish:'¿Qué haces?', exampleEnglish:'What are you doing?'},
+      {id:'estoy', category:'Essential Spoken Verbs', priority:'high', base:'estar', spanish:['Estoy'], english:['I am'], literal:'I am temporarily / currently', exampleSpanish:'Estoy cansado.', exampleEnglish:'I’m tired.'},
+      {id:'estoy-cansado', category:'Essential Spoken Verbs', priority:'high', base:'estar', spanish:['Estoy cansado','Estoy cansada'], english:['I am tired','I’m tired','Im tired'], literal:'I am tired', exampleSpanish:'Estoy cansado.', exampleEnglish:'I’m tired.'},
+      {id:'estoy-bien', category:'Essential Spoken Verbs', priority:'very-high', base:'estar', spanish:['Estoy bien'], english:['I am good','I’m good','I am well','I’m fine'], literal:'I am well', exampleSpanish:'Estoy bien.', exampleEnglish:'I’m good.'},
+      {id:'soy-de-india', category:'Essential Spoken Verbs', priority:'high', base:'ser', spanish:['Soy de India'], english:['I am from India','I’m from India','Im from India'], literal:'I am from India', exampleSpanish:'Soy de India.', exampleEnglish:'I’m from India.'},
+      {id:'hablo-un-poco', category:'Essential Spoken Verbs', priority:'very-high', base:'hablar', spanish:['Hablo un poco de español','Hablo un poco de espanol'], english:['I speak a little Spanish','I speak some Spanish'], literal:'I speak a little Spanish', exampleSpanish:'Hablo un poco de español.', exampleEnglish:'I speak a little Spanish.'},
+      {id:'entiendo', category:'Essential Spoken Verbs', priority:'medium', base:'entender', spanish:['Entiendo'], english:['I understand'], literal:'I understand', exampleSpanish:'Entiendo un poco.', exampleEnglish:'I understand a little.'},
+      {id:'me-gusta', category:'Essential Spoken Verbs', priority:'high', base:'gustar', spanish:['Me gusta'], english:['I like it','I like'], literal:'It pleases me', exampleSpanish:'Me gusta Colombia.', exampleEnglish:'I like Colombia.'},
+      {id:'vamos-a-comer', category:'Essential Spoken Verbs', priority:'high', base:'comer', spanish:['Vamos a comer'], english:['Let’s eat','Lets eat','We are going to eat'], literal:'We are going to eat', exampleSpanish:'Vamos a comer.', exampleEnglish:'Let’s go eat.'},
+      {id:'voy-a-tomar-cafe', category:'Essential Spoken Verbs', priority:'high', base:'tomar', spanish:['Voy a tomar café','Voy a tomar cafe'], english:['I am going to drink coffee','I’m going to drink coffee','I will have coffee'], literal:'I am going to take coffee', exampleSpanish:'Voy a tomar café.', exampleEnglish:'I’m going to drink coffee.'},
+      {id:'vivo-en', category:'Essential Spoken Verbs', priority:'medium', base:'vivir', spanish:['Vivo en...','Vivo en'], english:['I live in'], literal:'I live in...', exampleSpanish:'Vivo en Delhi.', exampleEnglish:'I live in Delhi.'},
+      {id:'cuando-llegas', category:'Essential Spoken Verbs', priority:'medium', base:'llegar', spanish:['¿Cuándo llegas?','Cuando llegas'], english:['When do you arrive','When are you arriving'], literal:'When do you arrive?', exampleSpanish:'¿Cuándo llegas?', exampleEnglish:'When do you arrive?'},
+      {id:'vamos-a-salir', category:'Essential Spoken Verbs', priority:'medium', base:'salir', spanish:['Vamos a salir'], english:['Let’s go out','Lets go out','We are going out'], literal:'We are going to leave/go out', exampleSpanish:'Vamos a salir.', exampleEnglish:'Let’s go out.'},
+      {id:'busco-un-hotel', category:'Essential Spoken Verbs', priority:'high', base:'buscar', spanish:['Busco un hotel'], english:['I am looking for a hotel','I’m looking for a hotel'], literal:'I look for a hotel', exampleSpanish:'Busco un hotel.', exampleEnglish:'I’m looking for a hotel.'},
+      {id:'voy-a-pagar', category:'Essential Spoken Verbs', priority:'high', base:'pagar', spanish:['Voy a pagar'], english:['I will pay','I’ll pay','I am going to pay'], literal:'I am going to pay', exampleSpanish:'Voy a pagar.', exampleEnglish:'I’ll pay.'},
+
+      // Survival conversation
+      {id:'si-claro', category:'Survival Conversation', priority:'high', base:null, spanish:['Sí, claro','Si claro'], english:['Yes of course','Yes sure','Sure'], literal:'Yes, clear/of course', exampleSpanish:'Sí, claro.', exampleEnglish:'Yes, of course.'},
+      {id:'no-quiero', category:'Survival Conversation', priority:'high', base:'querer', spanish:['No quiero'], english:['I don’t want','I do not want','I dont want'], literal:'I do not want', exampleSpanish:'No quiero.', exampleEnglish:'I don’t want to.'},
+      {id:'por-favor', category:'Survival Conversation', priority:'very-high', base:null, spanish:['Por favor'], english:['Please'], literal:'Please', exampleSpanish:'Agua, por favor.', exampleEnglish:'Water, please.'},
+      {id:'gracias', category:'Survival Conversation', priority:'very-high', base:null, spanish:['Gracias','Muchas gracias'], english:['Thank you','Thanks','Thank you very much'], literal:'Thanks', exampleSpanish:'Muchas gracias.', exampleEnglish:'Thank you very much.'},
+      {id:'de-nada', category:'Survival Conversation', priority:'high', base:null, spanish:['De nada'], english:['You’re welcome','You are welcome','No problem'], literal:'Of nothing', exampleSpanish:'—Gracias. —De nada.', exampleEnglish:'—Thanks. —You’re welcome.'},
+      {id:'perdon', category:'Survival Conversation', priority:'high', base:null, spanish:['Perdón','Perdon'], english:['Sorry','Excuse me','Pardon'], literal:'Pardon', exampleSpanish:'Perdón, una pregunta.', exampleEnglish:'Excuse me, one question.'},
+      {id:'hola-como-estas', category:'Survival Conversation', priority:'high', base:'estar', spanish:['Hola, ¿cómo estás?','Hola como estas'], english:['Hello how are you','Hi how are you'], literal:'Hello, how are you?', exampleSpanish:'Hola, ¿cómo estás?', exampleEnglish:'Hello, how are you?'},
+      {id:'adios-amigo', category:'Survival Conversation', priority:'medium', base:null, spanish:['Adiós, amigo','Adios amigo'], english:['Goodbye friend','Bye friend'], literal:'Goodbye, friend', exampleSpanish:'Adiós, amigo.', exampleEnglish:'Goodbye, friend.'},
+      {id:'me-siento-mal', category:'Survival Conversation', priority:'medium', base:'sentirse', spanish:['Me siento mal'], english:['I feel bad','I feel sick','I feel unwell'], literal:'I feel bad', exampleSpanish:'Me siento mal.', exampleEnglish:'I feel bad.'},
+      {id:'estoy-aqui', category:'Survival Conversation', priority:'high', base:'estar', spanish:['Estoy aquí','Estoy aqui'], english:['I am here','I’m here','Im here'], literal:'I am here', exampleSpanish:'Estoy aquí.', exampleEnglish:'I’m here.'},
+      {id:'vamos-alla', category:'Survival Conversation', priority:'medium', base:'ir', spanish:['Vamos allá','Vamos alla','Vamos allí','Vamos alli'], english:['Let’s go there','Lets go there','We are going there'], literal:'Let’s go there', exampleSpanish:'Vamos allá.', exampleEnglish:'Let’s go there.'},
+      {id:'no-ahora', category:'Survival Conversation', priority:'medium', base:null, spanish:['No ahora'], english:['Not now','No not now'], literal:'Not now', exampleSpanish:'No ahora.', exampleEnglish:'Not now.'},
+      {id:'despues-hablamos', category:'Survival Conversation', priority:'medium', base:'hablar', spanish:['Después hablamos','Despues hablamos'], english:['We’ll talk later','We will talk later','Talk later'], literal:'Afterwards we talk', exampleSpanish:'Después hablamos.', exampleEnglish:'We’ll talk later.'},
+      {id:'hoy-estoy-ocupado', category:'Survival Conversation', priority:'medium', base:'estar', spanish:['Hoy estoy ocupado','Hoy estoy ocupada'], english:['Today I am busy','I am busy today','I’m busy today'], literal:'Today I am busy', exampleSpanish:'Hoy estoy ocupado.', exampleEnglish:'Today I’m busy.'},
+      {id:'manana-voy', category:'Survival Conversation', priority:'medium', base:'ir', spanish:['Mañana voy','Manana voy'], english:['Tomorrow I am going','I go tomorrow','I am going tomorrow'], literal:'Tomorrow I go', exampleSpanish:'Mañana voy.', exampleEnglish:'Tomorrow I’m going.'},
+      {id:'llegue-ayer', category:'Survival Conversation', priority:'medium', base:'llegar', spanish:['Llegué ayer','Llegue ayer'], english:['I arrived yesterday'], literal:'I arrived yesterday', exampleSpanish:'Llegué ayer.', exampleEnglish:'I arrived yesterday.'},
+      {id:'yo-tambien', category:'Survival Conversation', priority:'high', base:null, spanish:['Yo también','Yo tambien'], english:['Me too','I also','Me also'], literal:'I also', exampleSpanish:'Yo también.', exampleEnglish:'Me too.'},
+
+      // Questions
+      {id:'que', category:'Question Words', priority:'very-high', base:null, spanish:['¿Qué?','Que'], english:['What'], literal:'What?', exampleSpanish:'¿Qué haces?', exampleEnglish:'What are you doing?'},
+      {id:'donde', category:'Question Words', priority:'very-high', base:null, spanish:['¿Dónde?','Donde'], english:['Where'], literal:'Where?', exampleSpanish:'¿Dónde está el baño?', exampleEnglish:'Where is the bathroom?'},
+      {id:'cuando', category:'Question Words', priority:'high', base:null, spanish:['¿Cuándo?','Cuando'], english:['When'], literal:'When?', exampleSpanish:'¿Cuándo sales?', exampleEnglish:'When do you leave?'},
+      {id:'quien', category:'Question Words', priority:'medium', base:null, spanish:['¿Quién?','Quien'], english:['Who'], literal:'Who?', exampleSpanish:'¿Quién es?', exampleEnglish:'Who is it?'},
+      {id:'como', category:'Question Words', priority:'very-high', base:null, spanish:['¿Cómo?','Como'], english:['How'], literal:'How?', exampleSpanish:'¿Cómo estás?', exampleEnglish:'How are you?'},
+      {id:'cuanto', category:'Question Words', priority:'very-high', base:null, spanish:['¿Cuánto?','Cuanto'], english:['How much','How many'], literal:'How much?', exampleSpanish:'¿Cuánto cuesta?', exampleEnglish:'How much does it cost?'},
+      {id:'por-que', category:'Question Words', priority:'medium', base:null, spanish:['¿Por qué?','Por que'], english:['Why'], literal:'Why?', exampleSpanish:'¿Por qué no?', exampleEnglish:'Why not?'},
+
+      // Travel / hostel survival
+      {id:'donde-bano', category:'Travel & Hostel', priority:'very-high', base:'estar', spanish:['¿Dónde está el baño?','Donde esta el bano','Donde esta el baño'], english:['Where is the bathroom','Where is the toilet','Where is the restroom'], literal:'Where is the bathroom?', exampleSpanish:'¿Dónde está el baño?', exampleEnglish:'Where is the bathroom?'},
+      {id:'quiero-agua', category:'Travel & Hostel', priority:'very-high', base:'querer', spanish:['Quiero agua'], english:['I want water','I would like water'], literal:'I want water', exampleSpanish:'Quiero agua.', exampleEnglish:'I want water.'},
+      {id:'la-comida-esta-buena', category:'Travel & Hostel', priority:'medium', base:'estar', spanish:['La comida está buena','La comida esta buena'], english:['The food is good'], literal:'The food is good', exampleSpanish:'La comida está buena.', exampleEnglish:'The food is good.'},
+      {id:'una-cerveza', category:'Travel & Hostel', priority:'high', base:null, spanish:['Una cerveza, por favor','Una cerveza'], english:['A beer please','One beer please','A beer'], literal:'A beer, please', exampleSpanish:'Una cerveza, por favor.', exampleEnglish:'A beer, please.'},
+      {id:'la-cuenta', category:'Travel & Hostel', priority:'very-high', base:null, spanish:['La cuenta, por favor','La cuenta'], english:['The bill please','Check please','The check please'], literal:'The bill, please', exampleSpanish:'La cuenta, por favor.', exampleEnglish:'The bill, please.'},
+      {id:'necesito-habitacion', category:'Travel & Hostel', priority:'high', base:'necesitar', spanish:['Necesito una habitación','Necesito una habitacion'], english:['I need a room'], literal:'I need a room', exampleSpanish:'Necesito una habitación.', exampleEnglish:'I need a room.'},
+      {id:'que-calle-es', category:'Travel & Hostel', priority:'medium', base:'ser', spanish:['¿Qué calle es?','Que calle es'], english:['What street is this','What street is it'], literal:'What street is it?', exampleSpanish:'¿Qué calle es?', exampleEnglish:'What street is this?'},
+      {id:'no-tengo-dinero', category:'Travel & Hostel', priority:'medium', base:'tener', spanish:['No tengo dinero'], english:['I don’t have money','I have no money','I dont have money'], literal:'I do not have money', exampleSpanish:'No tengo dinero.', exampleEnglish:'I don’t have money.'},
+      {id:'aceptan-tarjeta', category:'Travel & Hostel', priority:'very-high', base:'aceptar', spanish:['¿Aceptan tarjeta?','Aceptan tarjeta'], english:['Do you accept card','Do you take card','Can I pay by card'], literal:'Do you accept card?', exampleSpanish:'¿Aceptan tarjeta?', exampleEnglish:'Do you accept card?'},
+      {id:'solo-efectivo', category:'Travel & Hostel', priority:'high', base:null, spanish:['Solo efectivo'], english:['Cash only','Only cash'], literal:'Only cash', exampleSpanish:'Solo efectivo.', exampleEnglish:'Cash only.'},
+      {id:'necesito-taxi', category:'Travel & Hostel', priority:'high', base:'necesitar', spanish:['Necesito un taxi'], english:['I need a taxi'], literal:'I need a taxi', exampleSpanish:'Necesito un taxi.', exampleEnglish:'I need a taxi.'},
+      {id:'voy-aeropuerto', category:'Travel & Hostel', priority:'high', base:'ir', spanish:['Voy al aeropuerto'], english:['I am going to the airport','I’m going to the airport'], literal:'I go to the airport', exampleSpanish:'Voy al aeropuerto.', exampleEnglish:'I’m going to the airport.'},
+      {id:'donde-esta-bus', category:'Travel & Hostel', priority:'high', base:'estar', spanish:['¿Dónde está el bus?','Donde esta el bus','¿Dónde está el autobús?','Donde esta el autobus'], english:['Where is the bus'], literal:'Where is the bus?', exampleSpanish:'¿Dónde está el bus?', exampleEnglish:'Where is the bus?'},
+      {id:'cuanto-entrada', category:'Travel & Hostel', priority:'high', base:'costar', spanish:['¿Cuánto cuesta la entrada?','Cuanto cuesta la entrada'], english:['How much is the ticket','How much is the entrance','How much does the ticket cost'], literal:'How much does the entrance/ticket cost?', exampleSpanish:'¿Cuánto cuesta la entrada?', exampleEnglish:'How much is the ticket?'},
+
+      // Social / meeting people
+      {id:'hola-amigo', category:'Social / Meeting People', priority:'medium', base:null, spanish:['Hola amigo','Hola amiga'], english:['Hello friend','Hi friend'], literal:'Hello friend', exampleSpanish:'Hola amigo.', exampleEnglish:'Hello friend.'},
+      {id:'gente-amable', category:'Social / Meeting People', priority:'medium', base:'ser', spanish:['La gente es amable'], english:['The people are friendly','People are friendly'], literal:'The people are friendly', exampleSpanish:'La gente es amable.', exampleEnglish:'The people are friendly.'},
+      {id:'hay-fiesta-hoy', category:'Social / Meeting People', priority:'high', base:'haber', spanish:['¿Hay fiesta hoy?','Hay fiesta hoy'], english:['Is there a party today','Is there a party tonight'], literal:'Is there a party today?', exampleSpanish:'¿Hay fiesta hoy?', exampleEnglish:'Is there a party today?'},
+      {id:'quieres-bailar', category:'Social / Meeting People', priority:'high', base:'bailar', spanish:['¿Quieres bailar?','Quieres bailar'], english:['Do you want to dance','Want to dance'], literal:'Do you want to dance?', exampleSpanish:'¿Quieres bailar?', exampleEnglish:'Do you want to dance?'},
+      {id:'es-divertido', category:'Social / Meeting People', priority:'medium', base:'ser', spanish:['Es muy divertido','Es divertido'], english:['It is very fun','It’s very fun','It is fun'], literal:'It is very fun', exampleSpanish:'Es muy divertido.', exampleEnglish:'It’s very fun.'},
+      {id:'que-bonito-lugar', category:'Social / Meeting People', priority:'medium', base:'ser', spanish:['Qué bonito lugar','Que bonito lugar'], english:['What a beautiful place','What a nice place'], literal:'What beautiful place', exampleSpanish:'Qué bonito lugar.', exampleEnglish:'What a beautiful place.'},
+      {id:'increible', category:'Social / Meeting People', priority:'medium', base:null, spanish:['Increíble','Increible'], english:['Incredible','Amazing'], literal:'Incredible', exampleSpanish:'Increíble.', exampleEnglish:'Incredible.'},
+      {id:'tranquilo-aqui', category:'Social / Meeting People', priority:'medium', base:'estar', spanish:['Muy tranquilo aquí','Muy tranquilo aqui'], english:['Very calm here','Very chill here','It is very chill here'], literal:'Very calm here', exampleSpanish:'Muy tranquilo aquí.', exampleEnglish:'Very chill here.'},
+      {id:'estoy-feliz', category:'Social / Meeting People', priority:'medium', base:'estar', spanish:['Estoy feliz'], english:['I am happy','I’m happy'], literal:'I am happy', exampleSpanish:'Estoy feliz.', exampleEnglish:'I’m happy.'},
+      {id:'estas-libre-manana', category:'Social / Meeting People', priority:'high', base:'estar', spanish:['¿Estás libre mañana?','Estas libre manana','Estás libre mañana'], english:['Are you free tomorrow','Are you available tomorrow'], literal:'Are you free tomorrow?', exampleSpanish:'¿Estás libre mañana?', exampleEnglish:'Are you free tomorrow?'}
+    ];
+
+    const state = {
+      studyOrder: [...cards],
+      randomCard: null,
+      randomDirection: 'es-en',
+      randomRevealed: false,
+      quizCard: null,
+      quizDirection: 'es-en',
+      quizAnswered: false,
+      progress: loadProgress()
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const priorityWeight = { 'very-high': 5, high: 3, medium: 1 };
+
+    function loadProgress() {
+      try { return JSON.parse(localStorage.getItem('spanishCrashProgress') || '{}'); }
+      catch { return {}; }
+    }
+    function saveProgress() { localStorage.setItem('spanishCrashProgress', JSON.stringify(state.progress)); updateStats(); }
+    function progressFor(id) {
+      if (!state.progress[id]) state.progress[id] = {attempts:0, correct:0, close:0, wrong:0, known:false, difficult:false, lastSeen:null};
+      return state.progress[id];
+    }
+    function normalizeText(s) {
+      return String(s || '')
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[¿?¡!.,;:()\[\]"'’`]/g, '')
+        .replace(/\b(i am)\b/g, 'im')
+        .replace(/\b(do not)\b/g, 'dont')
+        .replace(/\b(can not)\b/g, 'cannot')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    function levenshtein(a, b) {
+      a = normalizeText(a); b = normalizeText(b);
+      const dp = Array.from({length: a.length + 1}, (_, i) => [i]);
+      for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          const cost = a[i-1] === b[j-1] ? 0 : 1;
+          dp[i][j] = Math.min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost);
+        }
+      }
+      return dp[a.length][b.length];
+    }
+    function allowedDistance(len) {
+      if (len <= 4) return 0;
+      if (len <= 8) return 1;
+      if (len <= 16) return 2;
+      return 3;
+    }
+    function tokenOverlap(a, b) {
+      const A = new Set(normalizeText(a).split(' ').filter(Boolean));
+      const B = new Set(normalizeText(b).split(' ').filter(Boolean));
+      if (!A.size || !B.size) return 0;
+      let hit = 0; A.forEach(x => { if (B.has(x)) hit++; });
+      return hit / Math.max(A.size, B.size);
+    }
+    function checkAnswer(user, accepted) {
+      const u = normalizeText(user);
+      if (!u) return {status:'wrong', matched:null};
+      const normalizedAccepted = accepted.map(normalizeText);
+      for (let i = 0; i < normalizedAccepted.length; i++) {
+        const a = normalizedAccepted[i];
+        if (u === a) return {status:'correct', matched: accepted[i]};
+        if (a.length > 5 && (u.includes(a) || a.includes(u))) return {status:'correct', matched: accepted[i]};
+      }
+      let best = {dist: Infinity, answer: accepted[0], overlap: 0};
+      for (const a of accepted) {
+        const na = normalizeText(a);
+        const d = levenshtein(u, na);
+        const o = tokenOverlap(u, na);
+        if (d < best.dist || o > best.overlap) best = {dist: d, answer: a, overlap: o};
+      }
+      const maxLen = Math.max(u.length, normalizeText(best.answer).length);
+      if (best.dist <= allowedDistance(maxLen)) return {status:'close', matched: best.answer};
+      if (best.overlap >= 0.67 && maxLen > 8) return {status:'close', matched: best.answer};
+      return {status:'wrong', matched: best.answer};
+    }
+    function sample(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+    function weightedCard() {
+      const pool = [];
+      for (const c of cards) {
+        const p = progressFor(c.id);
+        let w = priorityWeight[c.priority] || 1;
+        if (!p.attempts) w += 5;
+        if (p.difficult) w += 5;
+        w += Math.min(5, p.wrong * 2);
+        w -= Math.min(3, p.correct);
+        if (p.known) w -= 2;
+        w = Math.max(1, w);
+        for (let i = 0; i < w; i++) pool.push(c);
+      }
+      return sample(pool);
+    }
+    function displaySpanish(c) { return c.spanish[0]; }
+    function displayEnglish(c) { return c.english[0]; }
+    function renderStudy() {
+      const q = normalizeText($('search').value);
+      const cat = $('categoryFilter').value;
+      const pri = $('priorityFilter').value;
+      const filtered = state.studyOrder.filter(c => {
+        const blob = normalizeText([c.category, c.priority, c.base, ...c.spanish, ...c.english, c.literal, c.exampleSpanish, c.exampleEnglish].join(' '));
+        return (!q || blob.includes(q)) && (cat === 'all' || c.category === cat) && (pri === 'all' || c.priority === pri);
+      });
+      $('cardCount').textContent = `${filtered.length} cards`;
+      $('cardsGrid').innerHTML = filtered.map(c => `
+        <article class="card">
+          <span class="pill">${c.category} · ${c.priority}</span>
+          <div class="spanish">${escapeHtml(displaySpanish(c))}</div>
+          <div class="english">${escapeHtml(displayEnglish(c))}</div>
+          <div class="literal">Literal/note: ${escapeHtml(c.literal || '—')}</div>
+          <div class="example"><strong>${escapeHtml(c.exampleSpanish || '')}</strong><br>${escapeHtml(c.exampleEnglish || '')}</div>
+          <div class="meta">Root/reference: ${escapeHtml(c.base || '—')} · Accepted: ${c.spanish.length + c.english.length}</div>
+        </article>`).join('');
+    }
+    function escapeHtml(s) { return String(s || '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
+    function initFilters() {
+      const cats = [...new Set(cards.map(c => c.category))];
+      $('categoryFilter').innerHTML = '<option value="all">All categories</option>' + cats.map(c => `<option>${escapeHtml(c)}</option>`).join('');
+    }
+    function newRandom() {
+      state.randomCard = weightedCard();
+      state.randomDirection = Math.random() < 0.5 ? 'es-en' : 'en-es';
+      state.randomRevealed = false;
+      renderRandom();
+    }
+    function renderRandom() {
+      const c = state.randomCard || weightedCard(); state.randomCard = c;
+      const esFirst = state.randomDirection === 'es-en';
+      $('randomDirection').textContent = esFirst ? 'Spanish → English' : 'English → Spanish';
+      $('randomFront').textContent = esFirst ? displaySpanish(c) : displayEnglish(c);
+      $('randomMeaning').textContent = esFirst ? displayEnglish(c) : displaySpanish(c);
+      $('randomExample').innerHTML = `<strong>${escapeHtml(c.exampleSpanish || '')}</strong><br>${escapeHtml(c.exampleEnglish || '')}`;
+      $('randomMeta').textContent = `Category: ${c.category} · Root/reference: ${c.base || '—'} · Literal: ${c.literal || '—'}`;
+      $('randomBack').classList.toggle('hidden', !state.randomRevealed);
+    }
+    function mark(card, type) {
+      const p = progressFor(card.id);
+      if (type === 'known') p.known = true;
+      if (type === 'difficult') p.difficult = true;
+      p.lastSeen = new Date().toISOString();
+      saveProgress();
+    }
+    function newQuiz() {
+      state.quizCard = weightedCard();
+      state.quizDirection = Math.random() < 0.5 ? 'es-en' : 'en-es';
+      state.quizAnswered = false;
+      $('quizInput').value = '';
+      $('feedback').className = 'feedback';
+      $('feedback').innerHTML = '';
+      renderQuiz();
+      setTimeout(() => $('quizInput').focus(), 20);
+    }
+    function renderQuiz() {
+      const c = state.quizCard;
+      const esFirst = state.quizDirection === 'es-en';
+      $('quizDirection').textContent = esFirst ? 'Spanish → English' : 'English → Spanish';
+      $('quizPrompt').textContent = esFirst ? displaySpanish(c) : displayEnglish(c);
+      $('quizDetails').innerHTML = `
+        <div class="mini-row"><span>Category</span><strong>${escapeHtml(c.category)}</strong></div>
+        <div class="mini-row"><span>Root/reference</span><strong>${escapeHtml(c.base || '—')}</strong></div>
+        <div class="mini-row"><span>Literal/note</span><strong>${escapeHtml(c.literal || '—')}</strong></div>
+        <div class="mini-row"><span>Example</span><strong>${escapeHtml(c.exampleSpanish || '—')}</strong></div>`;
+    }
+    function checkQuiz(showOnly=false) {
+      const c = state.quizCard;
+      const expected = state.quizDirection === 'es-en' ? c.english : c.spanish;
+      const reverse = state.quizDirection === 'es-en' ? c.spanish : c.english;
+      const fb = $('feedback');
+      if (showOnly) {
+        fb.className = 'feedback close';
+        fb.innerHTML = `<strong>Answer:</strong> ${escapeHtml(expected[0])}<br><span class="muted">${escapeHtml(reverse[0])} · ${escapeHtml(c.exampleSpanish || '')} → ${escapeHtml(c.exampleEnglish || '')}</span>`;
+        state.quizAnswered = true;
+        return;
+      }
+      const result = checkAnswer($('quizInput').value, expected);
+      const p = progressFor(c.id);
+      p.attempts += 1;
+      p.lastSeen = new Date().toISOString();
+      if (result.status === 'correct') p.correct += 1;
+      if (result.status === 'close') p.close += 1;
+      if (result.status === 'wrong') { p.wrong += 1; p.difficult = true; }
+      if (p.correct >= 3 && p.wrong === 0) p.known = true;
+      saveProgress();
+      fb.className = `feedback ${result.status}`;
+      const label = result.status === 'correct' ? '✅ Correct' : result.status === 'close' ? '🟡 Close enough' : '❌ Not quite';
+      fb.innerHTML = `<strong>${label}</strong><br>Your answer: ${escapeHtml($('quizInput').value || '—')}<br>Expected: ${escapeHtml(expected.join(' / '))}<br><span class="muted">${escapeHtml(c.exampleSpanish || '')} → ${escapeHtml(c.exampleEnglish || '')}</span>`;
+      state.quizAnswered = true;
+    }
+    function updateStats() {
+      let attempts = 0, good = 0, known = 0, diff = 0;
+      for (const [id, p] of Object.entries(state.progress)) {
+        attempts += p.attempts || 0;
+        good += (p.correct || 0) + (p.close || 0);
+        if (p.known) known++;
+        if (p.difficult) diff++;
+      }
+      $('statAttempts').textContent = attempts;
+      $('statAccuracy').textContent = attempts ? `${Math.round(good / attempts * 100)}%` : '0%';
+      $('statKnown').textContent = known;
+      $('statDifficult').textContent = diff;
+      renderHardest();
+    }
+    function renderHardest() {
+      const rows = cards.map(c => ({c, p: progressFor(c.id)}))
+        .filter(x => x.p.attempts || x.p.difficult)
+        .sort((a,b) => (b.p.wrong + (b.p.difficult?2:0)) - (a.p.wrong + (a.p.difficult?2:0)))
+        .slice(0, 12);
+      $('hardestCards').innerHTML = rows.length ? rows.map(({c,p}) => `<div class="mini-row"><span><strong>${escapeHtml(displaySpanish(c))}</strong><br><span class="muted">${escapeHtml(displayEnglish(c))}</span></span><span>Wrong: ${p.wrong || 0}<br>Attempts: ${p.attempts || 0}</span></div>`).join('') : '<p class="muted">No attempts yet. Play the flashcard game first.</p>';
+    }
+    function switchTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.id === name));
+      if (name === 'random' && !state.randomCard) newRandom();
+      if (name === 'quiz' && !state.quizCard) newQuiz();
+      updateStats();
+    }
+    function bind() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+      ['search','categoryFilter','priorityFilter'].forEach(id => $(id).addEventListener('input', renderStudy));
+      $('shuffleStudy').addEventListener('click', () => { state.studyOrder = shuffle(state.studyOrder); renderStudy(); });
+      $('revealRandom').addEventListener('click', () => { state.randomRevealed = true; renderRandom(); });
+      $('nextRandom').addEventListener('click', newRandom);
+      $('knownRandom').addEventListener('click', () => { mark(state.randomCard, 'known'); newRandom(); });
+      $('difficultRandom').addEventListener('click', () => { mark(state.randomCard, 'difficult'); newRandom(); });
+      $('checkQuiz').addEventListener('click', () => checkQuiz(false));
+      $('skipQuiz').addEventListener('click', newQuiz);
+      $('showQuizAnswer').addEventListener('click', () => checkQuiz(true));
+      $('quizInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkQuiz(false); });
+      document.addEventListener('keydown', e => {
+        if (e.code === 'Space' && document.activeElement !== $('quizInput')) {
+          const quizVisible = $('quiz').classList.contains('active');
+          const randomVisible = $('random').classList.contains('active');
+          if (quizVisible && state.quizAnswered) { e.preventDefault(); newQuiz(); }
+          if (randomVisible) { e.preventDefault(); state.randomRevealed ? newRandom() : (state.randomRevealed = true, renderRandom()); }
+        }
+      });
+      $('resetProgress').addEventListener('click', () => {
+        if (confirm('Reset all Spanish dashboard progress?')) { state.progress = {}; localStorage.removeItem('spanishCrashProgress'); updateStats(); }
+      });
+      $('exportProgress').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(state.progress, null, 2)], {type:'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'spanish-progress.json'; a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+    initFilters(); bind(); renderStudy(); updateStats();
+  </script>
+</body>
+</html>
