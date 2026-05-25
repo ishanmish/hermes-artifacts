@@ -254,13 +254,17 @@
             </select>
             <button class="btn primary" id="lookupWordBtn">Lookup / Add</button>
           </div>
-          <div class="feedback close" style="display:block;margin-top:14px;">
+          <div id="geminiKeyHelp" class="feedback close" style="display:block;margin-top:14px;">
             <strong>Gemini key required once:</strong> paste your Gemini API key below, keep model as <code>gemini-2.5-flash</code>, then click Save. The key stays only in this browser’s localStorage; it is not committed into this public GitHub Pages file.
           </div>
-          <div class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
+          <div id="geminiControls" class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
             <input id="geminiApiKey" type="password" placeholder="Paste Gemini API key here — saved only in this browser" autocomplete="off" />
             <input id="geminiModel" placeholder="gemini-2.5-flash" />
             <button class="btn" id="saveGeminiSettings">Save key</button>
+          </div>
+          <div id="geminiSavedBar" class="feedback correct" style="display:none;margin-top:14px;">
+            <strong>Gemini key saved.</strong> Lookup will use Gemini Flash now.
+            <button class="btn small" id="editGeminiSettings" style="margin-left:10px;">Change key/model</button>
           </div>
           <div id="lookupResult" class="feedback close" style="display:none;"></div>
         </div>
@@ -529,21 +533,29 @@
         return { apiKey: '', model: 'gemini-2.5-flash' };
       }
     }
+    function setGeminiSettingsVisible(visible) {
+      if ($('geminiKeyHelp')) $('geminiKeyHelp').style.display = visible ? 'block' : 'none';
+      if ($('geminiControls')) $('geminiControls').style.display = visible ? 'grid' : 'none';
+      if ($('geminiSavedBar')) $('geminiSavedBar').style.display = visible ? 'none' : 'block';
+      if (visible && $('geminiApiKey')) setTimeout(() => $('geminiApiKey').focus(), 20);
+    }
     function saveGeminiSettings() {
       state.gemini = {
         apiKey: $('geminiApiKey').value.trim(),
         model: ($('geminiModel').value.trim() || 'gemini-2.5-flash')
       };
       localStorage.setItem('spanishCrashGeminiSettings', JSON.stringify(state.gemini));
+      if (state.gemini.apiKey) setGeminiSettingsVisible(false);
       const result = $('lookupResult');
       result.style.display = 'block';
-      result.className = 'feedback correct';
-      result.innerHTML = '<strong>Gemini settings saved in this browser.</strong>';
+      result.className = state.gemini.apiKey ? 'feedback correct' : 'feedback wrong';
+      result.innerHTML = state.gemini.apiKey ? '<strong>Gemini settings saved in this browser.</strong>' : '<strong>Paste a Gemini key before saving.</strong>';
     }
     function hydrateGeminiSettings() {
       if (!$('geminiApiKey')) return;
       $('geminiApiKey').value = state.gemini.apiKey || '';
       $('geminiModel').value = state.gemini.model || 'gemini-2.5-flash';
+      setGeminiSettingsVisible(!state.gemini.apiKey);
     }
     function loadCustomCards() {
       try {
@@ -1070,6 +1082,7 @@ JSON schema exactly:
       $('lookupFromSearch').addEventListener('click', () => lookupAndAddFromInput('search'));
       $('lookupWordBtn').addEventListener('click', () => lookupAndAddFromInput('lookup'));
       if ($('saveGeminiSettings')) $('saveGeminiSettings').addEventListener('click', saveGeminiSettings);
+      if ($('editGeminiSettings')) $('editGeminiSettings').addEventListener('click', () => setGeminiSettingsVisible(true));
       $('lookupInput').addEventListener('keydown', e => { if (e.key === 'Enter') lookupAndAddFromInput('lookup'); });
       $('revealRandom').addEventListener('click', () => { state.randomRevealed = true; renderRandom(); });
       $('nextRandom').addEventListener('click', newRandom);
