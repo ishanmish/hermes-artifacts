@@ -254,15 +254,14 @@
             </select>
             <button class="btn primary" id="lookupWordBtn">Lookup / Add</button>
           </div>
-          <details style="margin-top:14px;">
-            <summary class="muted">Gemini lookup settings</summary>
-            <div class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
-              <input id="geminiApiKey" type="password" placeholder="Gemini API key — saved only in this browser" autocomplete="off" />
-              <input id="geminiModel" placeholder="gemini-2.5-flash" />
-              <button class="btn" id="saveGeminiSettings">Save</button>
-            </div>
-            <p class="muted">I cannot hardcode a secret into the public dashboard. The key is stored in your browser localStorage only. If no Gemini key is set, lookup will stop and ask for one — no fake/local fallback cards.</p>
-          </details>
+          <div class="feedback close" style="display:block;margin-top:14px;">
+            <strong>Gemini key required once:</strong> paste your Gemini API key below, keep model as <code>gemini-2.5-flash</code>, then click Save. The key stays only in this browser’s localStorage; it is not committed into this public GitHub Pages file.
+          </div>
+          <div class="controls" style="grid-template-columns:minmax(240px,1fr) 200px 130px;margin-top:12px;">
+            <input id="geminiApiKey" type="password" placeholder="Paste Gemini API key here — saved only in this browser" autocomplete="off" />
+            <input id="geminiModel" placeholder="gemini-2.5-flash" />
+            <button class="btn" id="saveGeminiSettings">Save key</button>
+          </div>
           <div id="lookupResult" class="feedback close" style="display:none;"></div>
         </div>
         <div class="panel">
