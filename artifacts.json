@@ -1,5 +1,31 @@
 [
   {
+    "id": "2026-05-26-indian-resident-us-stocks-lrs-tax-guide",
+    "title": "Indian resident investing in U.S. stocks: LRS, taxes, charges, safety",
+    "summary": "Detailed guide to INR-to-U.S.-brokerage money movement under LRS, TCS/refunds, remittance charges, U.S. dividend withholding, Indian capital-gains tax, repatriation, broker safety, transferability, NRI caveats and estate-tax risk.",
+    "category": "finance",
+    "tags": [
+      "finance",
+      "tax",
+      "lrs",
+      "us-stocks",
+      "india",
+      "brokerage",
+      "nri",
+      "tcs",
+      "capital-gains"
+    ],
+    "status": "saved",
+    "created_at": "2026-05-26T13:15:00+05:30",
+    "updated_at": "2026-05-26T13:15:00+05:30",
+    "expires_at": null,
+    "importance": "reference",
+    "superseded_by": null,
+    "path": "finance/2026-05-26-indian-resident-us-stocks-lrs-tax-guide.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/finance/2026-05-26-indian-resident-us-stocks-lrs-tax-guide.html",
+    "template": "finance-research-guide"
+  },
+  {
     "id": "2026-05-26-scapia-vs-niyo-travel-card-community-research",
     "title": "Scapia vs Niyo: Indian traveller community preference",
     "summary": "Community comparison of Scapia vs Niyo for Indian travellers, now including official fees, cash withdrawal limits, ATM charges, forex markup, maintenance fees and hidden-charge caveats.",
