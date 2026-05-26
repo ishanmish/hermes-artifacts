@@ -15,9 +15,9 @@
 </head>
 <body><main class="wrap">
   <section class="hero">
-    <div class="badge">Updated 26 May 2026</div><div class="badge">For Indian tax-resident investors using LRS</div>
+    <div class="badge">Updated 26 May 2026</div><div class="badge">For Indian tax-resident investors using LRS</div><div class="badge">Now includes INDmoney + community platform notes</div>
     <h1>Indian resident → U.S. brokerage account: money flow, taxes, charges, limits, risks</h1>
-    <p class="sub">A practical map of how INR leaves India under LRS, what gets collected on the way, how gains/dividends are taxed, how to bring money back, and the hidden risks people usually miss.</p>
+    <p class="sub">A practical map of how INR leaves India under LRS, what gets collected on the way, how gains/dividends are taxed, how to bring money back, how INDmoney fits, what Reddit users worry about, and the hidden risks people usually miss.</p>
     <div class="callout warn"><b>Important distinction:</b> LRS applies to <b>resident individuals</b>. If you are truly an NRI using NRE/NRO funds, the rules are different: NRE funds are generally freely repatriable; NRO repatriation has its own USD 1m/year framework and tax paperwork. This guide assumes Indian tax resident + Indian bank account remitting to a U.S. broker.</div>
   </section>
 
@@ -122,18 +122,56 @@
     </div>
   </section>
 
-  <h2>7. Safety checklist</h2>
+  <h2>7. Platform view: where INDmoney fits</h2>
+  <section class="grid">
+    <div class="card">
+      <h3>INDmoney: current practical specifics</h3>
+      <ul>
+        <li><b>Structure:</b> INDmoney markets U.S. stock access from India through an IFSCA/GIFT-City-regulated setup, with U.S. clearing/broker relationships disclosed as <b>DriveWealth LLC</b> and <b>Alpaca Securities LLC</b>, both SEC/FINRA regulated. SIPC protection is shown as up to $500k including $250k cash, subject to SIPC scope.</li>
+        <li><b>Minimum:</b> INDmoney advertises fractional investing starting around <b>$1</b> and access to 10,000+ U.S. stocks/ETFs.</li>
+        <li><b>Account/AMC:</b> official page says <b>zero account opening fee</b> and <b>zero AMC</b>.</li>
+        <li><b>Funding/conversion:</b> official page says <b>zero INDmoney platform fee</b> for adding money/currency conversion, but bank FX conversion cost typically <b>0.5%–1.2%</b>. Supported/advertised bank integrations include HDFC, Axis, Federal, ICICI, Kotak, and IDFC First.</li>
+        <li><b>Brokerage:</b> current official page shows <b>0.25% per trade</b>. This matters: older community comments often discuss “zero brokerage”, but the current page is not zero brokerage.</li>
+        <li><b>Withdrawals:</b> current official page says <b>zero withdrawal fee</b> and withdrawal only to your verified Indian savings bank account; older Reddit comments mention prior $5/$20 style withdrawal charges, so treat old threads as historical.</li>
+        <li><b>Tax reports:</b> official page says taxation/transaction reports are free. Users still need to verify Schedule FA/foreign income/FTC handling with their CA.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>What Reddit/community users say about INDmoney</h3>
+      <ul>
+        <li><b>Positive:</b> convenience. Users like that remittance and U.S. investing are packaged inside an Indian app, with partner-bank flow instead of a fully manual wire process.</li>
+        <li><b>Mixed:</b> safety/custody worries. Some users say INDmoney does not itself hold the money/securities and points to bank + Alpaca/DriveWealth/clearing-broker custody; others remain uncomfortable because the app asks for PAN, Aadhaar/signature/KYC and aggregator-style access.</li>
+        <li><b>Operational complaints:</b> Reddit threads mention old order-stuck/cancel issues, slow support, deposit/statement upload delays, and difficulty closing/deleting accounts because linked bank/U.S. trading accounts had to be closed first.</li>
+        <li><b>Fee trust issue:</b> a recurring complaint is “started as zero/low cost, then charges changed”. Current official brokerage is 0.25% per trade, so the community concern is directionally valid even if old exact fee numbers are stale.</li>
+        <li><b>Tax/admin:</b> users repeatedly say global investing is more painful than the app marketing suggests: FX cost, remittance paperwork/TCS, and foreign-asset ITR reporting matter more than a slick UI.</li>
+        <li><b>Overall Reddit read:</b> INDmoney is seen as okay for convenience/small exploratory amounts, but not the community’s default “best” for serious or large long-term U.S. portfolios. For larger portfolios, Reddit comments more often point to IBKR or other established international brokers.</li>
+      </ul>
+    </div>
+    <div class="card full">
+      <h3>Are there cheaper or better alternatives?</h3>
+      <ul>
+        <li><b>Interactive Brokers (IBKR):</b> usually the serious-investor answer. Pros: established global broker, broad market access, low per-share commissions, institutional-grade tooling, easier in-kind transfer ecosystem. Cons: remittance is more DIY; Indian bank wire/FX/TCS frictions remain; interface/tax paperwork are less hand-held. IBKR’s U.S. stock examples show $1 on a 100-share × $25 fixed-pricing trade and $5 on 1,000 shares × $25; tiered pricing can be lower per share but adds venue/exchange/pass-through complexity. For larger portfolios or fewer/larger trades, it is often cheaper/better than app-wrapped Indian fintech routes.</li>
+        <li><b>Vested:</b> Indian-friendly UX and now has its own U.S. broker/dealer entity disclosed as VF Securities, member FINRA/SIPC. Pricing page shows U.S. stock/ETF brokerage at <b>0.25% of trade amount, max $35</b> on standard plans and <b>0.15%, max $35</b> on paid/premium plans; withdrawals show <b>$5/withdrawal</b> with some plans giving two free withdrawals/year. Better than INDmoney only if you value Vested’s UX/reporting or paid-plan economics; not automatically cheaper for small users.</li>
+        <li><b>Winvesta/Stockal/Appreciate/Fi-style routes:</b> may be convenient depending on current offers/partners, but scrutinize platform fee, inactive/reactivation fees, withdrawal fee, FX spread, supported universe, and who the actual U.S. broker/custodian is. Winvesta pricing visible during this check included a platform-fee style model and possible inactive/reactivation fees, so it is not a blanket “cheaper” answer.</li>
+        <li><b>Indian international mutual funds / ETFs / FoFs:</b> not a substitute for owning individual U.S. stocks, but often better for small investors who mainly want S&P 500/Nasdaq exposure without LRS remittance, W-8BEN, 1042-S, foreign broker statements, estate-tax exposure, or Schedule FA complexity. Watch expense ratios, tracking error, overseas investment limits, and taxation.</li>
+      </ul>
+      <div class="callout"><b>Bottom line:</b> if you want the least operational friction for a small experimental U.S. allocation, INDmoney is defensible but not “free” once brokerage + bank FX spread + tax admin are counted. If this is going to become a serious portfolio, benchmark INDmoney against IBKR using your actual remittance bank’s USD rate and expected trade size; IBKR is usually the cleaner long-term custody/platform choice, while the Indian apps win on onboarding convenience.</div>
+    </div>
+  </section>
+
+  <h2>8. Safety checklist</h2>
   <div class="card full">
     <ul>
-      <li><b>Broker custody:</b> prefer a known regulated U.S. broker/custodian. Check FINRA BrokerCheck/SEC status and whether account is at a SIPC member.</li>
+      <li><b>Broker custody:</b> prefer a known regulated U.S. broker/custodian. Check FINRA BrokerCheck/SEC status and whether account is at a SIPC member. For platform apps, identify the real clearing broker/custodian, not just the front-end app brand.</li>
       <li><b>SIPC:</b> protects missing securities/cash if a SIPC-member broker fails, up to $500k including $250k cash. It does not protect market losses, bad advice, FX losses, or tax/regulatory mistakes.</li>
       <li><b>FEMA/LRS compliance:</b> do not use LRS for margin trading, overseas derivatives/margin calls, crypto, or restricted destinations/purposes.</li>
       <li><b>Tax reporting risk:</b> the biggest practical risk for Indian residents is not buying Apple/MSFT; it is failing to report Schedule FA/foreign income/FTC correctly.</li>
+      <li><b>Exit risk:</b> before choosing a platform, check withdrawal limits/fees, account closure process, transfer-out/ACATS support, and whether holdings can be moved in-kind if you later want to leave.</li>
       <li><b>Currency risk:</b> your real return is USD asset return plus/minus INR/USD movement, minus FX spreads and taxes.</li>
     </ul>
   </div>
 
-  <h2>8. Decision view</h2>
+  <h2>9. Decision view</h2>
   <div class="callout">
     <b>Good use case:</b> long-term dollar diversification, access to specific U.S. stocks/ETFs, and willingness to handle tax paperwork. <br><br>
     <b>Bad use case:</b> frequent small remittances/trading, dividend-heavy portfolio, large direct U.S. holdings without estate planning, or if you hate ITR foreign-asset compliance.
@@ -149,6 +187,10 @@
       <li>IRS FDAP income and NRA withholding: <a href="https://www.irs.gov/individuals/international-taxpayers/fixed-determinable-annual-periodical-fdap-income">irs.gov FDAP</a>, <a href="https://www.irs.gov/individuals/international-taxpayers/nra-withholding">irs.gov NRA withholding</a></li>
       <li>India–U.S. tax treaty PDF: <a href="https://www.irs.gov/pub/irs-trty/india.pdf">irs.gov/pub/irs-trty/india.pdf</a></li>
       <li>SIPC investor protection: <a href="https://www.sipc.org/for-investors/what-sipc-protects">sipc.org/for-investors/what-sipc-protects</a></li>
+      <li>INDmoney U.S. stocks official product/charges page checked 26 May 2026: <a href="https://www.indmoney.com/us-stocks">indmoney.com/us-stocks</a></li>
+      <li>Vested pricing page checked 26 May 2026: <a href="https://vestedfinance.com/pricing">vestedfinance.com/pricing</a></li>
+      <li>Interactive Brokers India U.S. stock commissions page checked 26 May 2026: <a href="https://www.interactivebrokers.co.in/en/pricing/commissions-stocks.php">interactivebrokers.co.in commissions</a></li>
+      <li>Representative Reddit threads reviewed via Redlib/Reddit mirrors: <a href="https://www.reddit.com/r/IndiaInvestments/comments/wvztrf/thoughts_about_investing_in_us_stocks_via_indmoney/">INDmoney thoughts</a>, <a href="https://www.reddit.com/r/IndiaInvestments/comments/i3iz1h/be_careful_about_investing_in_us_stocks_with/">old INDmoney caution thread</a>, <a href="https://www.reddit.com/r/IndianStockMarket/comments/16vx294/best_indian_broker_to_invest_in_us_stocks/">best broker discussion</a>, <a href="https://www.reddit.com/r/personalfinanceindia/comments/18zubzj/information_about_indmoney/">INDmoney privacy/safety discussion</a>, <a href="https://www.reddit.com/r/personalfinanceindia/comments/1810lka/indian_investing_in_us_stock_market/">Indian investing in U.S. stocks</a>, <a href="https://www.reddit.com/r/IndianStreetBets/comments/ykc76u/indmoney_or_vested/">INDmoney or Vested</a>.</li>
     </ul>
     <p class="mini">This is research guidance, not CA/legal advice. For large sums or NRI/residency transitions, confirm with a cross-border CA.</p>
   </div>
