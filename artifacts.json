@@ -1,5 +1,30 @@
 [
   {
+    "id": "2026-05-26-scapia-vs-niyo-travel-card-community-research",
+    "title": "Scapia vs Niyo: Indian traveller community preference",
+    "summary": "Live Reddit/X/community synthesis of how Indian travellers compare Scapia and Niyo for zero-forex travel spends, ATM cash, reliability, fees, and backups.",
+    "category": "research",
+    "tags": [
+      "travel",
+      "credit-cards",
+      "forex",
+      "india",
+      "reddit",
+      "x",
+      "scapia",
+      "niyo"
+    ],
+    "status": "saved",
+    "created_at": "2026-05-26T11:41:13.486628+05:30",
+    "updated_at": "2026-05-26T11:41:13.486628+05:30",
+    "expires_at": null,
+    "importance": "reference",
+    "superseded_by": null,
+    "path": "research/2026-05-26-scapia-vs-niyo-travel-card-community-research.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-26-scapia-vs-niyo-travel-card-community-research.html",
+    "template": "14-research-feature-explainer.html"
+  },
+  {
     "id": "2026-05-25-trading-ideas-dashboard",
     "title": "Indian Trading Ideas Dashboard",
     "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
