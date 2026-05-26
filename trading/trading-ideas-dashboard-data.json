@@ -1,5 +1,445 @@
 [
   {
+    "id": "ITIS-20260526-1",
+    "title": "StockCharts Parabolic SAR reversal, adapted to NIFTY daily long/cash proxy",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/parabolic-sar",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC index; Parabolic SAR with AF step 0.02 and max 0.20.",
+    "signal_rule": "Parabolic SAR flips from above price to below price on prior daily bar (bullish reversal).",
+    "entry_timing": "Enter next session open after bullish SAR flip.",
+    "exit_timing": "Exit next session open after SAR flips from below price to above price.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "parabolic_sar_flip",
+    "run_date": "2026-05-26",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/parabolic-sar",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.10142828686123506,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.10142828686123506,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 2.17%, total 25.63%, max DD -29.22%; same-span NIFTY buy-hold CAGR 10.14%, total 178.96%, max DD -38.44%.",
+    "verdict": "Needs more work: lower drawdown but return trails same-span benchmark.",
+    "caveats": "Data coverage 2015-06-26\u21922026-05-12; OHLC filtered rows 0; index proxy is not directly tradable; execution requires NIFTY futures/ETF mapping; next-open fills from prior-close signals; 5 bps/side costs; ignores taxes, impact, roll/cash yield; survivorship is lower for index than stock universe but proxy/execution/sample-length caveats remain. Source HTTP 200 verified.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; Parabolic SAR with AF step 0.02 and max 0.20.\nSignal rule: Parabolic SAR flips from above price to below price on prior daily bar (bullish reversal).\nEntry timing: Enter next session open after bullish SAR flip.\nExit timing: Exit next session open after SAR flips from below price to above price.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; Parabolic SAR with AF step 0.02 and max 0.20.\nSignal rule: Parabolic SAR flips from above price to below price on prior daily bar (bullish reversal).\nEntry timing: Enter next session open after bullish SAR flip.\nExit timing: Exit next session open after SAR flips from below price to above price.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "total_return": 0.2562704320338398,
+    "cagr": 0.02171718725421612,
+    "max_dd": -0.2922052117980416,
+    "win_rate": 0.46825396825396826,
+    "trades": 126,
+    "trade_count": 126,
+    "metrics": {
+      "total_return": 0.2562704320338398,
+      "cagr": 0.02171718725421612,
+      "max_drawdown": -0.2922052117980416,
+      "trade_count": 126,
+      "win_rate": 0.46825396825396826,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/parabolic-sar",
+      "bytes_checked": 120000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2015-06-29",
+        "entry_price": 8247.0498046875,
+        "exit_date": "2015-06-30",
+        "exit_price": 8316.349609375,
+        "return": 0.007898779736456474,
+        "win": true
+      },
+      {
+        "entry_date": "2015-07-02",
+        "entry_price": 8471.9501953125,
+        "exit_date": "2015-07-28",
+        "exit_price": 8371.099609375,
+        "return": -0.012398105904860346,
+        "win": false
+      },
+      {
+        "entry_date": "2015-08-06",
+        "entry_price": 8585.7998046875,
+        "exit_date": "2015-08-13",
+        "exit_price": 8384.4501953125,
+        "return": -0.023939742266112174,
+        "win": false
+      },
+      {
+        "entry_date": "2015-09-14",
+        "entry_price": 7811.10009765625,
+        "exit_date": "2015-09-24",
+        "exit_price": 7838.39990234375,
+        "return": 0.002993253759908221,
+        "win": true
+      },
+      {
+        "entry_date": "2015-10-06",
+        "entry_price": 8180.4501953125,
+        "exit_date": "2015-10-29",
+        "exit_price": 8175.4501953125,
+        "return": -0.0011109076983151223,
+        "win": false
+      },
+      {
+        "entry_date": "2015-11-23",
+        "entry_price": 7869.5,
+        "exit_date": "2015-12-07",
+        "exit_price": 7816.5498046875,
+        "return": -0.007225169351908423,
+        "win": false
+      },
+      {
+        "entry_date": "2015-12-18",
+        "entry_price": 7828.89990234375,
+        "exit_date": "2016-01-06",
+        "exit_price": 7788.0498046875,
+        "return": -0.005715250305499242,
+        "win": false
+      },
+      {
+        "entry_date": "2016-01-27",
+        "entry_price": 7469.60009765625,
+        "exit_date": "2016-02-10",
+        "exit_price": 7264.2998046875,
+        "return": -0.02797103461223449,
+        "win": false
+      },
+      {
+        "entry_date": "2016-03-02",
+        "entry_price": 7321.7001953125,
+        "exit_date": "2016-03-30",
+        "exit_price": 7651.10009765625,
+        "return": 0.04446704230027909,
+        "win": true
+      },
+      {
+        "entry_date": "2016-04-01",
+        "entry_price": 7718.0498046875,
+        "exit_date": "2016-04-06",
+        "exit_price": 7636.0498046875,
+        "return": -0.011119133339904441,
+        "win": false
+      }
+    ],
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260526-1_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_trades.csv",
+    "local_report_paths": {
+      "html": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_report.html",
+      "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_equity.csv",
+      "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-1_trades.csv"
+    }
+  },
+  {
+    "id": "ITIS-20260526-2",
+    "title": "StockCharts CCI +100/-100 trend signal, adapted to NIFTY daily long/cash proxy",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC index; 20-day Commodity Channel Index from typical price.",
+    "signal_rule": "CCI(20) crosses above +100 on prior close data (strength / uptrend trigger).",
+    "entry_timing": "Enter next session open after CCI crosses above +100.",
+    "exit_timing": "Exit next session open after CCI crosses below -100 (weakness / downtrend trigger).",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "cci_20_plus100_minus100",
+    "run_date": "2026-05-26",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.10142828686123506,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.10142828686123506,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 4.19%, total 54.58%, max DD -18.70%; same-span NIFTY buy-hold CAGR 10.14%, total 178.96%, max DD -38.44%.",
+    "verdict": "Needs more work: lower drawdown but return trails same-span benchmark.",
+    "caveats": "Data coverage 2015-06-26\u21922026-05-12; OHLC filtered rows 0; index proxy is not directly tradable; execution requires NIFTY futures/ETF mapping; next-open fills from prior-close signals; 5 bps/side costs; ignores taxes, impact, roll/cash yield; survivorship is lower for index than stock universe but proxy/execution/sample-length caveats remain. Source HTTP 200 verified.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; 20-day Commodity Channel Index from typical price.\nSignal rule: CCI(20) crosses above +100 on prior close data (strength / uptrend trigger).\nEntry timing: Enter next session open after CCI crosses above +100.\nExit timing: Exit next session open after CCI crosses below -100 (weakness / downtrend trigger).\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; 20-day Commodity Channel Index from typical price.\nSignal rule: CCI(20) crosses above +100 on prior close data (strength / uptrend trigger).\nEntry timing: Enter next session open after CCI crosses above +100.\nExit timing: Exit next session open after CCI crosses below -100 (weakness / downtrend trigger).\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "total_return": 0.5458009873533078,
+    "cagr": 0.04186792734797451,
+    "max_dd": -0.1870342647927956,
+    "win_rate": 0.43137254901960786,
+    "trades": 51,
+    "trade_count": 51,
+    "metrics": {
+      "total_return": 0.5458009873533078,
+      "cagr": 0.04186792734797451,
+      "max_drawdown": -0.1870342647927956,
+      "trade_count": 51,
+      "win_rate": 0.43137254901960786,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+      "bytes_checked": 120000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2015-09-22",
+        "entry_price": 8014.7998046875,
+        "exit_date": "2015-11-03",
+        "exit_price": 8086.35009765625,
+        "return": 0.008422807751285344,
+        "win": true
+      },
+      {
+        "entry_date": "2015-12-30",
+        "entry_price": 7938.60009765625,
+        "exit_date": "2016-01-08",
+        "exit_price": 7611.64990234375,
+        "return": -0.04166427533757777,
+        "win": false
+      },
+      {
+        "entry_date": "2016-03-04",
+        "entry_price": 7505.39990234375,
+        "exit_date": "2016-06-27",
+        "exit_price": 8039.35009765625,
+        "return": 0.07060656689301625,
+        "win": true
+      },
+      {
+        "entry_date": "2016-07-01",
+        "entry_price": 8313.0498046875,
+        "exit_date": "2016-08-29",
+        "exit_price": 8583.75,
+        "return": 0.0320470015904728,
+        "win": true
+      },
+      {
+        "entry_date": "2016-08-31",
+        "entry_price": 8754.0498046875,
+        "exit_date": "2016-09-30",
+        "exit_price": 8581.5,
+        "return": -0.020200999381201568,
+        "win": false
+      },
+      {
+        "entry_date": "2016-12-12",
+        "entry_price": 8230.650390625,
+        "exit_date": "2016-12-23",
+        "exit_price": 7972.5,
+        "return": -0.03184883674850081,
+        "win": false
+      },
+      {
+        "entry_date": "2017-01-06",
+        "entry_price": 8281.849609375,
+        "exit_date": "2017-06-28",
+        "exit_price": 9520.2001953125,
+        "return": 0.14895108508652788,
+        "win": true
+      },
+      {
+        "entry_date": "2017-07-07",
+        "entry_price": 9670.349609375,
+        "exit_date": "2017-08-11",
+        "exit_price": 9712.150390625,
+        "return": 0.003820410589796319,
+        "win": true
+      },
+      {
+        "entry_date": "2017-09-12",
+        "entry_price": 10056.849609375,
+        "exit_date": "2017-09-27",
+        "exit_price": 9920.599609375,
+        "return": -0.01404120627130101,
+        "win": false
+      },
+      {
+        "entry_date": "2017-10-16",
+        "entry_price": 10207.400390625,
+        "exit_date": "2017-11-16",
+        "exit_price": 10152.900390625,
+        "return": -0.005836593835393256,
+        "win": false
+      }
+    ],
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260526-2_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_trades.csv",
+    "local_report_paths": {
+      "html": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_report.html",
+      "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_equity.csv",
+      "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-2_trades.csv"
+    }
+  },
+  {
+    "id": "ITIS-20260526-3",
+    "title": "StockCharts RSI oversold rebound, adapted to NIFTY daily long/cash proxy",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC index; Wilder RSI(14).",
+    "signal_rule": "RSI(14) crosses back above 30 after being below 30 on prior daily close (oversold rebound).",
+    "entry_timing": "Enter next session open after RSI crosses above 30.",
+    "exit_timing": "Exit next session open after RSI crosses below 70 from above; force-exit at final close if still open.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "rsi14_30_70_rebound",
+    "run_date": "2026-05-26",
+    "source": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.10142828686123506,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.10142828686123506,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 2.42%, total 28.84%, max DD -33.19%; same-span NIFTY buy-hold CAGR 10.14%, total 178.96%, max DD -38.44%.",
+    "verdict": "Needs more work: lower drawdown but return trails same-span benchmark.",
+    "caveats": "Data coverage 2015-06-26\u21922026-05-12; OHLC filtered rows 0; index proxy is not directly tradable; execution requires NIFTY futures/ETF mapping; next-open fills from prior-close signals; 5 bps/side costs; ignores taxes, impact, roll/cash yield; survivorship is lower for index than stock universe but proxy/execution/sample-length caveats remain. Source HTTP 200 verified.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; Wilder RSI(14).\nSignal rule: RSI(14) crosses back above 30 after being below 30 on prior daily close (oversold rebound).\nEntry timing: Enter next session open after RSI crosses above 30.\nExit timing: Exit next session open after RSI crosses below 70 from above; force-exit at final close if still open.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC index; Wilder RSI(14).\nSignal rule: RSI(14) crosses back above 30 after being below 30 on prior daily close (oversold rebound).\nEntry timing: Enter next session open after RSI crosses above 30.\nExit timing: Exit next session open after RSI crosses below 70 from above; force-exit at final close if still open.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side.\nWhy systematic: fixed public indicator rule; no discretionary tips.",
+    "total_return": 0.2884201492479588,
+    "cagr": 0.024151392774998115,
+    "max_dd": -0.3319147646752917,
+    "win_rate": 0.6666666666666666,
+    "trades": 9,
+    "trade_count": 9,
+    "metrics": {
+      "total_return": 0.2884201492479588,
+      "cagr": 0.024151392774998115,
+      "max_drawdown": -0.3319147646752917,
+      "trade_count": 9,
+      "win_rate": 0.6666666666666666,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+      "bytes_checked": 120000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2015-08-28",
+        "entry_price": 8053.7001953125,
+        "exit_date": "2016-06-07",
+        "exit_price": 8235.5498046875,
+        "return": 0.022068345004461642,
+        "win": true
+      },
+      {
+        "entry_date": "2016-11-24",
+        "entry_price": 8011.7998046875,
+        "exit_date": "2017-02-01",
+        "exit_price": 8570.349609375,
+        "return": 0.0691810383927125,
+        "win": true
+      },
+      {
+        "entry_date": "2018-10-11",
+        "entry_price": 10169.7998046875,
+        "exit_date": "2019-03-26",
+        "exit_price": 11375.2001953125,
+        "return": 0.11796818163267764,
+        "win": true
+      },
+      {
+        "entry_date": "2019-08-09",
+        "entry_price": 11087.900390625,
+        "exit_date": "2019-11-06",
+        "exit_price": 11911.5,
+        "return": 0.07374199177207008,
+        "win": true
+      },
+      {
+        "entry_date": "2020-03-04",
+        "entry_price": 11351.349609375,
+        "exit_date": "2020-07-09",
+        "exit_price": 10755.5498046875,
+        "return": -0.052960890138854855,
+        "win": false
+      },
+      {
+        "entry_date": "2022-05-18",
+        "entry_price": 16318.150390625,
+        "exit_date": "2022-08-23",
+        "exit_price": 17357.349609375,
+        "return": 0.06315179841321705,
+        "win": true
+      },
+      {
+        "entry_date": "2023-10-30",
+        "entry_price": 19053.400390625,
+        "exit_date": "2023-12-21",
+        "exit_price": 21033.94921875,
+        "return": 0.10339528971872958,
+        "win": true
+      },
+      {
+        "entry_date": "2024-10-29",
+        "entry_price": 24328.849609375,
+        "exit_date": "2025-03-27",
+        "exit_price": 23433.94921875,
+        "return": -0.037265114454282156,
+        "win": false
+      },
+      {
+        "entry_date": "2026-01-23",
+        "entry_price": 25344.599609375,
+        "exit_date": "2026-05-12",
+        "exit_price": 23379.55078125,
+        "return": -0.0775332362085579,
+        "win": false,
+        "forced_final_close": true
+      }
+    ],
+    "report_path": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_report.html",
+    "file_url": "file:///Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260526-3_report.html",
+    "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_equity.csv",
+    "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_trades.csv",
+    "local_report_paths": {
+      "html": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_report.html",
+      "equity_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_equity.csv",
+      "trades_csv": "/Users/ishanmishra/Desktop/Playground/SHOP/backtests/daily_scout_20260526/ITIS-20260526-3_trades.csv"
+    }
+  },
+  {
     "id": "ITIS-20260525-1",
     "title": "StockCharts moving-average golden/death cross, adapted to NIFTY index proxy",
     "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/moving-averages-simple-and-exponential",
