@@ -1,5 +1,98 @@
 [
   {
+    "id": "2026-05-27-I9c8STV7Hnw",
+    "video_url": "https://www.youtube.com/watch?v=I9c8STV7Hnw",
+    "title": "Moonshots: Salim Ismail on the Organizational Singularity",
+    "channel": "Moonshots",
+    "published_at": null,
+    "summarized_at": "2026-05-27T21:20:00+05:30",
+    "transcript_source": "yt-dlp auto subtitles",
+    "word_limit": 350,
+    "tags": [
+      "youtube",
+      "summary",
+      "ai",
+      "organizations",
+      "agents"
+    ],
+    "brief": "Peter Diamandis and Salim Ismail argue that AI-native agentic workflows are breaking the old company model built around hierarchy, coordination costs, and human-to-human approvals. They call the replacement model the organizational singularity: companies organized around intelligence, learning loops, governance, and AI agents rather than static org charts. Their recommended path is not to retrofit the existing company directly, but to build an AI-native digital twin at the edge, copy workflows into it, validate quality, and migrate only after the new loop improves faster than the legacy workflow.",
+    "key_insights": [
+      "The video frames AI as a direct challenge to Ronald Coase's theory of the firm: when execution becomes cheaper than meetings, traditional coordination advantages weaken.",
+      "The proposed organization is organized around intelligence rather than hierarchy, with purpose encoded as a protocol that guides both human and AI agents.",
+      "The intelligence stack resembles the OODA loop: purpose, sensing, interpretation, decision, orchestration, and learning, wrapped by governance and assurance.",
+      "Governance is treated as core infrastructure, including trusted evals, searchable logs, granular rollback, policy-controlled APIs, agent passports, and human review queues.",
+      "Humans shift toward accountability, judgment, dashboard oversight, exception handling, problem solving, and efficiency improvement.",
+      "Middle management is expected to change the most because much of its current role is coordination, aggregation, and reporting.",
+      "The suggested defensive moats are proprietary data, regulation, customer relationship, brand, purpose, and especially faster learning loops.",
+      "For companies above roughly 50 people, the speakers argue that transformation should happen at the edge because the existing organization's immune system resists disruption.",
+      "The digital twin approach copies workflows such as invoice processing into a separate AI-native entity, runs them in parallel, checks quality, and then gradually retires the old process.",
+      "They predict a five-to-seven-year turbulent transition for surviving companies, with many firms becoming much smaller and more agent-enabled."
+    ],
+    "key_takeaways": [
+      "Ask whether a two- or three-person AI-native team could replicate a high-margin line of your business in 60 to 90 days.",
+      "Do not treat AI as a tool pasted onto old workflows; redesign workflows around agents, data access, governance, and recursive learning.",
+      "Start with backcasting: define what the AI-native version of the company should look like, then work backward to the first workflows to migrate.",
+      "Score organizational drag before transformation, especially approval layers and whether AI is a first-class operating capability.",
+      "Map prescriptive workflows and tacit knowledge before moving them into an AI-native system.",
+      "Create a separate edge organization or digital twin for larger companies, with CEO and board support, rather than risking the cash-generating core.",
+      "Use humans where judgment matters most: approvals, oversight, exception handling, and strategic accountability.",
+      "Build apprenticeship and retraining paths so people can move from routine coordination work into higher-level judgment and problem-solving roles."
+    ],
+    "actionable_points": [
+      "Inventory high-margin business lines that could be attacked by a small AI-native team.",
+      "Pick one standardized workflow, such as invoice processing, demand forecasting, receipt confirmation, or customer support, as a digital-twin pilot.",
+      "Document hidden tacit knowledge before automating a workflow.",
+      "Cut approval steps until a workflow can move quickly enough to be automated safely.",
+      "Set up governance primitives before granting agents broad access: logs, evals, rollback, policy permissions, and human review queues.",
+      "Run the new AI-native workflow in parallel with the old one until quality and improvement rate are proven.",
+      "Give the edge team direct CEO sponsorship and explicit board support if the work may disrupt the existing business."
+    ],
+    "timestamped_highlights": [
+      {
+        "time": "0:00",
+        "note": "The opening question asks whether two people with AI tools could replicate a high-margin business line in 60 to 90 days."
+      },
+      {
+        "time": "4:30",
+        "note": "Ismail explains why Coase's theory of the firm weakens when AI drives down execution costs."
+      },
+      {
+        "time": "10:55",
+        "note": "The organizational singularity is defined as organizing around intelligence instead of hierarchy."
+      },
+      {
+        "time": "12:49",
+        "note": "The intelligence stack is compared to the OODA loop: observe, orient, decide, act."
+      },
+      {
+        "time": "13:13",
+        "note": "Governance and assurance are described as the harness around agents, including constraints and oversight."
+      },
+      {
+        "time": "18:10",
+        "note": "Agent passports, policy-controlled APIs, object metadata, and liability frameworks are proposed for agent governance."
+      },
+      {
+        "time": "27:50",
+        "note": "The speakers argue that larger companies should build disruptive AI-native systems at the edge, not inside the legacy core."
+      },
+      {
+        "time": "31:45",
+        "note": "The edge digital twin workflow is described: copy the workflow, fork the data, run in parallel, quality-check, then migrate."
+      },
+      {
+        "time": "38:55",
+        "note": "The REWRITE methodology starts with backcasting from the desired AI-native company."
+      },
+      {
+        "time": "45:30",
+        "note": "The new architecture is contrasted with legacy ERP: cloud/connectivity, accessible data lake, custom apps, AI, and agents."
+      }
+    ],
+    "brief_conclusion": "The video's core claim is that organizations must become AI-native systems with recursive learning loops, not merely old hierarchies using AI tools. The practical path is to build a governed digital twin at the edge, migrate workflows carefully, and let humans move upward into judgment, oversight, and exception handling.",
+    "notes": "Summary is based on extracted English auto subtitles. Exact title/channel metadata was inferred from transcript context and may need correction if YouTube metadata differs."
+  },
+  {
     "id": "2026-05-27-OtkNABB8Ras",
     "video_url": "https://www.youtube.com/watch?v=OtkNABB8Ras&pp=ugUEEgJlbg%3D%3D",
     "title": "Why Fixing the UK Is So Hard",
