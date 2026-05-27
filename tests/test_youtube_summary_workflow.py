@@ -31,6 +31,14 @@ def test_public_dashboard_loads_static_data_before_local_helper_probe():
     assert "if(!(await loadFromLocalApi())) await loadStaticData();" not in html
 
 
+def test_public_dashboard_keeps_archive_status_when_helper_is_offline():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    assert "Local helper offline; public archive is still visible." in html
+
+
 def test_create_summary_from_url_fetches_summarizes_and_saves(tmp_path, monkeypatch):
     data_file = tmp_path / "video" / "youtube-summary-data.json"
     manifest = tmp_path / "artifacts.json"

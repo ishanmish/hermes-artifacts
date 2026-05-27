@@ -106,7 +106,8 @@ async function loadFromLocalApi(){
     return true;
   }catch(e){
     apiOnline=false;
-    setStatus(helperUnavailableMessage(),'warn');
+    if(videos.length) setStatus(`Local helper offline; public archive is still visible. Start the helper only when adding a new video.`,'warn');
+    else setStatus(helperUnavailableMessage(),'warn');
     return false;
   }
 }
