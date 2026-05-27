@@ -14,12 +14,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import shlex
+import subprocess
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +31,9 @@ DATA_FILE = ROOT / "video" / "youtube-summary-data.json"
 MANIFEST = ROOT / "artifacts.json"
 DASHBOARD_PATH = "video/youtube-summary-dashboard.html"
 DASHBOARD_URL = "https://ishanmish.github.io/hermes-artifacts/video/youtube-summary-dashboard.html"
+DEFAULT_SERVICE_HOST = "127.0.0.1"
+DEFAULT_SERVICE_PORT = 8765
+DEFAULT_WORD_LIMIT = 350
 
 SUMMARY_PROMPT = """Video Summary Assistant: Highlight Insights, Takeaways, and Actionable Points
 
@@ -216,6 +223,133 @@ def normalize_summary(summary: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
+def extract_json_object(text: str) -> dict[str, Any]:
+    """Parse a JSON object from raw model output, including fenced JSON."""
+    raw = text.strip()
+    fenced = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw, re.DOTALL | re.IGNORECASE)
+    if fenced:
+        raw = fenced.group(1)
+    else:
+        start = raw.find("{")
+        end = raw.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            raw = raw[start : end + 1]
+    parsed = json.loads(raw)
+    if not isinstance(parsed, dict):
+        raise ValueError("Summary response must be a JSON object")
+    return parsed
+
+
+def _candidate_hermes_roots() -> list[Path]:
+    candidates: list[Path] = []
+    env_root = os.getenv("HERMES_AGENT_ROOT")
+    if env_root:
+        candidates.append(Path(env_root).expanduser())
+    candidates.extend(
+        [
+            ROOT.parent / "Hermes",
+            ROOT.parent / "hermes-agent",
+            Path.cwd(),
+        ]
+    )
+    return candidates
+
+
+def _run_summary_prompt(prompt: str) -> str:
+    command = os.getenv("HERMES_YOUTUBE_SUMMARY_COMMAND") or os.getenv("YOUTUBE_SUMMARY_COMMAND")
+    if command:
+        proc = subprocess.run(
+            shlex.split(command),
+            input=prompt,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip() or f"Summary command failed: {command}")
+        return proc.stdout
+
+    for root in _candidate_hermes_roots():
+        if (root / "run_agent.py").exists():
+            sys.path.insert(0, str(root))
+            break
+
+    try:
+        from run_agent import AIAgent
+    except Exception as exc:  # noqa: BLE001 - dashboard helper boundary
+        raise RuntimeError(
+            "Could not import Hermes. Run this helper from beside the Hermes checkout, "
+            "set HERMES_AGENT_ROOT, or set HERMES_YOUTUBE_SUMMARY_COMMAND."
+        ) from exc
+
+    agent = AIAgent(
+        platform="youtube-summary-dashboard",
+        max_iterations=1,
+        quiet_mode=True,
+        skip_memory=True,
+        skip_context_files=True,
+        enabled_toolsets=[],
+    )
+    return agent.chat(prompt).strip()
+
+
+def build_summary_prompt(payload: dict[str, Any], word_limit: int) -> str:
+    transcript = str(payload.get("transcript_text") or "")[:120000]
+    highlights = payload.get("timestamped_transcript") or []
+    highlight_sample = highlights[:160] if isinstance(highlights, list) else []
+    metadata = {
+        "video_id": payload.get("video_id"),
+        "video_url": payload.get("video_url"),
+        "language": payload.get("language"),
+        "transcript_source": payload.get("transcript_source"),
+        "word_limit": word_limit,
+        "timestamped_transcript_sample": highlight_sample,
+    }
+    return (
+        f"{SUMMARY_PROMPT}\n\n"
+        f"Use a maximum of {word_limit} words unless the user later requests a different length.\n"
+        "Return only the JSON object, with no prose before or after it.\n\n"
+        "Metadata:\n"
+        f"{json.dumps(metadata, ensure_ascii=False, indent=2)}\n\n"
+        "Transcript:\n"
+        f"{transcript}"
+    )
+
+
+def summarize_transcript_payload(
+    payload: dict[str, Any],
+    *,
+    word_limit: int = DEFAULT_WORD_LIMIT,
+    runner: Callable[[str], str] | None = None,
+) -> dict[str, Any]:
+    if not str(payload.get("transcript_text") or "").strip():
+        raise ValueError("Transcript is empty")
+
+    prompt = build_summary_prompt(payload, word_limit)
+    response = (runner or _run_summary_prompt)(prompt)
+    summary = extract_json_object(response)
+
+    video_id = str(payload.get("video_id") or extract_video_id(str(payload.get("video_url") or "")))
+    summary.setdefault("id", f"{now_iso()[:10]}-{video_id}")
+    summary.setdefault("video_url", payload.get("video_url") or canonical_url(video_id))
+    summary.setdefault("title", f"YouTube video {video_id}")
+    summary.setdefault("summarized_at", now_iso())
+    summary.setdefault("transcript_source", payload.get("transcript_source") or "")
+    summary.setdefault("word_limit", word_limit)
+    if not summary.get("timestamped_highlights") and payload.get("timestamped_transcript"):
+        summary["timestamped_highlights"] = [
+            {"time": item.get("time", ""), "note": item.get("text", "")}
+            for item in payload.get("timestamped_transcript", [])[:8]
+            if isinstance(item, dict)
+        ]
+
+    normalized = normalize_summary(summary)
+    errors = validate_summary(normalized)
+    if errors:
+        raise ValueError("Invalid summary: " + "; ".join(errors))
+    return normalized
+
+
 def upsert_summary(summary: dict[str, Any], *, replace: bool) -> tuple[str, int]:
     summary = normalize_summary(summary)
     errors = validate_summary(summary)
@@ -241,6 +375,128 @@ def upsert_summary(summary: dict[str, Any], *, replace: bool) -> tuple[str, int]
     save_json(DATA_FILE, items)
     touch_manifest()
     return action, len(items)
+
+
+def create_summary_from_url(
+    url: str,
+    *,
+    languages: list[str],
+    word_limit: int = DEFAULT_WORD_LIMIT,
+    runner: Callable[[str], str] | None = None,
+    replace: bool = False,
+) -> dict[str, Any]:
+    payload = fetch_transcript(url, languages)
+    summary = summarize_transcript_payload(payload, word_limit=word_limit, runner=runner)
+    action, total = upsert_summary(summary, replace=replace)
+    return {
+        "ok": True,
+        "action": action,
+        "total": total,
+        "summary": summary,
+        "items": load_json(DATA_FILE, []),
+        "dashboard_url": DASHBOARD_URL,
+    }
+
+
+class SummaryHTTPServer(ThreadingHTTPServer):
+    daemon_threads = True
+
+    def __init__(
+        self,
+        server_address: tuple[str, int],
+        request_handler: type[BaseHTTPRequestHandler],
+        *,
+        languages: list[str],
+        word_limit: int,
+        replace: bool,
+    ) -> None:
+        super().__init__(server_address, request_handler)
+        self.languages = languages
+        self.word_limit = word_limit
+        self.replace = replace
+
+
+class SummaryRequestHandler(BaseHTTPRequestHandler):
+    server: SummaryHTTPServer
+
+    def log_message(self, fmt: str, *args: Any) -> None:
+        print(f"[youtube-summary] {self.address_string()} - {fmt % args}", file=sys.stderr)
+
+    def _cors(self) -> None:
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+
+    def _json(self, status: int, payload: dict[str, Any]) -> None:
+        data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        self.send_response(status)
+        self._cors()
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def _read_json(self) -> dict[str, Any]:
+        length = int(self.headers.get("Content-Length") or "0")
+        if length <= 0:
+            return {}
+        body = self.rfile.read(length).decode("utf-8")
+        parsed = json.loads(body)
+        if not isinstance(parsed, dict):
+            raise ValueError("Request body must be a JSON object")
+        return parsed
+
+    def do_OPTIONS(self) -> None:  # noqa: N802 - http.server hook
+        self.send_response(204)
+        self._cors()
+        self.end_headers()
+
+    def do_GET(self) -> None:  # noqa: N802 - http.server hook
+        path = urlparse(self.path).path.rstrip("/") or "/"
+        if path == "/health":
+            self._json(
+                200,
+                {
+                    "ok": True,
+                    "dashboard_url": DASHBOARD_URL,
+                    "total": len(load_json(DATA_FILE, [])),
+                },
+            )
+            return
+        if path == "/summaries":
+            self._json(200, {"ok": True, "items": load_json(DATA_FILE, []), "dashboard_url": DASHBOARD_URL})
+            return
+        if path == "/prompt":
+            self._json(200, {"ok": True, "prompt": SUMMARY_PROMPT})
+            return
+        self._json(404, {"ok": False, "error": "Not found"})
+
+    def do_POST(self) -> None:  # noqa: N802 - http.server hook
+        path = urlparse(self.path).path.rstrip("/") or "/"
+        if path != "/summaries":
+            self._json(404, {"ok": False, "error": "Not found"})
+            return
+        try:
+            body = self._read_json()
+            url = str(body.get("url") or body.get("text") or "").strip()
+            if not url:
+                raise ValueError("Paste a YouTube URL.")
+            languages = body.get("languages") or self.server.languages
+            if isinstance(languages, str):
+                languages = [item.strip() for item in languages.split(",") if item.strip()]
+            word_limit = int(body.get("word_limit") or self.server.word_limit)
+            result = create_summary_from_url(
+                url,
+                languages=languages,
+                word_limit=word_limit,
+                replace=bool(body.get("replace", self.server.replace)),
+            )
+            self._json(200, result)
+        except ValueError as exc:
+            self._json(400, {"ok": False, "error": str(exc)})
+        except Exception as exc:  # noqa: BLE001 - local API error boundary
+            self._json(502, {"ok": False, "error": str(exc)})
 
 
 def touch_manifest() -> None:
@@ -284,6 +540,27 @@ def command_add(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_serve(args: argparse.Namespace) -> int:
+    languages = [item.strip() for item in args.language.split(",") if item.strip()]
+    server = SummaryHTTPServer(
+        (args.host, args.port),
+        SummaryRequestHandler,
+        languages=languages,
+        word_limit=args.word_limit,
+        replace=args.replace,
+    )
+    print(f"YouTube summary dashboard helper listening on http://{args.host}:{args.port}")
+    print(f"Dashboard: {DASHBOARD_URL}")
+    print("Press Ctrl-C to stop.")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nStopped.")
+    finally:
+        server.server_close()
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="YouTube summary dashboard workflow")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -301,6 +578,14 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("json", help="Summary JSON file, or '-' for stdin")
     add.add_argument("--replace", action="store_true", help="Replace an existing entry with the same id")
     add.set_defaults(func=command_add)
+
+    serve = sub.add_parser("serve", help="Run the local dashboard submission API")
+    serve.add_argument("--host", default=DEFAULT_SERVICE_HOST, help="Host to bind, default: 127.0.0.1")
+    serve.add_argument("--port", type=int, default=DEFAULT_SERVICE_PORT, help="Port to bind, default: 8765")
+    serve.add_argument("--language", default="en,hi", help="Comma-separated language fallback list, default: en,hi")
+    serve.add_argument("--word-limit", type=int, default=DEFAULT_WORD_LIMIT, help="Summary word limit, default: 350")
+    serve.add_argument("--replace", action="store_true", help="Replace an existing entry with the same id")
+    serve.set_defaults(func=command_serve)
     return parser
 
 
