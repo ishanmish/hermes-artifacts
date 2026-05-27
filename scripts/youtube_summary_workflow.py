@@ -398,6 +398,177 @@ def create_summary_from_url(
     }
 
 
+def _heading_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", value.lower()).strip()
+
+
+def _markdown_sections(markdown: str) -> dict[str, str]:
+    sections: dict[str, list[str]] = {"": []}
+    current = ""
+    for line in markdown.splitlines():
+        heading = re.match(r"^#{2,6}\s+(.+?)\s*$", line)
+        if heading:
+            current = _heading_key(heading.group(1))
+            sections.setdefault(current, [])
+            continue
+        sections.setdefault(current, []).append(line)
+    return {key: "\n".join(lines).strip() for key, lines in sections.items()}
+
+
+def _first_section(sections: dict[str, str], *names: str) -> str:
+    for name in names:
+        value = sections.get(_heading_key(name), "").strip()
+        if value:
+            return value
+    return ""
+
+
+def _clean_markdown_text(value: str) -> str:
+    lines = []
+    for line in value.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            if lines and lines[-1] != "":
+                lines.append("")
+            continue
+        if re.match(r"^(source|video id|duration):", stripped, re.IGNORECASE):
+            continue
+        stripped = re.sub(r"`([^`]+)`", r"\1", stripped)
+        stripped = re.sub(r"\*\*([^*]+)\*\*", r"\1", stripped)
+        lines.append(stripped)
+    return "\n".join(lines).strip()
+
+
+def _paragraph(section: str) -> str:
+    text = _clean_markdown_text(section)
+    paragraphs = [part.strip() for part in re.split(r"\n\s*\n", text) if part.strip()]
+    return "\n\n".join(paragraphs)
+
+
+def _bullet_items(section: str) -> list[str]:
+    items: list[str] = []
+    current: list[str] = []
+    for line in section.splitlines():
+        match = re.match(r"^\s*[-*]\s+(.+?)\s*$", line)
+        if match:
+            if current:
+                items.append(_clean_markdown_text(" ".join(current)))
+            current = [match.group(1).strip()]
+            continue
+        if current and line.startswith((" ", "\t")) and line.strip():
+            current.append(line.strip())
+    if current:
+        items.append(_clean_markdown_text(" ".join(current)))
+    return [item for item in items if item]
+
+
+def _timestamped_highlights(section: str) -> list[dict[str, str]]:
+    highlights: list[dict[str, str]] = []
+    for item in _bullet_items(section):
+        match = re.match(
+            r"^(?P<time>\d{1,2}:\d{2}(?::\d{2})?)\s*(?:[-\u2013\u2014:]|\s+-\s+)\s*(?P<note>.+)$",
+            item,
+        )
+        if match:
+            highlights.append({"time": match.group("time"), "note": match.group("note").strip()})
+    return highlights
+
+
+def _created_at_iso(metadata: dict[str, Any]) -> str:
+    created_at = metadata.get("created_at")
+    if isinstance(created_at, (int, float)) and created_at > 0:
+        return datetime.fromtimestamp(created_at, timezone.utc).astimezone().isoformat(timespec="seconds")
+    return now_iso()
+
+
+def _id_date(metadata: dict[str, Any], iso: str) -> str:
+    if isinstance(metadata.get("path"), str):
+        match = re.search(r"(\d{8})-\d{6}-([A-Za-z0-9_-]{11})", metadata["path"])
+        if match:
+            raw = match.group(1)
+            return f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}"
+    return iso[:10]
+
+
+def dashboard_summary_from_hermes_metadata(metadata: dict[str, Any]) -> dict[str, Any]:
+    markdown = str(metadata.get("summary") or "")
+    if not markdown.strip():
+        path = metadata.get("path")
+        if isinstance(path, str):
+            candidate = Path(path).expanduser()
+            if not candidate.is_absolute():
+                candidate = Path(os.getenv("HERMES_HOME", str(Path.home() / ".hermes"))) / candidate
+            if candidate.exists():
+                markdown = candidate.read_text(encoding="utf-8")
+    if not markdown.strip():
+        raise ValueError("Hermes summary metadata does not include summary markdown")
+
+    video_id = str(metadata.get("video_id") or extract_video_id(str(metadata.get("url") or "")))
+    summarized_at = _created_at_iso(metadata)
+    sections = _markdown_sections(markdown)
+    key_insights = _bullet_items(_first_section(sections, "Key Insights", "Key Points"))
+    key_takeaways = _bullet_items(_first_section(sections, "Key Takeaways"))
+    if not key_takeaways:
+        key_takeaways = key_insights[:]
+    actionable_points = _bullet_items(
+        _first_section(sections, "Actionable Points", "Action Items", "Action Items / Implications")
+    )
+    brief = _paragraph(_first_section(sections, "Brief", "Concise Summary", "Summary"))
+    if not brief:
+        brief = _paragraph(sections.get("", ""))
+    conclusion = _paragraph(_first_section(sections, "Brief Conclusion", "Final Takeaway", "Conclusion"))
+    if not conclusion and brief:
+        conclusion = brief.split("\n\n")[-1]
+
+    summary = {
+        "id": f"{_id_date(metadata, summarized_at)}-{video_id}",
+        "video_url": str(metadata.get("url") or canonical_url(video_id)),
+        "title": str(metadata.get("title") or f"YouTube video {video_id}"),
+        "channel": str(metadata.get("channel") or ""),
+        "published_at": metadata.get("published_at"),
+        "summarized_at": summarized_at,
+        "transcript_source": str(metadata.get("transcript_source") or "Hermes local summary"),
+        "word_limit": metadata.get("word_limit"),
+        "tags": list(metadata.get("tags") or ["youtube", "summary"]),
+        "brief": brief,
+        "key_insights": key_insights,
+        "key_takeaways": key_takeaways,
+        "actionable_points": actionable_points,
+        "timestamped_highlights": _timestamped_highlights(
+            _first_section(sections, "Timestamped Highlights", "Notable Details")
+        ),
+        "brief_conclusion": conclusion,
+        "notes": str(metadata.get("notes") or ""),
+    }
+    normalized = normalize_summary(summary)
+    errors = validate_summary(normalized)
+    if errors:
+        raise ValueError("Invalid imported summary: " + "; ".join(errors))
+    return normalized
+
+
+def import_hermes_summary(path: Path | str, *, replace: bool) -> dict[str, Any]:
+    metadata = load_json(Path(path), {})
+    if not isinstance(metadata, dict):
+        raise ValueError("Hermes summary metadata must be a JSON object")
+    summary = dashboard_summary_from_hermes_metadata(metadata)
+    action, total = upsert_summary(summary, replace=replace)
+    return {
+        "ok": True,
+        "action": action,
+        "total": total,
+        "summary": summary,
+        "items": load_json(DATA_FILE, []),
+        "dashboard_url": DASHBOARD_URL,
+    }
+
+
+def import_hermes_summaries(path: Path | str, *, replace: bool) -> list[dict[str, Any]]:
+    source = Path(path).expanduser()
+    files = sorted(source.glob("*.json")) if source.is_dir() else [source]
+    return [import_hermes_summary(file, replace=replace) for file in files]
+
+
 class SummaryHTTPServer(ThreadingHTTPServer):
     daemon_threads = True
 
@@ -540,6 +711,16 @@ def command_add(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_import_hermes(args: argparse.Namespace) -> int:
+    source = Path(args.path).expanduser()
+    results = import_hermes_summaries(source, replace=args.replace)
+    count = len(results)
+    label = "summary" if count == 1 else "summaries"
+    print(f"Imported {count} Hermes {label}. Dashboard entries: {len(load_json(DATA_FILE, []))}")
+    print(DASHBOARD_URL)
+    return 0
+
+
 def command_serve(args: argparse.Namespace) -> int:
     languages = [item.strip() for item in args.language.split(",") if item.strip()]
     server = SummaryHTTPServer(
@@ -578,6 +759,16 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("json", help="Summary JSON file, or '-' for stdin")
     add.add_argument("--replace", action="store_true", help="Replace an existing entry with the same id")
     add.set_defaults(func=command_add)
+
+    import_hermes = sub.add_parser("import-hermes", help="Import saved Hermes dashboard summaries")
+    import_hermes.add_argument(
+        "path",
+        nargs="?",
+        default=str(Path(os.getenv("HERMES_HOME", str(Path.home() / ".hermes"))) / "youtube_summaries"),
+        help="Metadata JSON file or directory; default: $HERMES_HOME/youtube_summaries",
+    )
+    import_hermes.add_argument("--replace", action="store_true", help="Replace existing entries with the same id")
+    import_hermes.set_defaults(func=command_import_hermes)
 
     serve = sub.add_parser("serve", help="Run the local dashboard submission API")
     serve.add_argument("--host", default=DEFAULT_SERVICE_HOST, help="Host to bind, default: 127.0.0.1")
