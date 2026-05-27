@@ -1,5 +1,29 @@
 [
   {
+    "id": "2026-05-27-youtube-summary-dashboard",
+    "title": "YouTube Video Summary Dashboard",
+    "summary": "Persistent dashboard for YouTube videos sent to Hermes with 'Summarise this video', keeping searchable history plus transcript-backed key insights, takeaways, actionable points, timestamped highlights, and conclusions.",
+    "category": "video",
+    "tags": [
+      "youtube",
+      "summaries",
+      "dashboard",
+      "video",
+      "learning"
+    ],
+    "status": "dashboard",
+    "created_at": "2026-05-27T11:04:47+05:30",
+    "updated_at": "2026-05-27T11:04:47+05:30",
+    "expires_at": null,
+    "importance": "reference",
+    "superseded_by": null,
+    "path": "video/youtube-summary-dashboard.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/video/youtube-summary-dashboard.html",
+    "template": "video-summary-dashboard",
+    "temp": false,
+    "retention_days": null
+  },
+  {
     "id": "2026-05-26-indian-resident-us-stocks-lrs-tax-guide",
     "title": "Indian resident investing in U.S. stocks: LRS, taxes, charges, safety",
     "summary": "Detailed guide to INR-to-U.S.-brokerage money movement under LRS, TCS/refunds, remittance charges, U.S. dividend withholding, Indian capital-gains tax, repatriation, INDmoney specifics, Reddit sentiment, broker alternatives, safety, transferability, NRI caveats and estate-tax risk.",

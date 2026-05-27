@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>YouTube Summary Dashboard</title>
+<link rel="stylesheet" href="../assets/unified-dashboard.css">
+<style>
+:root{--yt-red:#e62117;--ink:#1d1511;--cream:#fffaf0;--card:#fffdf8;--soft:#f1e3cf;--line:rgba(70,50,31,.16);--muted:#76675b;--green:#2f6f5e;--blue:#2f5f8f;--amber:#a56500;}
+body{background:radial-gradient(circle at 12% -10%,rgba(230,33,23,.14),transparent 34rem),radial-gradient(circle at 86% 0%,rgba(47,95,143,.12),transparent 30rem),linear-gradient(180deg,#f8efe1,#f3e5cf 100%)}
+.hero{position:relative;overflow:hidden}.hero:after{content:"▶";position:absolute;right:34px;top:26px;font-size:120px;line-height:1;color:rgba(230,33,23,.10);filter:drop-shadow(0 18px 45px rgba(143,63,35,.12))}.hero h1{max-width:780px}.hero .lead{max-width:860px}.statbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.stat{background:rgba(255,252,245,.74);border:1px solid var(--line);border-radius:18px;padding:14px}.stat b{display:block;font-size:26px}.stat span{font:700 11px var(--ds-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:22px 0}.search{width:100%;border:1px solid var(--line);border-radius:999px;background:rgba(255,252,245,.9);padding:13px 16px;font-size:15px;color:var(--ink);outline:none}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{border:1px solid var(--line);border-radius:999px;background:rgba(255,252,245,.78);padding:10px 13px;color:var(--ink);font-weight:750;cursor:pointer}.filters button.active{background:#2f5f8f;color:white;border-color:#2f5f8f}.layout{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}.list{display:flex;flex-direction:column;gap:12px;position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}.video-card{border:1px solid var(--line);background:rgba(255,252,245,.88);border-radius:20px;padding:15px;cursor:pointer;box-shadow:0 12px 35px rgba(77,54,33,.07)}.video-card:hover,.video-card.active{border-color:rgba(143,63,35,.38);transform:translateY(-1px)}.video-card.active{background:#fff7e8}.video-card h3{margin:7px 0 8px;font-size:17px;line-height:1.2}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font:750 10px var(--ds-mono);letter-spacing:.07em;text-transform:uppercase;border:1px solid rgba(47,95,143,.16);background:rgba(47,95,143,.08);color:#2f5f8f;border-radius:999px;padding:5px 7px}.chip.red{color:#9d2b22;background:rgba(230,33,23,.08);border-color:rgba(230,33,23,.14)}.tiny{font:650 11px var(--ds-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.viewer{border:1px solid var(--line);background:rgba(255,252,245,.92);border-radius:28px;padding:clamp(18px,3vw,32px);box-shadow:var(--ds-shadow);min-height:560px}.viewer.empty{display:grid;place-items:center;text-align:center;color:var(--muted)}.viewer h2{font-size:clamp(30px,5vw,56px);letter-spacing:-.055em;line-height:.95;margin:10px 0 12px}.video-meta{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}.source-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:10px 13px;background:var(--ink);color:#fff;text-decoration:none;font-weight:750}.btn.secondary{background:rgba(255,252,245,.82);color:var(--ink)}.summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}.section{border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.45);padding:18px}.section h3{margin:0 0 10px;font-size:16px;letter-spacing:-.02em}.section ul{padding-left:20px;margin:0}.section li{margin:8px 0;color:#3f332b;line-height:1.48}.section.full{grid-column:1/-1}.conclusion{font-size:17px;line-height:1.6;color:#3f332b}.timestamped{display:grid;gap:8px}.ts{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:10px;border-radius:14px;background:#fff8eb;border:1px solid rgba(70,50,31,.1)}.ts time{font:800 12px var(--ds-mono);color:#9d2b22}.empty-state{max-width:700px}.empty-state code{background:#251b16;color:#f8eadb;border-radius:8px;padding:3px 6px}.prompt{white-space:pre-wrap;background:#251b16;color:#f8eadb;border-radius:18px;padding:16px;font:12px/1.55 var(--ds-mono);overflow:auto;max-height:280px}.footer-note{margin-top:20px;color:var(--muted);font-size:13px}.hidden{display:none!important}@media(max-width:900px){.layout{grid-template-columns:1fr}.list{position:relative;top:auto;max-height:none}.summary-grid{grid-template-columns:1fr}.statbar{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.hero:after{display:none}}@media(max-width:520px){main,.wrap,.body{width:min(100% - 24px,var(--ds-container));padding-top:24px}.statbar{grid-template-columns:1fr}.source-row .btn{width:100%;justify-content:center}}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Video Summary Assistant</div>
+    <h1>YouTube summaries, archived beautifully.</h1>
+    <p class="lead">A persistent reading dashboard for videos sent with “Summarise this video”. Each entry keeps the video link, transcript-backed summary, key insights, takeaways, actionable points, and conclusion.</p>
+    <div class="statbar">
+      <div class="stat"><b id="count">0</b><span>videos saved</span></div>
+      <div class="stat"><b id="takeaways">0</b><span>takeaways</span></div>
+      <div class="stat"><b id="actions">0</b><span>action points</span></div>
+      <div class="stat"><b id="updated">—</b><span>last updated</span></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" class="search" placeholder="Search title, channel, insight, takeaway…" autocomplete="off">
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <section class="layout">
+    <aside class="list" id="list"></aside>
+    <article class="viewer empty" id="viewer"></article>
+  </section>
+
+  <p class="footer-note">Data source: <a href="youtube-summary-data.json">youtube-summary-data.json</a>. Stable dashboard URL; new summaries are appended to the history.</p>
+</main>
+<script>
+const DATA_URL='youtube-summary-data.json';
+const $=s=>document.querySelector(s);
+let videos=[], filtered=[], current=null, currentFilter='all';
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const fmtDate=iso=>iso?new Date(iso).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const domain=url=>{try{return new URL(url).hostname.replace('www.','')}catch{return 'youtube'}};
+function allText(v){return [v.title,v.channel,v.brief,...(v.key_insights||[]),...(v.key_takeaways||[]),...(v.actionable_points||[]),v.brief_conclusion].join(' ').toLowerCase()}
+async function load(){
+  try{const res=await fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}); videos=await res.json();}
+  catch(e){videos=[]; console.warn(e)}
+  videos.sort((a,b)=>String(b.summarized_at||b.published_at||'').localeCompare(String(a.summarized_at||a.published_at||'')));
+  current=videos[0]?.id || null; renderFilters(); apply();
+}
+function renderFilters(){
+  const tags=new Set(['all']); videos.forEach(v=>(v.tags||[]).forEach(t=>tags.add(t)));
+  $('#filters').innerHTML=[...tags].slice(0,12).map(t=>`<button class="${t===currentFilter?'active':''}" data-filter="${esc(t)}">${esc(t)}</button>`).join('');
+  document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;renderFilters();apply();});
+}
+function apply(){
+  const q=$('#search').value.trim().toLowerCase();
+  filtered=videos.filter(v=>(currentFilter==='all'||(v.tags||[]).includes(currentFilter)) && (!q||allText(v).includes(q)));
+  if(!filtered.find(v=>v.id===current)) current=filtered[0]?.id || null;
+  renderStats(); renderList(); renderViewer();
+}
+function renderStats(){
+  $('#count').textContent=videos.length;
+  $('#takeaways').textContent=videos.reduce((n,v)=>n+(v.key_takeaways||[]).length,0);
+  $('#actions').textContent=videos.reduce((n,v)=>n+(v.actionable_points||[]).length,0);
+  $('#updated').textContent=videos[0]?fmtDate(videos[0].summarized_at):'—';
+}
+function renderList(){
+  if(!filtered.length){$('#list').innerHTML='<div class="video-card"><div class="tiny">No matches</div><h3>Try a different search/filter.</h3></div>'; return;}
+  $('#list').innerHTML=filtered.map(v=>`<div class="video-card ${v.id===current?'active':''}" data-id="${esc(v.id)}"><div class="chips"><span class="chip red">${esc(fmtDate(v.summarized_at))}</span>${(v.tags||[]).slice(0,3).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div><h3>${esc(v.title||'Untitled video')}</h3><div class="tiny">${esc(v.channel||domain(v.video_url||''))}</div><p>${esc(v.brief||'')}</p></div>`).join('');
+  document.querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>{current=el.dataset.id;renderList();renderViewer();window.scrollTo({top:0,behavior:'smooth'});});
+}
+function listItems(items){return (items&&items.length)?`<ul>${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<p>No items recorded.</p>'}
+function timestamps(items){return (items&&items.length)?`<div class="timestamped">${items.map(x=>`<div class="ts"><time>${esc(x.time||'—')}</time><span>${esc(x.note||x.text||'')}</span></div>`).join('')}</div>`:'<p>No timestamped highlights captured yet.</p>'}
+function renderViewer(){
+  const v=videos.find(x=>x.id===current);
+  if(!v){$('#viewer').className='viewer empty'; $('#viewer').innerHTML=`<div class="empty-state"><h2>No summaries yet.</h2><p>Send a YouTube URL with <code>Summarise this video</code>. I’ll fetch the transcript, summarize it using your required sections, append it here, and keep the stable history.</p><details><summary>Stored summary prompt</summary><div class="prompt">${esc(SUMMARY_PROMPT)}</div></details></div>`; return;}
+  $('#viewer').className='viewer';
+  $('#viewer').innerHTML=`<div class="eyebrow">${esc(v.channel||'YouTube')} · ${esc(fmtDate(v.summarized_at))}</div><h2>${esc(v.title||'Untitled video')}</h2><p class="lead">${esc(v.brief||'')}</p><div class="video-meta"><span class="chip red">${esc(domain(v.video_url||''))}</span>${(v.tags||[]).map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div><div class="source-row"><a class="btn" href="${esc(v.video_url||'#')}" target="_blank" rel="noopener">Watch video</a>${v.transcript_source?`<span class="btn secondary">Transcript: ${esc(v.transcript_source)}</span>`:''}${v.word_limit?`<span class="btn secondary">≤ ${esc(v.word_limit)} words</span>`:''}</div><div class="summary-grid"><section class="section"><h3>Key Insights</h3>${listItems(v.key_insights)}</section><section class="section"><h3>Key Takeaways</h3>${listItems(v.key_takeaways)}</section><section class="section"><h3>Actionable Points</h3>${listItems(v.actionable_points)}</section><section class="section"><h3>Timestamped Highlights</h3>${timestamps(v.timestamped_highlights)}</section><section class="section full"><h3>Brief Conclusion</h3><div class="conclusion">${esc(v.brief_conclusion||'No conclusion recorded.')}</div></section>${v.notes?`<section class="section full"><h3>Notes / Missing Context</h3><div class="conclusion">${esc(v.notes)}</div></section>`:''}</div>`;
+}
+const SUMMARY_PROMPT=`Title
+Video Summary Assistant: Highlight Insights, Takeaways, and Actionable Points
+
+Sections: Key Insights, Key Takeaways, Actionable Points, Brief Conclusion.
+Rules: capture all important insights and takeaways; emphasize actionable points; preserve meaning; do not invent facts; ask for clarification if transcript misses essential detail.`;
+$('#search').addEventListener('input', apply);
+load();
+</script>
+</body>
+</html>
