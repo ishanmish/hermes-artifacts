@@ -92,10 +92,15 @@ async function readJson(res){
   if(!res.ok||data.ok===false) throw new Error(data.error||`Request failed (${res.status})`);
   return data;
 }
+function mergeVideos(primary,fallback){
+  const out=[], seen=new Set();
+  [...(primary||[]),...(fallback||[])].forEach(v=>{if(!v) return; const key=v.id||v.video_url||JSON.stringify(v); if(seen.has(key)) return; seen.add(key); out.push(v);});
+  return out;
+}
 async function loadFromLocalApi(){
   try{
     const data=await readJson(await fetch(apiUrl('/summaries'),{cache:'no-store'}));
-    videos=Array.isArray(data.items)?data.items:[];
+    videos=mergeVideos(Array.isArray(data.items)?data.items:[],videos);
     apiOnline=true;
     setStatus(`Local helper connected. New summaries will be saved to <code>video/youtube-summary-data.json</code>.`,'ok');
     return true;
@@ -106,15 +111,22 @@ async function loadFromLocalApi(){
   }
 }
 async function loadStaticData(){
-  try{const res=await fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}); videos=await res.json(); if(!Array.isArray(videos)) videos=[];}
+  try{const res=await fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}); videos=await res.json(); if(!Array.isArray(videos)) videos=[]; setStatus(`Public archive loaded from <code>${esc(DATA_URL)}</code>. Start the local helper only when adding a new video.`,'ok');}
   catch(e){videos=[]; console.warn(e)}
+}
+function renderData(){
+  videos.sort((a,b)=>String(b.summarized_at||b.published_at||'').localeCompare(String(a.summarized_at||a.published_at||'')));
+  current=videos.find(v=>v.id===current)?.id || videos[0]?.id || null; renderFilters(); apply();
+}
+async function refreshFromLocalApi(){
+  if(await loadFromLocalApi()) renderData();
 }
 async function load(){
   $('#promptBox').textContent=SUMMARY_PROMPT;
   $('#localApi').value=localApi;
-  if(!(await loadFromLocalApi())) await loadStaticData();
-  videos.sort((a,b)=>String(b.summarized_at||b.published_at||'').localeCompare(String(a.summarized_at||a.published_at||'')));
-  current=videos[0]?.id || null; renderFilters(); apply();
+  await loadStaticData();
+  renderData();
+  refreshFromLocalApi();
 }
 async function createSummary(event){
   event.preventDefault();

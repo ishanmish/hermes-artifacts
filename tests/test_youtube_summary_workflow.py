@@ -17,6 +17,20 @@ def test_dashboard_html_has_own_url_submission_surface():
     assert "Could not reach the local helper" in html
 
 
+def test_public_dashboard_loads_static_data_before_local_helper_probe():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    load_body = html.split("async function load(){", 1)[1].split("\n}", 1)[0]
+    static_idx = load_body.index("await loadStaticData();")
+    render_idx = load_body.index("renderData();")
+    refresh_idx = load_body.index("refreshFromLocalApi();")
+
+    assert static_idx < render_idx < refresh_idx
+    assert "if(!(await loadFromLocalApi())) await loadStaticData();" not in html
+
+
 def test_create_summary_from_url_fetches_summarizes_and_saves(tmp_path, monkeypatch):
     data_file = tmp_path / "video" / "youtube-summary-data.json"
     manifest = tmp_path / "artifacts.json"
