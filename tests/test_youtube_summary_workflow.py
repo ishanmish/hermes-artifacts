@@ -157,6 +157,45 @@ def test_import_hermes_summary_metadata_maps_markdown_to_dashboard_schema(
     )
 
 
+def test_import_hermes_summary_uses_key_points_and_takeaway_when_no_summary_section():
+    summary = workflow.dashboard_summary_from_hermes_metadata(
+        {
+            "url": "https://www.youtube.com/watch?v=OtkNABB8Ras",
+            "video_id": "OtkNABB8Ras",
+            "title": "Why Fixing the UK Is So Hard",
+            "created_at": 1779891711.645799,
+            "summary": "\n".join(
+                [
+                    "# Why Fixing the UK Is So Hard",
+                    "",
+                    "## Key Points",
+                    "",
+                    "- Bloomberg frames the UK's political churn as a collision between public impatience, weak growth, and harsh fiscal reality.",
+                    "- Britain has had five prime ministers in roughly seven years, while the cost-of-living crisis and low-growth economy have remained stubbornly unresolved.",
+                    "",
+                    "## Important Details",
+                    "",
+                    "- The transcript says UK debt is above 90% of economic output.",
+                    "",
+                    "## Takeaway",
+                    "",
+                    "Changing prime ministers will not reset Britain's economic problems.",
+                ]
+            ),
+        }
+    )
+
+    assert summary["brief"] == (
+        "Bloomberg frames the UK's political churn as a collision between public impatience, "
+        "weak growth, and harsh fiscal reality.\n\n"
+        "Britain has had five prime ministers in roughly seven years, while the cost-of-living "
+        "crisis and low-growth economy have remained stubbornly unresolved."
+    )
+    assert summary["brief_conclusion"] == (
+        "Changing prime ministers will not reset Britain's economic problems."
+    )
+
+
 def test_import_hermes_command_imports_summary_directory(tmp_path, monkeypatch, capsys):
     data_file = tmp_path / "video" / "youtube-summary-data.json"
     manifest = tmp_path / "artifacts.json"

@@ -431,6 +431,8 @@ def _clean_markdown_text(value: str) -> str:
             if lines and lines[-1] != "":
                 lines.append("")
             continue
+        if re.match(r"^#{1,6}\s+", stripped):
+            continue
         if re.match(r"^(source|video id|duration):", stripped, re.IGNORECASE):
             continue
         stripped = re.sub(r"`([^`]+)`", r"\1", stripped)
@@ -516,7 +518,9 @@ def dashboard_summary_from_hermes_metadata(metadata: dict[str, Any]) -> dict[str
     brief = _paragraph(_first_section(sections, "Brief", "Concise Summary", "Summary"))
     if not brief:
         brief = _paragraph(sections.get("", ""))
-    conclusion = _paragraph(_first_section(sections, "Brief Conclusion", "Final Takeaway", "Conclusion"))
+    if not brief and key_insights:
+        brief = "\n\n".join(key_insights[:2])
+    conclusion = _paragraph(_first_section(sections, "Brief Conclusion", "Final Takeaway", "Conclusion", "Takeaway"))
     if not conclusion and brief:
         conclusion = brief.split("\n\n")[-1]
 
