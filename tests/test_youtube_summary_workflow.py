@@ -13,6 +13,8 @@ def test_dashboard_html_has_own_url_submission_surface():
     assert 'id="videoUrl"' in html
     assert "createSummary" in html
     assert "http://127.0.0.1:8765" in html
+    assert "../Hermes/venv/bin/python scripts/youtube_summary_workflow.py serve" in html
+    assert "Could not reach the local helper" in html
 
 
 def test_create_summary_from_url_fetches_summarizes_and_saves(tmp_path, monkeypatch):

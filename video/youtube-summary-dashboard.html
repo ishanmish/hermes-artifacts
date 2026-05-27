@@ -75,7 +75,7 @@ main{max-width:1220px;margin:0 auto;padding:34px 18px 70px}.hero{position:relati
 <script>
 const DATA_URL='youtube-summary-data.json';
 const LOCAL_API_DEFAULT='http://127.0.0.1:8765';
-const HELPER_COMMAND='python3 scripts/youtube_summary_workflow.py serve';
+const HELPER_COMMAND='../Hermes/venv/bin/python scripts/youtube_summary_workflow.py serve';
 const $=s=>document.querySelector(s);
 let videos=[], filtered=[], current=null, currentFilter='all', localApi=localStorage.getItem('youtubeSummaryApi')||LOCAL_API_DEFAULT, apiOnline=false;
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -84,6 +84,9 @@ const domain=url=>{try{return new URL(url).hostname.replace('www.','')}catch{ret
 function allText(v){return [v.title,v.channel,v.brief,...(v.key_insights||[]),...(v.key_takeaways||[]),...(v.actionable_points||[]),v.brief_conclusion,v.notes].join(' ').toLowerCase()}
 function setStatus(message,tone=''){const el=$('#serviceStatus');el.className=`service-status ${tone}`.trim();el.innerHTML=message}
 function apiUrl(path){return `${localApi.replace(/\/+$/,'')}${path}`}
+function helperUnavailableMessage(){
+  return `Could not reach the local helper at <code>${esc(localApi)}</code>. In a terminal, run this from the artifact repo: <code>${esc(HELPER_COMMAND)}</code>`;
+}
 async function readJson(res){
   const data=await res.json().catch(()=>({}));
   if(!res.ok||data.ok===false) throw new Error(data.error||`Request failed (${res.status})`);
@@ -98,7 +101,7 @@ async function loadFromLocalApi(){
     return true;
   }catch(e){
     apiOnline=false;
-    setStatus(`Start the helper beside this artifact repo, then submit URLs here: <code>${esc(HELPER_COMMAND)}</code>`,'warn');
+    setStatus(helperUnavailableMessage(),'warn');
     return false;
   }
 }
@@ -135,7 +138,9 @@ async function createSummary(event){
     setStatus(`Saved “${esc(data.summary?.title||'summary')}”. Paste another URL when ready.`,'ok');
     renderFilters(); apply();
   }catch(e){
-    setStatus(`${esc(e.message||e)}<br><code>${esc(HELPER_COMMAND)}</code>`,'error');
+    const message=String(e.message||e);
+    const text=message.toLowerCase().includes('failed to fetch')?helperUnavailableMessage():`${esc(message)}<br><code>${esc(HELPER_COMMAND)}</code>`;
+    setStatus(text,'error');
   }finally{
     button.disabled=false;
     button.textContent='Summarize';
