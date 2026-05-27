@@ -50,6 +50,37 @@ def safe_repo_path(relative_path: str | None) -> Path | None:
     return target
 
 
+def removal_summary(item: dict[str, Any]) -> dict[str, str]:
+    return {
+        "id": str(item.get("id", "")),
+        "title": str(item.get("title", "")),
+        "path": str(item.get("path", "")),
+    }
+
+
+def delete_artifact(artifact_id: str, dry_run: bool = False) -> dict[str, str]:
+    """Remove one artifact from the manifest and delete its file."""
+    items = load_manifest()
+    keep: list[dict[str, Any]] = []
+    removed_item: dict[str, Any] | None = None
+
+    for item in items:
+        if item.get("id") == artifact_id:
+            removed_item = item
+        else:
+            keep.append(item)
+
+    if removed_item is None:
+        raise KeyError(f"Artifact not found: {artifact_id}")
+
+    path = safe_repo_path(removed_item.get("path"))
+    if path and path.exists() and path.is_file() and not dry_run:
+        path.unlink()
+    if not dry_run:
+        save_manifest(keep)
+    return removal_summary(removed_item)
+
+
 def prune(now: datetime | None = None, dry_run: bool = False) -> list[dict[str, str]]:
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
     items = load_manifest()
@@ -60,12 +91,9 @@ def prune(now: datetime | None = None, dry_run: bool = False) -> list[dict[str, 
         expires_at = parse_dt(item.get("expires_at"))
         if is_temp(item) and expires_at and expires_at <= now:
             path = safe_repo_path(item.get("path"))
-            removed.append({
-                "id": str(item.get("id", "")),
-                "title": str(item.get("title", "")),
-                "path": str(item.get("path", "")),
-                "expires_at": item.get("expires_at", ""),
-            })
+            summary = removal_summary(item)
+            summary["expires_at"] = item.get("expires_at", "")
+            removed.append(summary)
             if path and path.exists() and path.is_file() and not dry_run:
                 path.unlink()
             continue
@@ -77,10 +105,22 @@ def prune(now: datetime | None = None, dry_run: bool = False) -> list[dict[str, 
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Prune expired temp Hermes artifacts")
+    parser = argparse.ArgumentParser(description="Manage Hermes artifact retention")
     parser.add_argument("--dry-run", action="store_true", help="Print what would be deleted without changing files")
     parser.add_argument("--now", help="Override current time as ISO-8601 for tests/manual cleanup")
+    parser.add_argument("--delete-id", help="Delete one artifact by id, including its file")
     args = parser.parse_args()
+
+    if args.delete_id:
+        try:
+            removed_one = delete_artifact(args.delete_id, dry_run=args.dry_run)
+        except KeyError as exc:
+            print(str(exc))
+            return 1
+        print(f"Deleted artifact: {removed_one['id']} | {removed_one['path']}")
+        if args.dry_run:
+            print("Dry run only; no files changed.")
+        return 0
 
     now = parse_dt(args.now) if args.now else None
     removed = prune(now=now, dry_run=args.dry_run)
