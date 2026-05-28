@@ -30,6 +30,43 @@ def test_dashboard_html_renders_memory_aids_inside_video_page():
     assert "concept-map" in html
 
 
+def test_summary_prompt_requires_memory_optimized_json_contract():
+    prompt = workflow.SUMMARY_PROMPT
+
+    assert "Memory-Optimized YouTube Video Summarizer Prompt" in prompt
+    assert "HIGH-RETENTION KNOWLEDGE DOCUMENT" in prompt
+    for field in (
+        "memory_optimized",
+        "one_sentence_core_thesis",
+        "most_important_ideas",
+        "mental_models",
+        "counterintuitive_insights",
+        "key_quotes",
+        "facts_data_statistics",
+        "mistakes_misunderstandings",
+        "compression_layer",
+        "flashcards",
+        "final_synthesis",
+    ):
+        assert field in prompt
+
+
+def test_dashboard_html_renders_memory_optimized_summary_format():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    assert "function memoryOptimized" in html
+    assert "${memoryOptimized(v)}" in html
+    assert "One-Sentence Core Thesis" in html
+    assert "Most Important Ideas" in html
+    assert "Mental Models & Frameworks" in html
+    assert "Counterintuitive or Surprising Insights" in html
+    assert "Compression Layer" in html
+    assert "Flashcards" in html
+    assert "Final Synthesis" in html
+
+
 def test_dashboard_html_exposes_delete_button_and_local_state_removal():
     html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
         encoding="utf-8"
@@ -185,6 +222,51 @@ def test_upsert_summary_adds_memory_aids_for_dashboard_rendering(tmp_path, monke
             ],
         },
     ]
+
+
+def test_normalize_summary_backfills_memory_optimized_from_legacy_fields():
+    summary = {
+        "id": "2026-05-27-dQw4w9WgXcQ",
+        "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "title": "Useful Video",
+        "summarized_at": "2026-05-27T10:00:00+05:30",
+        "brief": "A short summary. Extra context for the archive.",
+        "key_insights": ["The main idea matters."],
+        "key_takeaways": ["Remember the main idea."],
+        "actionable_points": ["Try the concrete next step."],
+        "brief_conclusion": "Use the idea deliberately.",
+    }
+
+    normalized = workflow.normalize_summary(summary)
+
+    memory = normalized["memory_optimized"]
+    assert memory["one_sentence_core_thesis"] == "A short summary."
+    assert memory["most_important_ideas"] == [
+        {
+            "title": "Main",
+            "idea": "The main idea matters.",
+            "why_it_matters": "",
+            "example": "",
+            "memory_hook": "",
+            "actionable_takeaway": "Try the concrete next step.",
+        }
+    ]
+    assert memory["compression_layer"] == [
+        "The main idea matters.",
+        "Remember the main idea.",
+        "Try the concrete next step.",
+    ]
+    assert memory["flashcards"] == [
+        {
+            "question": "What should you remember about remember the main idea?",
+            "answer": "Remember the main idea.",
+        }
+    ]
+    assert memory["final_synthesis"] == {
+        "deepest_lesson": "Use the idea deliberately.",
+        "how_to_change_thinking_or_action": "Try the concrete next step.",
+        "three_takeaways": ["Remember the main idea."],
+    }
 
 
 def test_import_hermes_summary_metadata_maps_markdown_to_dashboard_schema(

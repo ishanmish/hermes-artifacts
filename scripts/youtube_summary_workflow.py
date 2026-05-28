@@ -38,7 +38,23 @@ DEFAULT_SERVICE_HOST = "127.0.0.1"
 DEFAULT_SERVICE_PORT = 8765
 DEFAULT_WORD_LIMIT = 350
 
-SUMMARY_PROMPT = """Video Summary Assistant: Highlight Insights, Takeaways, and Actionable Points
+SUMMARY_PROMPT = """# Memory-Optimized YouTube Video Summarizer Prompt
+
+You are not a normal summarizer.
+
+Your goal is to convert the YouTube video into a HIGH-RETENTION KNOWLEDGE DOCUMENT optimized for:
+
+- Long-term memory
+- Fast revision
+- Conceptual clarity
+- Recall under pressure
+- Understanding instead of passive reading
+
+The output should feel like elite study notes, compressed wisdom, mental models, revision sheets, and insight maps.
+
+Do not create generic summaries. Extract only information that changes how the viewer thinks, contains actionable insights, explains important mechanisms, contains counterintuitive ideas, contains principles/frameworks/heuristics/systems/strategies/rules, or is likely to be forgotten unless structured properly.
+
+Ignore filler, repetition, storytelling fluff, sponsor segments, transitions, and motivational padding.
 
 Use the transcript and metadata to produce ONE valid JSON object matching this schema:
 {
@@ -57,16 +73,77 @@ Use the transcript and metadata to produce ONE valid JSON object matching this s
   "actionable_points": ["specific things to do, test, avoid, or investigate"],
   "timestamped_highlights": [{"time":"MM:SS or HH:MM:SS", "note":"important moment"}],
   "brief_conclusion": "bottom-line conclusion",
-  "notes": "limitations, missing transcript sections, uncertainty, or empty string"
+  "notes": "limitations, missing transcript sections, uncertainty, or empty string",
+  "memory_optimized": {
+    "one_sentence_core_thesis": "one powerful sentence capturing the central idea, main argument, and deepest insight",
+    "most_important_ideas": [
+      {
+        "title": "short memorable title",
+        "idea": "clear concise explanation",
+        "why_it_matters": "real-world importance",
+        "example": "practical example from business, life, psychology, investing, history, etc.",
+        "memory_hook": "memorable analogy, visual image, or phrase",
+        "actionable_takeaway": "what someone should do differently"
+      }
+    ],
+    "mental_models": [
+      {
+        "name": "framework, system, heuristic, checklist, or model",
+        "explanation": "what it means",
+        "when_to_use": "best use case",
+        "when_not_to_use": "where it misleads or overreaches"
+      }
+    ],
+    "counterintuitive_insights": [
+      {
+        "common_belief": "what people normally believe",
+        "video_argument": "what the video argues instead",
+        "why_it_matters": "why the reversal matters"
+      }
+    ],
+    "key_quotes": [
+      {
+        "quote": "extremely memorable, high-signal, perspective-shifting line",
+        "meaning": "simple-language meaning"
+      }
+    ],
+    "facts_data_statistics": ["important numbers, studies, statistics, events, findings, metrics, or experiments"],
+    "mistakes_misunderstandings": [
+      {
+        "mistake": "common mistake",
+        "why_people_make_it": "why people make it",
+        "correction": "better understanding or action"
+      }
+    ],
+    "compression_layer": ["10-20 high-density one-line bullets for sub-2-minute revision"],
+    "flashcards": [
+      {
+        "question": "understanding-focused retrieval question",
+        "answer": "concise answer"
+      }
+    ],
+    "final_synthesis": {
+      "deepest_lesson": "deepest lesson from the video",
+      "how_to_change_thinking_or_action": "how someone should think or act differently",
+      "three_takeaways": ["the 3 most important takeaways overall"]
+    }
+  }
 }
 
 Rules:
 - Be transcript-backed. Do not invent facts.
-- Capture all important insights and takeaways, not just a generic overview.
-- Emphasize actionable points.
+- Fill both the legacy dashboard fields and the memory_optimized object.
+- For most_important_ideas, include 5-15 ideas when the transcript supports them.
+- For flashcards, generate at least 15 Q/A pairs when the transcript supports them.
+- Prefer insight density over length.
+- Use structure aggressively and make the document easy to revisit months later.
+- Optimize for memory and understanding, not completeness.
+- Merge overlapping ideas intelligently.
+- Highlight causal relationships and first principles.
+- Whenever possible, connect ideas into a coherent mental map.
 - Preserve important numbers, names, caveats, and causality.
 - If the transcript is poor/missing context, say so in notes.
-- Keep bullets concise and useful for later search.
+- Keep bullets concise and useful for later search and revision.
 """
 
 REQUIRED_FIELDS = {
@@ -430,6 +507,161 @@ def _prompt_subject(value: str) -> str:
     return text[:1].lower() + text[1:]
 
 
+def _first_sentence(value: str) -> str:
+    text = _memory_item_text(value)
+    if not text:
+        return ""
+    match = re.match(r"(.+?[.!?])(?:\s|$)", text)
+    return match.group(1).strip() if match else text
+
+
+def _summary_list(summary: dict[str, Any], field: str) -> list[str]:
+    values = summary.get(field) or []
+    if not isinstance(values, list):
+        return []
+    return [_memory_item_text(value) for value in values if _memory_item_text(value)]
+
+
+def _unique_memory_lines(*groups: list[str], limit: int | None = None) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for group in groups:
+        for value in group:
+            text = _memory_item_text(value)
+            key = text.casefold()
+            if text and key not in seen:
+                seen.add(key)
+                out.append(text)
+                if limit is not None and len(out) >= limit:
+                    return out
+    return out
+
+
+def _normalize_string_list(value: Any, *, fallback: list[str] | None = None, limit: int | None = None) -> list[str]:
+    values = value if isinstance(value, list) else fallback or []
+    normalized = [_memory_item_text(item) for item in values if _memory_item_text(item)]
+    return normalized[:limit] if limit is not None else normalized
+
+
+def _normalize_dict_list(value: Any, fields: tuple[str, ...], *, fallback: list[dict[str, str]] | None = None) -> list[dict[str, str]]:
+    values = value if isinstance(value, list) else fallback or []
+    out: list[dict[str, str]] = []
+    for item in values:
+        if isinstance(item, dict):
+            normalized = {field: _memory_item_text(item.get(field, "")) for field in fields}
+        else:
+            normalized = {field: "" for field in fields}
+            normalized[fields[0]] = _memory_item_text(item)
+        if any(normalized.values()):
+            out.append(normalized)
+    return out
+
+
+def _legacy_memory_optimized(summary: dict[str, Any]) -> dict[str, Any]:
+    insights = _summary_list(summary, "key_insights")
+    takeaways = _summary_list(summary, "key_takeaways")
+    actions = _summary_list(summary, "actionable_points")
+    brief = str(summary.get("brief") or "")
+    conclusion = str(summary.get("brief_conclusion") or "")
+    ideas: list[dict[str, str]] = []
+    for idx, insight in enumerate(insights[:15]):
+        ideas.append(
+            {
+                "title": _leading_word(insight),
+                "idea": insight,
+                "why_it_matters": "",
+                "example": "",
+                "memory_hook": "",
+                "actionable_takeaway": actions[idx] if idx < len(actions) else "",
+            }
+        )
+    return {
+        "one_sentence_core_thesis": _first_sentence(brief) or _first_sentence(conclusion),
+        "most_important_ideas": ideas,
+        "mental_models": [],
+        "counterintuitive_insights": [],
+        "key_quotes": [],
+        "facts_data_statistics": [],
+        "mistakes_misunderstandings": [],
+        "compression_layer": _unique_memory_lines(insights, takeaways, actions, limit=20),
+        "flashcards": [
+            {
+                "question": f"What should you remember about {_prompt_subject(item)}?",
+                "answer": item,
+            }
+            for item in takeaways[:15]
+        ],
+        "final_synthesis": {
+            "deepest_lesson": _memory_item_text(conclusion) or _first_sentence(brief),
+            "how_to_change_thinking_or_action": actions[0] if actions else "",
+            "three_takeaways": (takeaways or insights)[:3],
+        },
+    }
+
+
+def _normalize_final_synthesis(value: Any, fallback: dict[str, Any]) -> dict[str, Any]:
+    raw = value if isinstance(value, dict) else {}
+    return {
+        "deepest_lesson": _memory_item_text(raw.get("deepest_lesson") or fallback.get("deepest_lesson") or ""),
+        "how_to_change_thinking_or_action": _memory_item_text(
+            raw.get("how_to_change_thinking_or_action") or fallback.get("how_to_change_thinking_or_action") or ""
+        ),
+        "three_takeaways": _normalize_string_list(raw.get("three_takeaways"), fallback=fallback.get("three_takeaways") or [], limit=3),
+    }
+
+
+def _normalize_memory_optimized(summary: dict[str, Any]) -> dict[str, Any]:
+    fallback = _legacy_memory_optimized(summary)
+    raw = summary.get("memory_optimized")
+    if not isinstance(raw, dict):
+        raw = {}
+    return {
+        "one_sentence_core_thesis": _memory_item_text(
+            raw.get("one_sentence_core_thesis") or fallback["one_sentence_core_thesis"]
+        ),
+        "most_important_ideas": _normalize_dict_list(
+            raw.get("most_important_ideas"),
+            ("title", "idea", "why_it_matters", "example", "memory_hook", "actionable_takeaway"),
+            fallback=fallback["most_important_ideas"],
+        ),
+        "mental_models": _normalize_dict_list(
+            raw.get("mental_models"),
+            ("name", "explanation", "when_to_use", "when_not_to_use"),
+            fallback=fallback["mental_models"],
+        ),
+        "counterintuitive_insights": _normalize_dict_list(
+            raw.get("counterintuitive_insights"),
+            ("common_belief", "video_argument", "why_it_matters"),
+            fallback=fallback["counterintuitive_insights"],
+        ),
+        "key_quotes": _normalize_dict_list(
+            raw.get("key_quotes"),
+            ("quote", "meaning"),
+            fallback=fallback["key_quotes"],
+        ),
+        "facts_data_statistics": _normalize_string_list(
+            raw.get("facts_data_statistics"),
+            fallback=fallback["facts_data_statistics"],
+        ),
+        "mistakes_misunderstandings": _normalize_dict_list(
+            raw.get("mistakes_misunderstandings"),
+            ("mistake", "why_people_make_it", "correction"),
+            fallback=fallback["mistakes_misunderstandings"],
+        ),
+        "compression_layer": _normalize_string_list(
+            raw.get("compression_layer"),
+            fallback=fallback["compression_layer"],
+            limit=20,
+        ),
+        "flashcards": _normalize_dict_list(
+            raw.get("flashcards"),
+            ("question", "answer"),
+            fallback=fallback["flashcards"],
+        ),
+        "final_synthesis": _normalize_final_synthesis(raw.get("final_synthesis"), fallback["final_synthesis"]),
+    }
+
+
 def _generated_memory_aids(summary: dict[str, Any]) -> list[dict[str, Any]]:
     items = _memory_aid_items(summary)
     if not items:
@@ -493,6 +725,7 @@ def normalize_summary(summary: dict[str, Any]) -> dict[str, Any]:
     out.setdefault("notes", "")
     for field in LIST_FIELDS:
         out[field] = out.get(field) or []
+    out["memory_optimized"] = _normalize_memory_optimized(out)
     out["memory_aids"] = _normalize_memory_aids(out)
     return out
 
