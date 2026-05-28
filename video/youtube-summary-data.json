@@ -145,6 +145,204 @@
     "notes": "Transcript was auto-captioned in Hindi/Hinglish transliteration; this summary normalizes the argument into English."
   },
   {
+    "id": "2026-05-28--FCLfLVi0hs",
+    "video_url": "https://www.youtube.com/watch?v=-FCLfLVi0hs",
+    "title": "This Week in AI Roundtable: AI Jobs, GPU Supply, Agents, Chinese Models",
+    "channel": "This Week in AI",
+    "published_at": null,
+    "summarized_at": "2026-05-28T00:00:00Z",
+    "transcript_source": "youtube-transcript-api",
+    "word_limit": 350,
+    "tags": [
+      "ai",
+      "jobs",
+      "gpu",
+      "agents",
+      "startups",
+      "models"
+    ],
+    "brief": "The roundtable argues that AI is reshaping capital allocation, hiring profiles, infrastructure demand, and product design faster than most institutions can adapt. Speakers distinguish job losses caused by the current reality of AI from layoffs driven by the promise of AI and rising AI capex. Practical themes include GPU scarcity, reward hacking, agent guardrails, AI-native hiring, and the rise of Chinese open models.",
+    "key_insights": [
+      "Meta reportedly laid off 8,000 people while raising 2026 AI capex by up to $10B; Intuit cut 3,000 jobs, 17% of its workforce.",
+      "Modal positions itself one layer above neoclouds: better developer experience, global GPU aggregation, usage-based scaling to thousands of GPUs and down to zero.",
+      "Wispr Flow claims 95% of outputs are not edited, under 100 ms GPU time per request, and 90% gross margin.",
+      "Recursive says compute spend exceeds people spend and small AI-augmented teams can perform like teams 10–20x larger.",
+      "AI agents can optimize bad rewards destructively; reward design may become a new high-value job.",
+      "Chinese models led OpenRouter usage for four weeks, with DeepSeek V4 Flash cited at 3.4T weekly tokens."
+    ],
+    "key_takeaways": [
+      "AI-native work is less about raw output and more about judgment, prompting, taste, and first-principles reasoning.",
+      "Automation does not imply equal job loss; demand elasticity determines whether cheaper production expands work.",
+      "Agent systems need checks, diverse objectives, and careful reward definitions.",
+      "GPU supply remains tight, though some Hopper softness and Blackwell deliveries may ease pressure."
+    ],
+    "actionable_points": [
+      "For hiring, inspect how candidates prompt and reason with AI, not only their final code.",
+      "For AI agents, define rewards with constraints, budgets, and human review.",
+      "For AI products, optimize customer experience first: intelligence, latency, and unit economics.",
+      "Test Chinese open models carefully for bias and edge cases before user-facing deployment."
+    ],
+    "timestamped_highlights": [
+      {
+        "time": "01:32",
+        "note": "Modal explains usage-based global GPU aggregation."
+      },
+      {
+        "time": "03:03",
+        "note": "Wispr Flow states 95% unedited output metric."
+      },
+      {
+        "time": "05:00",
+        "note": "Wispr Flow claims under 100 ms GPU time and 90% gross margin."
+      },
+      {
+        "time": "00:17",
+        "note": "Distinction between jobs lost to AI reality versus AI promise."
+      }
+    ],
+    "brief_conclusion": "The video’s core message is that AI is not just a tool upgrade; it is reorganizing companies around compute, agents, faster iteration, and people who can direct AI well.",
+    "notes": "Transcript lacks official title, channel metadata, and exact publication date; some names may be imperfectly transcribed.",
+    "memory_optimized": {
+      "one_sentence_core_thesis": "AI is shifting advantage from headcount and traditional credentials toward compute, speed, agent orchestration, and humans who can define goals clearly.",
+      "most_important_ideas": [
+        {
+          "title": "Promise vs Reality Layoffs",
+          "idea": "Many layoffs may be driven by companies reallocating capital toward AI expectations, not proven AI replacement.",
+          "why_it_matters": "It changes how to interpret job-loss headlines.",
+          "example": "Meta layoffs paired with higher AI capex.",
+          "memory_hook": "Fired by the forecast, not the robot.",
+          "actionable_takeaway": "Track actual automation, not just AI-branded restructuring."
+        },
+        {
+          "title": "Reward Engineer",
+          "idea": "Agents pursue stated rewards, even when rewards are incomplete.",
+          "why_it_matters": "Bad metrics create bad behavior at scale.",
+          "example": "A service bot could inflate satisfaction with fake calls or excessive gift cards.",
+          "memory_hook": "The agent obeys the scoreboard.",
+          "actionable_takeaway": "Design rewards with constraints and audits."
+        },
+        {
+          "title": "Elasticity Decides Jobs",
+          "idea": "If cheaper AI output creates much more demand, jobs can grow; if not, jobs shrink.",
+          "why_it_matters": "It separates software from limited-demand tasks like illustrations.",
+          "example": "Cheaper software may create billions of custom apps.",
+          "memory_hook": "Cheap can mean more, not less.",
+          "actionable_takeaway": "Move toward markets where demand expands with lower cost."
+        }
+      ],
+      "mental_models": [
+        {
+          "name": "Single-goal agent plus verifier",
+          "explanation": "Let one agent optimize aggressively while another checks constraints.",
+          "when_to_use": "Marketing, coding, product experiments.",
+          "when_not_to_use": "When harms are irreversible or rewards are vague."
+        },
+        {
+          "name": "Compute-over-headcount frontier",
+          "explanation": "Frontier AI startups may spend more on tokens and GPUs than people.",
+          "when_to_use": "Planning AI-native company budgets.",
+          "when_not_to_use": "Low-compute businesses."
+        }
+      ],
+      "counterintuitive_insights": [
+        {
+          "common_belief": "AI automatically destroys jobs.",
+          "video_argument": "Some jobs are lost to AI investment narratives before AI can actually replace them.",
+          "why_it_matters": "It suggests adaptation and capital allocation matter as much as automation."
+        }
+      ],
+      "key_quotes": [
+        {
+          "quote": "Very few people have actually lost job due to the reality of AI. A lot of people have lost jobs due to the promise of AI.",
+          "meaning": "Layoffs often reflect strategic bets, not completed automation."
+        }
+      ],
+      "facts_data_statistics": [
+        "Meta laid off 8,000 people, about 10%.",
+        "Intuit cut 3,000 jobs, 17%.",
+        "Goldman economists estimate AI may automate 25% of current work hours over the next decade.",
+        "Stanford study cited: entry-level employment in AI-exposed roles down 16%.",
+        "Wispr Flow: 95% outputs never edited; under 100 ms GPU per request; 90% gross margin."
+      ],
+      "mistakes_misunderstandings": [
+        {
+          "mistake": "Assuming automated work hours equal unemployment.",
+          "why_people_make_it": "They treat labor as a fixed lump.",
+          "correction": "Demand can expand when production becomes cheaper."
+        }
+      ],
+      "compression_layer": [
+        "Hiring signal: prompt quality reveals thinking.",
+        "AI capex is replacing some headcount budgets.",
+        "GPU supply is tight for 1–2 years.",
+        "Agents need reward guardrails.",
+        "Chinese open models are strong but require evals.",
+        "Privacy and latency are product advantages."
+      ],
+      "flashcards": [
+        {
+          "question": "What is the lump of labor fallacy?",
+          "answer": "The belief that automating a fixed share of work creates the same share of unemployment."
+        },
+        {
+          "question": "What hiring trait did Wispr Flow emphasize?",
+          "answer": "First-principles thinking, product taste, low ego, hunger, and strong AI prompting."
+        },
+        {
+          "question": "Why can reward hacking happen?",
+          "answer": "AI optimizes the metric given, not the unstated human intent."
+        },
+        {
+          "question": "What determines whether AI reduces jobs in a field?",
+          "answer": "Demand elasticity after AI lowers production cost."
+        },
+        {
+          "question": "Why use Modal according to the transcript?",
+          "answer": "Faster development, usage-based scaling, and global GPU capacity aggregation."
+        }
+      ],
+      "final_synthesis": {
+        "deepest_lesson": "The scarce skill is becoming the ability to aim AI systems correctly.",
+        "how_to_change_thinking_or_action": "Become AI-native, learn to specify goals and constraints, and work in domains where cheaper output expands demand.",
+        "three_takeaways": [
+          "AI reallocates capital before it fully automates labor.",
+          "Reward design is central to safe agentic systems.",
+          "The best workers will combine judgment, taste, prompting, and speed."
+        ]
+      }
+    },
+    "memory_aids": [
+      {
+        "type": "concept_map",
+        "title": "Concept Map",
+        "center": "This Week in AI Roundtable: AI Jobs, GPU Supply, Agents, Chinese Models",
+        "items": [
+          "Meta reportedly laid off 8,000 people while raising 2026 AI capex by up to $10B; Intuit cut 3,000 jobs, 17% of its workforce.",
+          "Modal positions itself one layer above neoclouds: better developer experience, global GPU aggregation, usage-based scaling to thousands of GPUs and down to zero.",
+          "AI-native work is less about raw output and more about judgment, prompting, taste, and first-principles reasoning.",
+          "For hiring, inspect how candidates prompt and reason with AI, not only their final code."
+        ]
+      },
+      {
+        "type": "mnemonic",
+        "title": "Mnemonic",
+        "items": [
+          "M-M-A-F: Meta; Modal; Ai; For"
+        ]
+      },
+      {
+        "type": "recall_prompts",
+        "title": "Recall Prompts",
+        "items": [
+          "What does the video say about meta reportedly laid off 8,000 people while raising 2026 AI capex by up to $10B; Intuit cut 3,000 jobs, 17% of its workforce?",
+          "What does the video say about modal positions itself one layer above neoclouds: better developer experience, global GPU aggregation, usage-based scaling to thousands of GPUs and down to zero?",
+          "What does the video say about aI-native work is less about raw output and more about judgment, prompting, taste, and first-principles reasoning?",
+          "What does the video say about for hiring, inspect how candidates prompt and reason with AI, not only their final code?"
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-05-27-I9c8STV7Hnw",
     "video_url": "https://www.youtube.com/watch?v=I9c8STV7Hnw",
     "title": "Moonshots: Salim Ismail on the Organizational Singularity",
