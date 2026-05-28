@@ -278,7 +278,53 @@
     "actionable_points": [],
     "timestamped_highlights": [],
     "brief_conclusion": "Changing prime ministers will not reset Britain's economic problems. The video argues that whoever leads the UK faces the same trap: voters want rapid repair of public services and living standards, but weak growth, inflation risk, debt costs, and bond-market pressure sharply limit what any government can do.",
-    "notes": ""
+    "notes": "",
+    "memory_aids": [
+      {
+        "type": "key_points",
+        "title": "Key Concepts",
+        "items": [
+          "Bloomberg frames the UK's political churn as a collision between public impatience, weak growth, and harsh fiscal reality.",
+          "Britain has had five prime ministers in roughly seven years, while the cost-of-living crisis and low-growth economy have remained stubbornly unresolved.",
+          "Keir Starmer's 2024 Labour landslide is presented as more of an anti-Conservative vote than a strong personal mandate, which left him exposed once hard choices began.",
+          "Early fiscal moves hurt Labour's standing: Rachel Reeves warned that public finances were worse than expected, pensioner support was cut, and around 40 billion pounds of tax rises landed heavily on businesses.",
+          "The video links weaker job numbers and lower vacancies to higher employment costs, arguing that the growth pledge became harder to deliver.",
+          "Starmer was also damaged by political scandals, especially the Peter Mandelson and Jeffrey Epstein revelations that led to Mandelson's removal and Starmer's apology."
+        ]
+      },
+      {
+        "type": "concept_map",
+        "title": "Concept Map",
+        "center": "Why Fixing the UK Is So Hard",
+        "items": [
+          "Bloomberg frames the UK's political churn as a collision between public impatience, weak growth, and harsh fiscal reality.",
+          "Britain has had five prime ministers in roughly seven years, while the cost-of-living crisis and low-growth economy have remained stubbornly unresolved.",
+          "Keir Starmer's 2024 Labour landslide is presented as more of an anti-Conservative vote than a strong personal mandate, which left him exposed once hard choices began.",
+          "Early fiscal moves hurt Labour's standing: Rachel Reeves warned that public finances were worse than expected, pensioner support was cut, and around 40 billion pounds of tax rises landed heavily on businesses.",
+          "The video links weaker job numbers and lower vacancies to higher employment costs, arguing that the growth pledge became harder to deliver.",
+          "Starmer was also damaged by political scandals, especially the Peter Mandelson and Jeffrey Epstein revelations that led to Mandelson's removal and Starmer's apology."
+        ],
+        "asset_path": "youtube_summaries/20260527-195151-OtkNABB8Ras-memory-map.svg"
+      },
+      {
+        "type": "mnemonic",
+        "title": "Mnemonic",
+        "items": [
+          "B-B-K-E-V: Bloomberg; Britain; Keir; Early; Video"
+        ]
+      },
+      {
+        "type": "recall_prompts",
+        "title": "Recall Prompts",
+        "items": [
+          "What does the video say about bloomberg frames the UK's political churn as a collision between public impatience, weak growth, and harsh fiscal reality?",
+          "What does the video say about britain has had five prime ministers in roughly seven years, while the cost-of-living crisis and low-growth economy have remained stubbornly unresolved?",
+          "What does the video say about keir Starmer's 2024 Labour landslide is presented as more of an anti-Conservative vote than a strong personal mandate, which left him exposed once hard choices began?",
+          "What does the video say about early fiscal moves hurt Labour's standing: Rachel Reeves warned that public finances were worse than expected, pensioner support was cut, and around 40 billion pounds of tax rises landed heavily on businesses?",
+          "What does the video say about the video links weaker job numbers and lower vacancies to higher employment costs, arguing that the growth pledge became harder to deliver?"
+        ]
+      }
+    ]
   },
   {
     "id": "2026-05-27-ANV3tE5ywv0",
@@ -396,6 +442,52 @@
       }
     ],
     "brief_conclusion": "Pichai presents Google’s AI era as an organizational and infrastructure reset: centralize the models, move faster, embed Gemini and agents everywhere, and keep arguing that the web will adapt rather than disappear. The interview’s tension is that Google’s ambitions for AI-powered Search and agents depend on the same web, publishers, creators, and public trust that those products may also disrupt.",
-    "notes": ""
+    "notes": "",
+    "memory_aids": [
+      {
+        "type": "key_points",
+        "title": "Key Concepts",
+        "items": [
+          "Google’s operating model is being pulled toward shared AI infrastructure. Pichai describes Gemini models, voice, personal intelligence, and agentic harnesses as common building blocks that can appear in Search, Maps, Gemini, NotebookLM, Cloud, Android, Chrome, and other products.",
+          "The ChatGPT shock made Google move faster. Pichai says he had already oriented the company around AI, but realized Google needed a clearer structure for core models, infrastructure, product reviews, and faster decision-making.",
+          "Pichai’s decision framework is velocity-first. He argues most decisions are not truly consequential, so leaders should make them quickly; only a small set, such as forming Google DeepMind, deserve deep deliberation.",
+          "AI is changing work more as augmentation than replacement. When asked how close AI is to replacing him as CEO, Pichai jokes that the CEO job is “not that complicated,” but says AI should help with decisions like compute allocation and raise the baseline for all work, similar to spreadsheets.",
+          "Google’s agent products are still fragmented, but Pichai expects convergence. Search-generated software, Gemini Spark, Antigravity, NotebookLM, and Gemini features are described as experiments around shared primitives: reasoning, planning, tool use, code generation, and context.",
+          "Search is becoming more personalized and more opinionated. Pichai distinguishes objective queries from subjective ones, but when shown a “best Chromebook” result with an AI Overview, ads, Reddit, and publisher links giving conflicting answers, he concedes that result looked more opinionated than it should be."
+        ]
+      },
+      {
+        "type": "concept_map",
+        "title": "Concept Map",
+        "center": "How Sundar Pichai is rethinking Google for the AI era | Decoder",
+        "items": [
+          "Google’s operating model is being pulled toward shared AI infrastructure. Pichai describes Gemini models, voice, personal intelligence, and agentic harnesses as common building blocks that can appear in Search, Maps, Gemini, NotebookLM, Cloud, Android, Chrome, and other products.",
+          "The ChatGPT shock made Google move faster. Pichai says he had already oriented the company around AI, but realized Google needed a clearer structure for core models, infrastructure, product reviews, and faster decision-making.",
+          "Pichai’s decision framework is velocity-first. He argues most decisions are not truly consequential, so leaders should make them quickly; only a small set, such as forming Google DeepMind, deserve deep deliberation.",
+          "AI is changing work more as augmentation than replacement. When asked how close AI is to replacing him as CEO, Pichai jokes that the CEO job is “not that complicated,” but says AI should help with decisions like compute allocation and raise the baseline for all work, similar to spreadsheets.",
+          "Google’s agent products are still fragmented, but Pichai expects convergence. Search-generated software, Gemini Spark, Antigravity, NotebookLM, and Gemini features are described as experiments around shared primitives: reasoning, planning, tool use, code generation, and context.",
+          "Search is becoming more personalized and more opinionated. Pichai distinguishes objective queries from subjective ones, but when shown a “best Chromebook” result with an AI Overview, ads, Reddit, and publisher links giving conflicting answers, he concedes that result looked more opinionated than it should be."
+        ],
+        "asset_path": "youtube_summaries/20260527-192642-ANV3tE5ywv0-memory-map.svg"
+      },
+      {
+        "type": "mnemonic",
+        "title": "Mnemonic",
+        "items": [
+          "G-C-P-A-G: Google; Chatgpt; Pichai; Ai; Google"
+        ]
+      },
+      {
+        "type": "recall_prompts",
+        "title": "Recall Prompts",
+        "items": [
+          "What does the video say about google’s operating model is being pulled toward shared AI infrastructure. Pichai describes Gemini models, voice, personal intelligence, and agentic harnesses as common building blocks that can appear in Search, Maps, Gemini, NotebookLM, Cloud, Android, Chrome, and other products?",
+          "What does the video say about the ChatGPT shock made Google move faster. Pichai says he had already oriented the company around AI, but realized Google needed a clearer structure for core models, infrastructure, product reviews, and faster decision-making?",
+          "What does the video say about pichai’s decision framework is velocity-first. He argues most decisions are not truly consequential, so leaders should make them quickly; only a small set, such as forming Google DeepMind, deserve deep deliberation?",
+          "What does the video say about aI is changing work more as augmentation than replacement. When asked how close AI is to replacing him as CEO, Pichai jokes that the CEO job is “not that complicated,” but says AI should help with decisions like compute allocation and raise the baseline for all work, similar to spreadsheets?",
+          "What does the video say about google’s agent products are still fragmented, but Pichai expects convergence. Search-generated software, Gemini Spark, Antigravity, NotebookLM, and Gemini features are described as experiments around shared primitives: reasoning, planning, tool use, code generation, and context?"
+        ]
+      }
+    ]
   }
 ]

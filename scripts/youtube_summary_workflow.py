@@ -17,6 +17,7 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -24,7 +25,9 @@ from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable
-from urllib.parse import parse_qs, urlparse
+from urllib.error import HTTPError, URLError
+from urllib.parse import parse_qs, quote, urlparse
+from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = ROOT / "video" / "youtube-summary-data.json"
@@ -103,6 +106,189 @@ def load_json(path: Path, default: Any) -> Any:
 def save_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+class GitHubAPIError(RuntimeError):
+    def __init__(self, message: str, *, status: int | None = None) -> None:
+        super().__init__(message)
+        self.status = status
+
+
+def _github_repo(repo: str | None = None) -> str:
+    value = repo or os.getenv("GITHUB_REPOSITORY") or os.getenv("GITHUB_REPO") or "ishanmish/hermes-artifacts"
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", value):
+        raise ValueError("GitHub repo must use owner/repo format")
+    return value
+
+
+def _github_token(token: str | None = None) -> str:
+    value = token or os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+    if not value:
+        raise ValueError("GitHub token missing. Set GITHUB_TOKEN or GH_TOKEN.")
+    return value
+
+
+def _github_branch(branch: str | None = None) -> str:
+    return branch or os.getenv("GITHUB_BRANCH") or os.getenv("GITHUB_PAGES_BRANCH") or "main"
+
+
+def _safe_markdown_path(path: str) -> str:
+    value = path.strip().lstrip("/")
+    if not value:
+        raise ValueError("Markdown path is required")
+    parts = value.split("/")
+    if any(part in {"", ".", ".."} for part in parts):
+        raise ValueError("Markdown path must be a safe repository-relative path")
+    if not value.lower().endswith((".md", ".markdown")):
+        raise ValueError("Only markdown files can be deleted")
+    return value
+
+
+def _github_request(method: str, url: str, *, token: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    request = Request(
+        url,
+        data=data,
+        method=method,
+        headers={
+            "Accept": "application/vnd.github+json",
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "User-Agent": "hermes-artifacts-youtube-summary-helper",
+            "X-GitHub-Api-Version": "2022-11-28",
+        },
+    )
+    try:
+        with urlopen(request, timeout=30) as response:  # noqa: S310 - URL is GitHub API or operator-supplied API base
+            body = response.read().decode("utf-8")
+    except HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        message = body
+        try:
+            parsed = json.loads(body)
+            if isinstance(parsed, dict):
+                message = str(parsed.get("message") or body)
+        except json.JSONDecodeError:
+            pass
+        raise GitHubAPIError(message, status=exc.code) from exc
+    except URLError as exc:
+        raise GitHubAPIError(str(exc.reason)) from exc
+    if not body.strip():
+        return {}
+    parsed = json.loads(body)
+    if not isinstance(parsed, dict):
+        raise GitHubAPIError("GitHub API returned a non-object response")
+    return parsed
+
+
+def delete_github_markdown_file(
+    file_path: str,
+    *,
+    repo: str | None = None,
+    token: str | None = None,
+    branch: str | None = None,
+    message: str | None = None,
+) -> dict[str, Any]:
+    safe_path = _safe_markdown_path(file_path)
+    resolved_repo = _github_repo(repo)
+    resolved_token = _github_token(token)
+    resolved_branch = _github_branch(branch)
+    api_base = os.getenv("GITHUB_API_URL", "https://api.github.com").rstrip("/")
+    contents_url = f"{api_base}/repos/{resolved_repo}/contents/{quote(safe_path, safe='/')}"
+    try:
+        current = _github_request("GET", f"{contents_url}?ref={quote(resolved_branch, safe='')}", token=resolved_token)
+    except GitHubAPIError as exc:
+        if exc.status == 404:
+            return {
+                "ok": True,
+                "deleted": False,
+                "already_missing": True,
+                "path": safe_path,
+                "repo": resolved_repo,
+                "branch": resolved_branch,
+                "commit_sha": None,
+            }
+        raise
+    sha = current.get("sha")
+    if not isinstance(sha, str) or not sha:
+        raise GitHubAPIError("GitHub content response did not include a file sha")
+    try:
+        result = _github_request(
+            "DELETE",
+            contents_url,
+            token=resolved_token,
+            payload={
+                "message": message or f"Delete {safe_path}",
+                "sha": sha,
+                "branch": resolved_branch,
+            },
+        )
+    except GitHubAPIError as exc:
+        if exc.status == 404:
+            return {
+                "ok": True,
+                "deleted": False,
+                "already_missing": True,
+                "path": safe_path,
+                "repo": resolved_repo,
+                "branch": resolved_branch,
+                "commit_sha": None,
+            }
+        raise
+    commit_value = result.get("commit")
+    commit = commit_value if isinstance(commit_value, dict) else {}
+    return {
+        "ok": True,
+        "deleted": True,
+        "already_missing": False,
+        "path": safe_path,
+        "repo": resolved_repo,
+        "branch": resolved_branch,
+        "commit_sha": commit.get("sha"),
+    }
+
+
+def _summary_markdown_path(summary: dict[str, Any]) -> str:
+    for key in ("markdown_path", "github_path", "file_path", "path"):
+        value = summary.get(key)
+        if isinstance(value, str) and value.strip().lower().endswith((".md", ".markdown")):
+            return value
+    raise ValueError("Summary does not include a markdown_path/github_path/file_path/path")
+
+
+def delete_summary(
+    post_id: str,
+    *,
+    file_path: str | None = None,
+    repo: str | None = None,
+    token: str | None = None,
+    branch: str | None = None,
+    message: str | None = None,
+) -> dict[str, Any]:
+    items = load_json(DATA_FILE, [])
+    if not isinstance(items, list):
+        raise ValueError(f"{DATA_FILE} must contain a JSON list")
+    idx = next((i for i, item in enumerate(items) if isinstance(item, dict) and item.get("id") == post_id), None)
+    if idx is None:
+        github_result = None
+        if file_path:
+            github_result = delete_github_markdown_file(file_path, repo=repo, token=token, branch=branch, message=message)
+        return {"ok": True, "deleted": False, "already_missing": True, "removed_local": False, "summary": None, "github": github_result}
+    summary = dict(items[idx])
+    markdown_path = file_path or _summary_markdown_path(summary)
+    github_result = delete_github_markdown_file(markdown_path, repo=repo, token=token, branch=branch, message=message)
+    del items[idx]
+    save_json(DATA_FILE, items)
+    touch_manifest()
+    return {
+        "ok": True,
+        "deleted": bool(github_result.get("deleted")),
+        "already_missing": bool(github_result.get("already_missing")),
+        "removed_local": True,
+        "summary": summary,
+        "github": github_result,
+        "items": items,
+    }
 
 
 def extract_video_id(value: str) -> str:
@@ -208,6 +394,93 @@ def validate_summary(summary: dict[str, Any]) -> list[str]:
     return errors
 
 
+def _memory_item_text(item: str) -> str:
+    return re.sub(r"\s+", " ", str(item).strip())
+
+
+def _memory_aid_items(summary: dict[str, Any]) -> list[str]:
+    seen: set[str] = set()
+    items: list[str] = []
+    for field, limit in (("key_insights", 2), ("key_takeaways", 1), ("actionable_points", 1)):
+        values = summary.get(field) or []
+        if not isinstance(values, list):
+            continue
+        for value in values[:limit]:
+            text = _memory_item_text(value)
+            key = text.casefold()
+            if text and key not in seen:
+                seen.add(key)
+                items.append(text)
+    return items
+
+
+def _leading_word(value: str) -> str:
+    words = re.findall(r"[A-Za-z][A-Za-z0-9']*", value)
+    stopwords = {"a", "an", "and", "the", "this", "that", "what", "why", "how", "review"}
+    for word in words:
+        if word.lower() not in stopwords:
+            return word[:1].upper() + word[1:].lower()
+    return "Point"
+
+
+def _prompt_subject(value: str) -> str:
+    text = _memory_item_text(value).rstrip(".?!")
+    if not text:
+        return "this point"
+    return text[:1].lower() + text[1:]
+
+
+def _generated_memory_aids(summary: dict[str, Any]) -> list[dict[str, Any]]:
+    items = _memory_aid_items(summary)
+    if not items:
+        return []
+    title = str(summary.get("title") or "Concept Map")
+    words = [_leading_word(item) for item in items]
+    mnemonic = f"{'-'.join(word[0].upper() for word in words)}: {'; '.join(words)}"
+    return [
+        {
+            "type": "concept_map",
+            "title": "Concept Map",
+            "center": title,
+            "items": items,
+        },
+        {
+            "type": "mnemonic",
+            "title": "Mnemonic",
+            "items": [mnemonic],
+        },
+        {
+            "type": "recall_prompts",
+            "title": "Recall Prompts",
+            "items": [f"What does the video say about {_prompt_subject(item)}?" for item in items],
+        },
+    ]
+
+
+def _normalize_memory_aids(summary: dict[str, Any]) -> list[dict[str, Any]]:
+    raw = summary.get("memory_aids")
+    if not raw:
+        return _generated_memory_aids(summary)
+    if not isinstance(raw, list):
+        return []
+    aids: list[dict[str, Any]] = []
+    for aid in raw:
+        if not isinstance(aid, dict):
+            continue
+        normalized = dict(aid)
+        normalized["type"] = str(normalized.get("type") or "note")
+        normalized["title"] = str(normalized.get("title") or normalized["type"].replace("_", " ").title())
+        items = normalized.get("items") or []
+        normalized["items"] = [_memory_item_text(item) for item in items if _memory_item_text(item)] if isinstance(items, list) else []
+        if normalized["type"] == "concept_map":
+            normalized.setdefault("center", str(summary.get("title") or "Concept Map"))
+        asset_path = normalized.get("asset_path")
+        if isinstance(asset_path, str):
+            normalized["asset_path"] = asset_path.strip().lstrip("/")
+        aids.append(normalized)
+    return aids
+
+
 def normalize_summary(summary: dict[str, Any]) -> dict[str, Any]:
     out = dict(summary)
     out.setdefault("summarized_at", now_iso())
@@ -220,6 +493,7 @@ def normalize_summary(summary: dict[str, Any]) -> dict[str, Any]:
     out.setdefault("notes", "")
     for field in LIST_FIELDS:
         out[field] = out.get(field) or []
+    out["memory_aids"] = _normalize_memory_aids(out)
     return out
 
 
@@ -492,6 +766,59 @@ def _id_date(metadata: dict[str, Any], iso: str) -> str:
     return iso[:10]
 
 
+def _hermes_home() -> Path:
+    return Path(os.getenv("HERMES_HOME", str(Path.home() / ".hermes"))).expanduser()
+
+
+def _copy_summary_asset(asset_path: str) -> str:
+    safe_path = asset_path.strip().lstrip("/")
+    if not safe_path or any(part in {"", ".", ".."} for part in safe_path.split("/")):
+        return safe_path
+    if safe_path.startswith("video/"):
+        relative_to_video = safe_path.removeprefix("video/")
+    else:
+        relative_to_video = safe_path
+    sources = [
+        _hermes_home() / relative_to_video,
+        Path.home() / ".hermes" / relative_to_video,
+    ]
+    login_user = os.getenv("SUDO_USER") or os.getenv("LOGNAME") or os.getenv("USER")
+    if login_user:
+        sources.append(Path("/Users") / login_user / ".hermes" / relative_to_video)
+    destination = ROOT / "video" / relative_to_video
+    for source in sources:
+        if source.exists() and source.is_file() and not destination.exists():
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+            break
+    return relative_to_video
+
+
+def _metadata_memory_aids(metadata: dict[str, Any], markdown_path: str | None) -> list[dict[str, Any]] | None:
+    raw = metadata.get("memory_aids")
+    if not isinstance(raw, list):
+        return None
+    aids: list[dict[str, Any]] = []
+    for aid in raw:
+        if not isinstance(aid, dict):
+            continue
+        normalized = dict(aid)
+        asset_path = normalized.get("asset_path")
+        if isinstance(asset_path, str) and asset_path.strip():
+            normalized["asset_path"] = _copy_summary_asset(asset_path)
+        aids.append(normalized)
+    if markdown_path:
+        stem = Path(markdown_path).with_suffix("").name
+        inferred_svg = f"youtube_summaries/{stem}-memory-map.svg"
+        if (_hermes_home() / inferred_svg).exists():
+            copied = _copy_summary_asset(inferred_svg)
+            for aid in aids:
+                if aid.get("type") == "concept_map" and not aid.get("asset_path"):
+                    aid["asset_path"] = copied
+                    break
+    return aids
+
+
 def dashboard_summary_from_hermes_metadata(metadata: dict[str, Any]) -> dict[str, Any]:
     markdown = str(metadata.get("summary") or "")
     if not markdown.strip():
@@ -524,6 +851,8 @@ def dashboard_summary_from_hermes_metadata(metadata: dict[str, Any]) -> dict[str
     if not conclusion and brief:
         conclusion = brief.split("\n\n")[-1]
 
+    markdown_path = metadata.get("path") if isinstance(metadata.get("path"), str) else None
+    memory_aids = _metadata_memory_aids(metadata, markdown_path)
     summary = {
         "id": f"{_id_date(metadata, summarized_at)}-{video_id}",
         "video_url": str(metadata.get("url") or canonical_url(video_id)),
@@ -544,6 +873,8 @@ def dashboard_summary_from_hermes_metadata(metadata: dict[str, Any]) -> dict[str
         "brief_conclusion": conclusion,
         "notes": str(metadata.get("notes") or ""),
     }
+    if memory_aids is not None:
+        summary["memory_aids"] = memory_aids
     normalized = normalize_summary(summary)
     errors = validate_summary(normalized)
     if errors:
@@ -599,7 +930,7 @@ class SummaryRequestHandler(BaseHTTPRequestHandler):
 
     def _cors(self) -> None:
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("Access-Control-Allow-Private-Network", "true")
 
@@ -627,6 +958,41 @@ class SummaryRequestHandler(BaseHTTPRequestHandler):
         self._cors()
         self.end_headers()
 
+    def _delete_summary_response(self, post_id: str | None, body: dict[str, Any] | None = None) -> None:
+        body = body or {}
+        target_id = str(post_id or body.get("id") or body.get("post_id") or "").strip()
+        file_path = str(body.get("file_path") or body.get("path") or "").strip() or None
+        token = str(body.get("token") or "").strip()
+        if not target_id and not file_path:
+            raise ValueError("Provide an id/post_id or file_path to delete.")
+        if not token:
+            raise ValueError("Provide a GitHub token in the request body for deletion.")
+        if target_id:
+            result = delete_summary(
+                target_id,
+                file_path=file_path,
+                repo=body.get("repo"),
+                token=token,
+                branch=body.get("branch"),
+                message=body.get("message"),
+            )
+        else:
+            github_result = delete_github_markdown_file(
+                file_path or "",
+                repo=body.get("repo"),
+                token=token,
+                branch=body.get("branch"),
+                message=body.get("message"),
+            )
+            result = {
+                "ok": True,
+                "deleted": github_result.get("deleted"),
+                "already_missing": github_result.get("already_missing"),
+                "removed_local": False,
+                "github": github_result,
+            }
+        self._json(200, result)
+
     def do_GET(self) -> None:  # noqa: N802 - http.server hook
         path = urlparse(self.path).path.rstrip("/") or "/"
         if path == "/health":
@@ -649,6 +1015,17 @@ class SummaryRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802 - http.server hook
         path = urlparse(self.path).path.rstrip("/") or "/"
+        if path in {"/summaries/delete", "/delete"}:
+            try:
+                self._delete_summary_response(None, self._read_json())
+            except ValueError as exc:
+                self._json(400, {"ok": False, "error": str(exc)})
+            except GitHubAPIError as exc:
+                status = 404 if exc.status == 404 else 502
+                self._json(status, {"ok": False, "error": str(exc), "status": exc.status})
+            except Exception as exc:  # noqa: BLE001 - local API error boundary
+                self._json(502, {"ok": False, "error": str(exc)})
+            return
         if path != "/summaries":
             self._json(404, {"ok": False, "error": "Not found"})
             return
@@ -670,6 +1047,25 @@ class SummaryRequestHandler(BaseHTTPRequestHandler):
             self._json(200, result)
         except ValueError as exc:
             self._json(400, {"ok": False, "error": str(exc)})
+        except Exception as exc:  # noqa: BLE001 - local API error boundary
+            self._json(502, {"ok": False, "error": str(exc)})
+
+    def do_DELETE(self) -> None:  # noqa: N802 - http.server hook
+        path = urlparse(self.path).path.rstrip("/") or "/"
+        if path == "/summaries":
+            post_id = None
+        elif path.startswith("/summaries/"):
+            post_id = path.rsplit("/", 1)[-1]
+        else:
+            self._json(404, {"ok": False, "error": "Not found"})
+            return
+        try:
+            self._delete_summary_response(post_id, self._read_json())
+        except ValueError as exc:
+            self._json(400, {"ok": False, "error": str(exc)})
+        except GitHubAPIError as exc:
+            status = 404 if exc.status == 404 else 502
+            self._json(status, {"ok": False, "error": str(exc), "status": exc.status})
         except Exception as exc:  # noqa: BLE001 - local API error boundary
             self._json(502, {"ok": False, "error": str(exc)})
 
@@ -725,6 +1121,37 @@ def command_import_hermes(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_delete(args: argparse.Namespace) -> int:
+    if not args.id and not args.file_path:
+        raise ValueError("delete requires --id/--post-id or --file-path")
+    if args.id:
+        result = delete_summary(
+            args.id,
+            file_path=args.file_path,
+            repo=args.repo,
+            token=args.token,
+            branch=args.branch,
+            message=args.message,
+        )
+    else:
+        github_result = delete_github_markdown_file(
+            args.file_path,
+            repo=args.repo,
+            token=args.token,
+            branch=args.branch,
+            message=args.message,
+        )
+        result = {
+            "ok": True,
+            "deleted": github_result.get("deleted"),
+            "already_missing": github_result.get("already_missing"),
+            "removed_local": False,
+            "github": github_result,
+        }
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+    return 0
+
+
 def command_serve(args: argparse.Namespace) -> int:
     languages = [item.strip() for item in args.language.split(",") if item.strip()]
     server = SummaryHTTPServer(
@@ -773,6 +1200,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     import_hermes.add_argument("--replace", action="store_true", help="Replace existing entries with the same id")
     import_hermes.set_defaults(func=command_import_hermes)
+
+    delete = sub.add_parser("delete", help="Delete a summary record and its GitHub markdown file")
+    delete.add_argument("--id", "--post-id", dest="id", help="Dashboard summary/post id to remove from local data")
+    delete.add_argument("--file-path", help="Repository-relative markdown path to delete")
+    delete.add_argument("--repo", help="GitHub owner/repo; default GITHUB_REPOSITORY/GITHUB_REPO or ishanmish/hermes-artifacts")
+    delete.add_argument("--branch", help="Git branch; default GITHUB_BRANCH/GITHUB_PAGES_BRANCH or main")
+    delete.add_argument("--token", help="GitHub token; default GITHUB_TOKEN/GH_TOKEN")
+    delete.add_argument("--message", help="Commit message for the GitHub deletion")
+    delete.set_defaults(func=command_delete)
 
     serve = sub.add_parser("serve", help="Run the local dashboard submission API")
     serve.add_argument("--host", default=DEFAULT_SERVICE_HOST, help="Host to bind, default: 127.0.0.1")

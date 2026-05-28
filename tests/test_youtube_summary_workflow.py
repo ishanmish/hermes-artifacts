@@ -17,6 +17,31 @@ def test_dashboard_html_has_own_url_submission_surface():
     assert "Could not reach the local helper" in html
 
 
+def test_dashboard_html_renders_memory_aids_inside_video_page():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    assert "function memoryAids" in html
+    assert "function conceptMapSvg" in html
+    assert "Memory Aids" in html
+    assert "Mnemonic" in html
+    assert "Recall Prompts" in html
+    assert "concept-map" in html
+
+
+def test_dashboard_html_exposes_delete_button_and_local_state_removal():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    assert "function deleteSummary(id)" in html
+    assert "confirm(`Delete" in html
+    assert "method:'DELETE'" in html
+    assert "data-delete-id" in html
+    assert "videos=Array.isArray(data.items)?data.items:videos.filter" in html
+
+
 def test_public_dashboard_loads_static_data_before_local_helper_probe():
     html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
         encoding="utf-8"
@@ -98,6 +123,70 @@ def test_create_summary_from_url_fetches_summarizes_and_saves(tmp_path, monkeypa
     assert json.loads(data_file.read_text(encoding="utf-8")) == [result["summary"]]
 
 
+def test_upsert_summary_adds_memory_aids_for_dashboard_rendering(tmp_path, monkeypatch):
+    data_file = tmp_path / "video" / "youtube-summary-data.json"
+    manifest = tmp_path / "artifacts.json"
+    manifest.write_text("[]", encoding="utf-8")
+    monkeypatch.setattr(workflow, "DATA_FILE", data_file)
+    monkeypatch.setattr(workflow, "MANIFEST", manifest)
+
+    summary = {
+        "id": "2026-05-27-dQw4w9WgXcQ",
+        "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "title": "Useful Video",
+        "channel": "Example Channel",
+        "published_at": None,
+        "summarized_at": "2026-05-27T10:00:00+05:30",
+        "transcript_source": "youtube-transcript-api",
+        "word_limit": 220,
+        "tags": ["learning"],
+        "brief": "A short summary.",
+        "key_insights": [
+            "The main idea matters.",
+            "Concrete next steps make the lesson useful.",
+        ],
+        "key_takeaways": ["Remember the main idea."],
+        "actionable_points": ["Try the concrete next step."],
+        "timestamped_highlights": [{"time": "0:01", "note": "Main idea"}],
+        "brief_conclusion": "Use the idea deliberately.",
+        "notes": "",
+    }
+
+    action, total = workflow.upsert_summary(summary, replace=False)
+
+    assert action == "added"
+    assert total == 1
+    saved = json.loads(data_file.read_text(encoding="utf-8"))[0]
+    assert saved["memory_aids"] == [
+        {
+            "type": "concept_map",
+            "title": "Concept Map",
+            "center": "Useful Video",
+            "items": [
+                "The main idea matters.",
+                "Concrete next steps make the lesson useful.",
+                "Remember the main idea.",
+                "Try the concrete next step.",
+            ],
+        },
+        {
+            "type": "mnemonic",
+            "title": "Mnemonic",
+            "items": ["M-C-R-T: Main; Concrete; Remember; Try"],
+        },
+        {
+            "type": "recall_prompts",
+            "title": "Recall Prompts",
+            "items": [
+                "What does the video say about the main idea matters?",
+                "What does the video say about concrete next steps make the lesson useful?",
+                "What does the video say about remember the main idea?",
+                "What does the video say about try the concrete next step?",
+            ],
+        },
+    ]
+
+
 def test_import_hermes_summary_metadata_maps_markdown_to_dashboard_schema(
     tmp_path, monkeypatch
 ):
@@ -177,6 +266,195 @@ def test_import_hermes_summary_metadata_maps_markdown_to_dashboard_schema(
     assert summary["brief_conclusion"] == (
         "Google's AI reset depends on preserving trust in the web."
     )
+
+
+def test_delete_github_markdown_file_deletes_existing_file(monkeypatch):
+    calls = []
+
+    def fake_request(method, url, *, token, payload=None):
+        calls.append((method, url, token, payload))
+        if method == "GET":
+            assert token == "secret-token"
+            return {"sha": "file-sha"}
+        if method == "DELETE":
+            assert payload["sha"] == "file-sha"
+            assert payload["branch"] == "main"
+            assert "Delete posts/example.md" in payload["message"]
+            return {"commit": {"sha": "commit-sha"}}
+        raise AssertionError(f"unexpected method: {method}")
+
+    monkeypatch.setattr(workflow, "_github_request", fake_request)
+
+    result = workflow.delete_github_markdown_file(
+        "posts/example.md",
+        repo="owner/repo",
+        token="secret-token",
+        branch="main",
+    )
+
+    assert result == {
+        "ok": True,
+        "deleted": True,
+        "already_missing": False,
+        "path": "posts/example.md",
+        "repo": "owner/repo",
+        "branch": "main",
+        "commit_sha": "commit-sha",
+    }
+    assert [call[0] for call in calls] == ["GET", "DELETE"]
+
+
+def test_delete_github_markdown_file_treats_missing_file_as_success(monkeypatch):
+    def fake_request(method, url, *, token, payload=None):
+        raise workflow.GitHubAPIError("not found", status=404)
+
+    monkeypatch.setattr(workflow, "_github_request", fake_request)
+
+    result = workflow.delete_github_markdown_file(
+        "posts/missing.md",
+        repo="owner/repo",
+        token="secret-token",
+        branch="main",
+    )
+
+    assert result["ok"] is True
+    assert result["deleted"] is False
+    assert result["already_missing"] is True
+
+
+def test_delete_github_markdown_file_treats_delete_race_404_as_missing(monkeypatch):
+    calls = []
+
+    def fake_request(method, url, *, token, payload=None):
+        calls.append(method)
+        if method == "GET":
+            return {"sha": "stale-sha"}
+        raise workflow.GitHubAPIError("not found", status=404)
+
+    monkeypatch.setattr(workflow, "_github_request", fake_request)
+
+    result = workflow.delete_github_markdown_file(
+        "posts/raced.md",
+        repo="owner/repo",
+        token="secret-token",
+        branch="main",
+    )
+
+    assert result["ok"] is True
+    assert result["deleted"] is False
+    assert result["already_missing"] is True
+    assert calls == ["GET", "DELETE"]
+
+
+def test_delete_github_markdown_file_rejects_unsafe_or_non_markdown_paths():
+    for path in ("../secret.md", "posts//bad.md", "posts/not-markdown.txt", ""):
+        try:
+            workflow.delete_github_markdown_file(
+                path,
+                repo="owner/repo",
+                token="secret-token",
+                branch="main",
+            )
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"expected ValueError for {path!r}")
+
+
+def test_http_delete_requires_explicit_body_token():
+    handler = object.__new__(workflow.SummaryRequestHandler)
+
+    try:
+        handler._delete_summary_response(None, {"file_path": "posts/example.md"})
+    except ValueError as exc:
+        assert "GitHub token" in str(exc)
+    else:
+        raise AssertionError("expected ValueError when token is omitted")
+
+
+def test_http_delete_uses_explicit_body_token(monkeypatch):
+    handler = object.__new__(workflow.SummaryRequestHandler)
+    captured = []
+    handler._json = lambda status, payload: captured.append((status, payload))
+
+    def fake_delete(path, **kwargs):
+        assert path == "posts/example.md"
+        assert kwargs["token"] == "body-token"
+        return {"ok": True, "deleted": False, "already_missing": True, "path": path}
+
+    monkeypatch.setattr(workflow, "delete_github_markdown_file", fake_delete)
+
+    handler._delete_summary_response(
+        None,
+        {"file_path": "posts/example.md", "token": "body-token", "repo": "owner/repo"},
+    )
+
+    assert captured == [
+        (
+            200,
+            {
+                "ok": True,
+                "deleted": False,
+                "already_missing": True,
+                "removed_local": False,
+                "github": {"ok": True, "deleted": False, "already_missing": True, "path": "posts/example.md"},
+            },
+        )
+    ]
+
+
+def test_delete_summary_removes_local_record_and_github_markdown(tmp_path, monkeypatch):
+    data_file = tmp_path / "video" / "youtube-summary-data.json"
+    manifest = tmp_path / "artifacts.json"
+    manifest.write_text("[]", encoding="utf-8")
+    monkeypatch.setattr(workflow, "DATA_FILE", data_file)
+    monkeypatch.setattr(workflow, "MANIFEST", manifest)
+    data_file.parent.mkdir(parents=True)
+    data_file.write_text(
+        json.dumps(
+            [
+                {
+                    "id": "post-1",
+                    "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                    "title": "Delete Me",
+                    "summarized_at": "2026-05-27T10:00:00+05:30",
+                    "brief": "A short summary.",
+                    "key_insights": [],
+                    "key_takeaways": [],
+                    "actionable_points": [],
+                    "brief_conclusion": "Done.",
+                    "markdown_path": "posts/post-1.md",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    github_calls = []
+
+    def fake_delete(path, **kwargs):
+        github_calls.append((path, kwargs))
+        return {"ok": True, "deleted": True, "already_missing": False, "path": path}
+
+    monkeypatch.setattr(workflow, "delete_github_markdown_file", fake_delete)
+
+    result = workflow.delete_summary(
+        "post-1",
+        repo="owner/repo",
+        token="secret-token",
+        branch="main",
+    )
+
+    assert result["ok"] is True
+    assert result["deleted"] is True
+    assert result["removed_local"] is True
+    assert result["summary"]["id"] == "post-1"
+    assert json.loads(data_file.read_text(encoding="utf-8")) == []
+    assert github_calls == [
+        (
+            "posts/post-1.md",
+            {"repo": "owner/repo", "token": "secret-token", "branch": "main", "message": None},
+        )
+    ]
 
 
 def test_import_hermes_summary_uses_key_points_and_takeaway_when_no_summary_section():

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="507" viewBox="0 0 960 507" role="img" aria-labelledby="title desc">
+<title>How Sundar Pichai is rethinking Google for the AI era | Decoder</title>
+<desc>Concept map generated from the YouTube summary memory aids.</desc>
+<rect width="960" height="100%" rx="18" fill="#f8fafc"/>
+<rect x="250" y="34" width="460" height="58" rx="16" fill="#111827"/>
+<text x="480.0" y="59" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">How Sundar Pichai is rethinking Google for</text>
+<text x="480.0" y="77" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">the AI era | Decoder</text>
+<line x1="480.0" y1="92" x2="265.0" y2="145" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="70" y="145" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="98" cy="175" r="13" fill="#2563eb"/>
+<text x="98" y="180" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">1</text>
+<text x="122" y="173" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Google’s operating model is being pulled</text>
+<text x="122" y="191" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">toward shared AI infrastructure. Pichai...</text>
+<line x1="480.0" y1="92" x2="695.0" y2="145" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="500" y="145" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="528" cy="175" r="13" fill="#059669"/>
+<text x="528" y="180" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">2</text>
+<text x="552" y="173" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">The ChatGPT shock made Google move faster.</text>
+<text x="552" y="191" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Pichai says he had already oriented the...</text>
+<line x1="480.0" y1="92" x2="265.0" y2="257" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="70" y="257" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="98" cy="287" r="13" fill="#d97706"/>
+<text x="98" y="292" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">3</text>
+<text x="122" y="285" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Pichai’s decision framework is velocity-</text>
+<text x="122" y="303" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">first. He argues most decisions are not...</text>
+<line x1="480.0" y1="92" x2="695.0" y2="257" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="500" y="257" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="528" cy="287" r="13" fill="#7c3aed"/>
+<text x="528" y="292" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">4</text>
+<text x="552" y="285" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">AI is changing work more as augmentation</text>
+<text x="552" y="303" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">than replacement. When asked how close...</text>
+<line x1="480.0" y1="92" x2="265.0" y2="369" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="70" y="369" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="98" cy="399" r="13" fill="#dc2626"/>
+<text x="98" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">5</text>
+<text x="122" y="397" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Google’s agent products are still</text>
+<text x="122" y="415" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">fragmented, but Pichai expects...</text>
+<line x1="480.0" y1="92" x2="695.0" y2="369" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="500" y="369" width="390" height="82" rx="14" fill="#ffffff" stroke="#dbe3ef"/>
+<circle cx="528" cy="399" r="13" fill="#0891b2"/>
+<text x="528" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">6</text>
+<text x="552" y="397" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">Search is becoming more personalized and</text>
+<text x="552" y="415" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600" fill="#0f172a">more opinionated. Pichai distinguishes...</text>
+</svg>
