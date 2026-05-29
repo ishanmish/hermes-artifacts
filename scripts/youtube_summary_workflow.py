@@ -325,12 +325,12 @@ def delete_github_markdown_file(
     }
 
 
-def _summary_markdown_path(summary: dict[str, Any]) -> str:
+def _summary_markdown_path(summary: dict[str, Any]) -> str | None:
     for key in ("markdown_path", "github_path", "file_path", "path"):
         value = summary.get(key)
         if isinstance(value, str) and value.strip().lower().endswith((".md", ".markdown")):
             return value
-    raise ValueError("Summary does not include a markdown_path/github_path/file_path/path")
+    return None
 
 
 def delete_summary(
@@ -353,14 +353,16 @@ def delete_summary(
         return {"ok": True, "deleted": False, "already_missing": True, "removed_local": False, "summary": None, "github": github_result}
     summary = dict(items[idx])
     markdown_path = file_path or _summary_markdown_path(summary)
-    github_result = delete_github_markdown_file(markdown_path, repo=repo, token=token, branch=branch, message=message)
+    github_result = None
+    if markdown_path:
+        github_result = delete_github_markdown_file(markdown_path, repo=repo, token=token, branch=branch, message=message)
     del items[idx]
     save_json(DATA_FILE, items)
     touch_manifest()
     return {
         "ok": True,
-        "deleted": bool(github_result.get("deleted")),
-        "already_missing": bool(github_result.get("already_missing")),
+        "deleted": bool(github_result.get("deleted")) if github_result else True,
+        "already_missing": bool(github_result.get("already_missing")) if github_result else False,
         "removed_local": True,
         "summary": summary,
         "github": github_result,
@@ -1195,11 +1197,11 @@ class SummaryRequestHandler(BaseHTTPRequestHandler):
         body = body or {}
         target_id = str(post_id or body.get("id") or body.get("post_id") or "").strip()
         file_path = str(body.get("file_path") or body.get("path") or "").strip() or None
-        token = str(body.get("token") or "").strip()
+        token = str(body.get("token") or "").strip() or None
         if not target_id and not file_path:
             raise ValueError("Provide an id/post_id or file_path to delete.")
-        if not token:
-            raise ValueError("Provide a GitHub token in the request body for deletion.")
+        if file_path and not token:
+            raise ValueError("Provide a GitHub token in the request body when deleting a markdown file.")
         if target_id:
             result = delete_summary(
                 target_id,

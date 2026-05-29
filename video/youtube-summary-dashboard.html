@@ -105,14 +105,11 @@ async function deleteSummary(id){
   const v=videos.find(x=>x.id===id);
   if(!v) return;
   const label=v.title||v.video_url||id;
-  if(!confirm(`Delete “${label}”? This removes the markdown file from GitHub and the dashboard entry. This cannot be undone.`)) return;
-  let filePath=markdownPathFor(v);
-  if(!filePath){
-    filePath=(prompt('Repository-relative markdown path to delete (for example: youtube_summaries/example.md)', '')||'').trim();
-    if(!filePath) return;
-  }
-  const token=(prompt('GitHub token for deleting this markdown file. It is sent once to the local helper and is not stored.', '')||'').trim();
-  if(!token){setStatus('Deletion cancelled: GitHub token is required.','warn');return;}
+  const filePath=markdownPathFor(v);
+  const scope=filePath?'the markdown file from GitHub and the dashboard entry':'this dashboard entry';
+  if(!confirm(`Delete “${label}”? This removes ${scope}. This cannot be undone.`)) return;
+  const token=filePath?(prompt('GitHub token for deleting this markdown file. It is sent once to the local helper and is not stored.', '')||'').trim():'';
+  if(filePath&&!token){setStatus('Deletion cancelled: GitHub token is required for markdown-backed summaries.','warn');return;}
   deletingId=id;
   setStatus(`Deleting “${esc(label)}”…`,'');
   renderList(); renderViewer();
@@ -125,7 +122,8 @@ async function deleteSummary(id){
     }));
     videos=Array.isArray(data.items)?data.items:videos.filter(x=>x.id!==id);
     if(current===id) current=videos[0]?.id||null;
-    setStatus(`Deleted “${esc(label)}”.${data.github?.already_missing?' GitHub file was already missing.':''}`,'ok');
+    const githubNote=data.github?.already_missing?' GitHub file was already missing.':(!data.github?' JSON-only entry removed locally. Commit/push the artifact repo to publish this deletion.':'');
+    setStatus(`Deleted “${esc(label)}”.${githubNote}`,'ok');
   }catch(e){
     const message=String(e.message||e);
     const text=message.toLowerCase().includes('failed to fetch')?helperUnavailableMessage():`${esc(message)}<br><code>${esc(HELPER_COMMAND)}</code>`;
