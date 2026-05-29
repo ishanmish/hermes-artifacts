@@ -1,5 +1,210 @@
 [
   {
+    "id": "2026-05-29-t3uBGhpii6w",
+    "video_url": "https://www.youtube.com/watch?v=t3uBGhpii6w",
+    "title": "Claude Opus 4.8, Fast Mode, Benchmarks, and Dynamic Workflows",
+    "channel": "",
+    "published_at": null,
+    "summarized_at": "2026-05-29T00:00:00Z",
+    "transcript_source": "youtube-transcript-api",
+    "word_limit": 350,
+    "tags": [
+      "claude",
+      "opus",
+      "anthropic",
+      "ai-coding",
+      "benchmarks",
+      "agents"
+    ],
+    "brief": "Claude Opus 4.8 improves over Opus 4.7 at the same regular price, with sharper judgment, longer independent work, and better benchmark results. The biggest practical themes are faster/cheaper fast mode, stronger coding and reasoning scores, and Dynamic Workflows that parallelize hard tasks with many subagents. The speaker likes Opus personally, while noting GPT 5.5 still leads on terminal coding and may better match some real-world coding impressions.",
+    "key_insights": [
+      "Opus 4.8 keeps regular pricing unchanged: $5 per million input tokens and $25 per million output tokens.",
+      "Fast mode is about 2.5x speed and now costs $10 input/$50 output per million tokens, described as only 2x regular price.",
+      "SWE-bench Pro score cited: Opus 4.8 at 69.2%, a five-point jump from Opus 4.7.",
+      "Terminal Bench 2.1: GPT 5.5 is cited at 78.2 and still ahead for agentic terminal coding.",
+      "Dynamic Workflows can run tens to hundreds of parallel subagents and verify results before reporting.",
+      "The speaker warns Dynamic Workflows can consume substantially more tokens."
+    ],
+    "key_takeaways": [
+      "Treat same-price model upgrades as an effective cost decrease.",
+      "Benchmarks conflict with user vibe checks; compare models on your own workload.",
+      "Parallel agents trade money for time and verification.",
+      "Main-agent planning remains a bottleneck even with many subagents."
+    ],
+    "actionable_points": [
+      "Test Opus 4.8 against GPT 5.5 on your own coding tasks.",
+      "Use slashfast in Claude Code if speed matters and access is available.",
+      "Start Dynamic Workflows on scoped tasks to understand token usage.",
+      "Use Dynamic Workflows for migrations, bug hunts, audits, and high-cost wrong-answer tasks."
+    ],
+    "timestamped_highlights": [
+      {
+        "time": "00:15",
+        "note": "Opus 4.8 introduced with sharper judgment and same price."
+      },
+      {
+        "time": "01:15",
+        "note": "Fast mode described as roughly 2.5x speed."
+      },
+      {
+        "time": "02:47",
+        "note": "Opus 4.8 cited at 69.2% on SWE-bench Pro."
+      },
+      {
+        "time": "04:17",
+        "note": "GPT 5.5 leads Terminal Bench 2.1 at 78.2."
+      },
+      {
+        "time": "09:00",
+        "note": "Dynamic Workflows explained as parallel subagent orchestration."
+      }
+    ],
+    "brief_conclusion": "Opus 4.8 is a meaningful incremental upgrade, but its most important shift may be Anthropic turning increased compute into faster inference, parallel agent workflows, and higher token usage rather than higher base prices.",
+    "notes": "Transcript appears complete but includes sponsor content and informal commentary. Some benchmark names are transcript-transcribed imperfectly.",
+    "memory_optimized": {
+      "one_sentence_core_thesis": "Claude Opus 4.8 improves capability without raising regular price, while Anthropic’s new workflow layer turns hard tasks into parallel agent swarms that can save time but burn tokens.",
+      "most_important_ideas": [
+        {
+          "title": "Same Price, More Intelligence",
+          "idea": "Opus 4.8 improves over 4.7 while keeping regular pricing unchanged.",
+          "why_it_matters": "Higher capability at the same price functions like a cost decrease.",
+          "example": "The speaker says Anthropic models are expensive, so unchanged pricing is welcome.",
+          "memory_hook": "More brain, same bill.",
+          "actionable_takeaway": "Re-evaluate Opus if cost previously blocked adoption."
+        },
+        {
+          "title": "Parallel Agents Are a Time-Money Trade",
+          "idea": "Dynamic Workflows run tens to hundreds of subagents in parallel.",
+          "why_it_matters": "They may finish large tasks faster but consume more tokens.",
+          "example": "Bug hunts, migrations, audits, and framework swaps.",
+          "memory_hook": "Hire 100 interns; pay 100 invoices.",
+          "actionable_takeaway": "Use only when speed or verification justifies cost."
+        },
+        {
+          "title": "Benchmarks Need Vibe Checks",
+          "idea": "SWE-bench results and user impressions may diverge.",
+          "why_it_matters": "A benchmark winner may not feel best in real use.",
+          "example": "Opus leads SWE-bench Pro while many users favor GPT 5.5 coding feel.",
+          "memory_hook": "Scoreboard is not the whole game.",
+          "actionable_takeaway": "Benchmark on your own workflows."
+        }
+      ],
+      "mental_models": [
+        {
+          "name": "Cost-Speed-Quality Triangle",
+          "explanation": "Fast and verified work usually costs more tokens.",
+          "when_to_use": "Choosing fast mode or Dynamic Workflows.",
+          "when_not_to_use": "Small tasks where overhead dominates."
+        },
+        {
+          "name": "Main-Agent Bottleneck",
+          "explanation": "Subagents only help if the orchestrating agent plans well.",
+          "when_to_use": "Evaluating parallel agent systems.",
+          "when_not_to_use": "Assuming more agents automatically means better output."
+        }
+      ],
+      "counterintuitive_insights": [
+        {
+          "common_belief": "Better models must cost more.",
+          "video_argument": "Opus 4.8 is better at the same regular price.",
+          "why_it_matters": "Compute supply may shift pricing strategy toward usage expansion."
+        }
+      ],
+      "key_quotes": [
+        {
+          "quote": "The acceleration is accelerating.",
+          "meaning": "Model releases and improvements are arriving faster than even specialists can track."
+        }
+      ],
+      "facts_data_statistics": [
+        "Opus 4.8 SWE-bench Pro: 69.2%.",
+        "GPT 5.5 Terminal Bench 2.1: 78.2.",
+        "Regular Opus 4.8 pricing: $5 input/$25 output per million tokens.",
+        "Fast mode pricing: $10 input/$50 output per million tokens.",
+        "Fast mode described as roughly 2.5x speed."
+      ],
+      "mistakes_misunderstandings": [
+        {
+          "mistake": "Assuming benchmark rank equals best model for your work.",
+          "why_people_make_it": "Benchmarks are simple and numerical.",
+          "correction": "Run direct task comparisons."
+        },
+        {
+          "mistake": "Using Dynamic Workflows without scoping.",
+          "why_people_make_it": "Parallelism sounds automatically better.",
+          "correction": "Start small and monitor token usage."
+        }
+      ],
+      "compression_layer": [
+        "Opus 4.8: better than 4.7, same regular price.",
+        "Fast mode: ~2.5x speed, 2x regular token price.",
+        "SWE-bench Pro: Opus 4.8 cited at 69.2%.",
+        "GPT 5.5 still leads terminal coding at 78.2.",
+        "Dynamic Workflows = orchestrated parallel subagents.",
+        "Parallelism improves time and verification but raises token burn.",
+        "Benchmarks and user vibe can disagree.",
+        "Main-agent planning remains the key bottleneck."
+      ],
+      "flashcards": [
+        {
+          "question": "What is the main pricing point for Opus 4.8?",
+          "answer": "Regular pricing is unchanged from prior Opus pricing."
+        },
+        {
+          "question": "What does Dynamic Workflows do?",
+          "answer": "It plans tasks, runs parallel subagents, verifies results, and returns one coordinated answer."
+        },
+        {
+          "question": "Why start Dynamic Workflows with scoped tasks?",
+          "answer": "Because they can consume substantially more tokens."
+        },
+        {
+          "question": "Which model leads terminal coding in the transcript?",
+          "answer": "GPT 5.5."
+        }
+      ],
+      "final_synthesis": {
+        "deepest_lesson": "The frontier is shifting from single-model intelligence to orchestration systems that spend compute for speed, coverage, and verification.",
+        "how_to_change_thinking_or_action": "Choose models by workload, not hype; use parallel workflows selectively where the cost of delay or error is high.",
+        "three_takeaways": [
+          "Opus 4.8 improves at unchanged regular price.",
+          "Fast mode and Dynamic Workflows reflect Anthropic’s larger compute availability.",
+          "Real-world testing matters more than any single benchmark."
+        ]
+      }
+    },
+    "memory_aids": [
+      {
+        "type": "concept_map",
+        "title": "Concept Map",
+        "center": "Claude Opus 4.8, Fast Mode, Benchmarks, and Dynamic Workflows",
+        "items": [
+          "Opus 4.8 keeps regular pricing unchanged: $5 per million input tokens and $25 per million output tokens.",
+          "Fast mode is about 2.5x speed and now costs $10 input/$50 output per million tokens, described as only 2x regular price.",
+          "Treat same-price model upgrades as an effective cost decrease.",
+          "Test Opus 4.8 against GPT 5.5 on your own coding tasks."
+        ]
+      },
+      {
+        "type": "mnemonic",
+        "title": "Mnemonic",
+        "items": [
+          "O-F-T-T: Opus; Fast; Treat; Test"
+        ]
+      },
+      {
+        "type": "recall_prompts",
+        "title": "Recall Prompts",
+        "items": [
+          "What does the video say about opus 4.8 keeps regular pricing unchanged: $5 per million input tokens and $25 per million output tokens?",
+          "What does the video say about fast mode is about 2.5x speed and now costs $10 input/$50 output per million tokens, described as only 2x regular price?",
+          "What does the video say about treat same-price model upgrades as an effective cost decrease?",
+          "What does the video say about test Opus 4.8 against GPT 5.5 on your own coding tasks?"
+        ]
+      }
+    ]
+  },
+  {
     "id": "2026-05-28-EOg4gY0Yln0",
     "video_url": "https://www.youtube.com/watch?v=EOg4gY0Yln0",
     "title": "YouTube video EOg4gY0Yln0",
