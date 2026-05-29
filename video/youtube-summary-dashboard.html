@@ -78,6 +78,10 @@ main{max-width:1220px;margin:0 auto;padding:34px 18px 70px}.hero{position:relati
 const DATA_URL='youtube-summary-data.json';
 const LOCAL_API_DEFAULT='http://127.0.0.1:8765';
 const HELPER_COMMAND='../Hermes/venv/bin/python scripts/youtube_summary_workflow.py serve';
+const GITHUB_REPO='ishanmish/hermes-artifacts';
+const GITHUB_BRANCH='main';
+const GITHUB_DATA_PATH='video/youtube-summary-data.json';
+const GITHUB_MANIFEST_PATH='artifacts.json';
 const $=s=>document.querySelector(s);
 let videos=[], filtered=[], current=null, currentFilter='all', localApi=localStorage.getItem('youtubeSummaryApi')||LOCAL_API_DEFAULT, apiOnline=false, deletingId=null;
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -100,29 +104,76 @@ function mergeVideos(primary,fallback){
   return out;
 }
 function markdownPathFor(v){return String(v.markdown_path||v.github_path||v.file_path||v.path||'').trim();}
+function b64Encode(value){return btoa(unescape(encodeURIComponent(value)))}
+function b64Decode(value){return decodeURIComponent(escape(atob(String(value||'').replace(/\s/g,''))))}
+async function githubJsonFile(path,token){
+  const res=await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}?ref=${encodeURIComponent(GITHUB_BRANCH)}`,{headers:{Accept:'application/vnd.github+json',Authorization:`Bearer ${token}`}});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.message||`GitHub read failed (${res.status})`);
+  return data;
+}
+async function updateGithubJsonFile(path,token,transform,message){
+  const file=await githubJsonFile(path,token);
+  const current=JSON.parse(b64Decode(file.content||''));
+  const next=transform(current);
+  const res=await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${encodeURIComponent(path).replace(/%2F/g,'/')}`,{
+    method:'PUT',
+    headers:{Accept:'application/vnd.github+json','Content-Type':'application/json',Authorization:`Bearer ${token}`},
+    body:JSON.stringify({message,content:b64Encode(JSON.stringify(next,null,2)+'\n'),sha:file.sha,branch:GITHUB_BRANCH})
+  });
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.message||`GitHub update failed (${res.status})`);
+  return {data,next};
+}
+async function deleteSummaryFromGithubJson(id,token){
+  let removed=null;
+  const dataResult=await updateGithubJsonFile(GITHUB_DATA_PATH,token,current=>{
+    if(!Array.isArray(current)) throw new Error(`${GITHUB_DATA_PATH} is not a JSON list`);
+    const next=current.filter(item=>{
+      if(item&&item.id===id){removed=item; return false}
+      return true;
+    });
+    if(!removed) throw new Error(`Summary ${id} was not found in ${GITHUB_DATA_PATH}`);
+    return next;
+  },`Delete YouTube summary ${id}`);
+  try{
+    await updateGithubJsonFile(GITHUB_MANIFEST_PATH,token,current=>{
+      if(!Array.isArray(current)) return current;
+      const now=new Date().toISOString();
+      return current.map(item=>(item&&item.id==='2026-05-27-youtube-summary-dashboard')?{...item,updated_at:now}:item);
+    },`Update YouTube summary dashboard timestamp`);
+  }catch(e){
+    console.warn('Could not update artifact manifest timestamp',e);
+  }
+  return {ok:true,deleted:true,removed_local:false,summary:removed,items:dataResult.next,github:dataResult.data};
+}
 async function deleteSummary(id){
   if(deletingId) return;
   const v=videos.find(x=>x.id===id);
   if(!v) return;
   const label=v.title||v.video_url||id;
   const filePath=markdownPathFor(v);
-  const scope=filePath?'the markdown file from GitHub and the dashboard entry':'this dashboard entry';
+  const scope=filePath?'the markdown file from GitHub and the dashboard entry':'the dashboard JSON entry from GitHub Pages';
   if(!confirm(`Delete “${label}”? This removes ${scope}. This cannot be undone.`)) return;
-  const token=filePath?(prompt('GitHub token for deleting this markdown file. It is sent once to the local helper and is not stored.', '')||'').trim():'';
-  if(filePath&&!token){setStatus('Deletion cancelled: GitHub token is required for markdown-backed summaries.','warn');return;}
+  const token=(prompt('GitHub token for deleting this dashboard entry. It is used once in this browser request and is not stored.', '')||'').trim();
+  if(!token){setStatus('Deletion cancelled: GitHub token is required to publish dashboard deletions.','warn');return;}
   deletingId=id;
   setStatus(`Deleting “${esc(label)}”…`,'');
   renderList(); renderViewer();
   try{
-    if(!apiOnline) await loadFromLocalApi();
-    const data=await readJson(await fetch(apiUrl(`/summaries/${encodeURIComponent(id)}`),{
-      method:'DELETE',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({id,post_id:id,file_path:filePath,path:filePath,token})
-    }));
+    let data;
+    if(filePath&&apiOnline){
+      data=await readJson(await fetch(apiUrl(`/summaries/${encodeURIComponent(id)}`),{
+        method:'DELETE',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({id,post_id:id,file_path:filePath,path:filePath,token})
+      }));
+    }else{
+      data=await deleteSummaryFromGithubJson(id,token);
+    }
     videos=Array.isArray(data.items)?data.items:videos.filter(x=>x.id!==id);
     if(current===id) current=videos[0]?.id||null;
-    const githubNote=data.github?.already_missing?' GitHub file was already missing.':(!data.github?' JSON-only entry removed locally. Commit/push the artifact repo to publish this deletion.':'');
+    const githubNote=data.github?.already_missing?' GitHub file was already missing.':' GitHub Pages may take a moment to refresh.';
     setStatus(`Deleted “${esc(label)}”.${githubNote}`,'ok');
   }catch(e){
     const message=String(e.message||e);
@@ -142,7 +193,7 @@ async function loadFromLocalApi(){
     return true;
   }catch(e){
     apiOnline=false;
-    if(videos.length) setStatus(`Local helper offline; public archive is still visible. Start the helper only when adding a new video.`,'warn');
+    if(videos.length) setStatus(`Local helper offline; public archive is still visible. Deletions can be published with a GitHub token; start the helper only when adding a new video.`,'warn');
     else setStatus(helperUnavailableMessage(),'warn');
     return false;
   }

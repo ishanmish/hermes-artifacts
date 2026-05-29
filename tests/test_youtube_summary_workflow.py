@@ -74,9 +74,26 @@ def test_dashboard_html_exposes_delete_button_and_local_state_removal():
 
     assert "function deleteSummary(id)" in html
     assert "confirm(`Delete" in html
+    assert "GitHub token for deleting this dashboard entry" in html
+    assert "function deleteSummaryFromGithubJson(id,token)" in html
+    assert "GITHUB_DATA_PATH='video/youtube-summary-data.json'" in html
+    assert "Delete YouTube summary ${id}" in html
     assert "method:'DELETE'" in html
     assert "data-delete-id" in html
     assert "videos=Array.isArray(data.items)?data.items:videos.filter" in html
+
+
+def test_public_dashboard_can_delete_json_only_entries_without_local_helper():
+    html = (workflow.ROOT / "video" / "youtube-summary-dashboard.html").read_text(
+        encoding="utf-8"
+    )
+
+    delete_body = html.split("async function deleteSummary(id){", 1)[1].split(
+        "\n}\nasync function loadFromLocalApi", 1
+    )[0]
+    assert "deleteSummaryFromGithubJson(id,token)" in delete_body
+    assert "if(filePath&&apiOnline)" in delete_body
+    assert "if(!token)" in delete_body
 
 
 def test_public_dashboard_loads_static_data_before_local_helper_probe():
@@ -99,6 +116,7 @@ def test_public_dashboard_keeps_archive_status_when_helper_is_offline():
     )
 
     assert "Local helper offline; public archive is still visible." in html
+    assert "Deletions can be published with a GitHub token" in html
 
 
 def test_create_summary_from_url_fetches_summarizes_and_saves(tmp_path, monkeypatch):
