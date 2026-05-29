@@ -1697,5 +1697,302 @@
     "win_rate": "54.64%",
     "report_path": "/Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-19/daily_indian_trading_idea_scout_2026-05-19.html",
     "file_url": "file:///Users/ishanmishra/Desktop/Playground/trading-research/daily_scout_2026-05-19/daily_indian_trading_idea_scout_2026-05-19.html"
+  },
+  {
+    "id": "ITIS-20260529-1",
+    "title": "Faber 10-month SMA timing model adapted to NIFTY 50",
+    "source_url": "https://mebfaber.com/timing-model/",
+    "market_fit": "India adaptation of public tactical asset allocation timing rule",
+    "instrument": "NIFTY 50 index daily OHLC proxy, monthly signal",
+    "data_required": "NIFTY daily OHLC aggregated to month-end; 10-month simple moving average of monthly closes",
+    "signal_rule": "At month-end, bullish when monthly close is above its trailing 10-month SMA; bearish when monthly close is below/equal the 10-month SMA.",
+    "entry_timing": "Enter at next trading session open after a bullish month-end signal when currently in cash.",
+    "exit_timing": "Exit at next trading session open after a bearish month-end signal when currently long.",
+    "sizing_risk": "100% notional long NIFTY proxy while signal is bullish; cash otherwise; no leverage.",
+    "costs_slippage": "5 bps per entry/exit side",
+    "strategy": "faber_10_month_sma",
+    "run_date": "2026-05-29",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "metrics": {
+      "total_return": 1.0122601340590789,
+      "cagr": 0.0663962448359725,
+      "max_drawdown": -0.21305241157332822,
+      "trade_count": 11,
+      "win_rate": 0.5454545454545454,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "total_return": 1.0122601340590789,
+    "cagr": 0.0663962448359725,
+    "max_dd": -0.21305241157332822,
+    "trade_count": 11,
+    "trades": 11,
+    "win_rate": 0.5454545454545454,
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 6.64%, total 101.23%, max DD -21.31%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://mebfaber.com/timing-model/",
+      "ok": true
+    },
+    "status": "backtested",
+    "blocker": null,
+    "trade_sample": [
+      {
+        "entry_date": "2016-06-01",
+        "entry_price": 8179.2001953125,
+        "exit_date": "2017-01-03",
+        "exit_price": 8196.0498046875,
+        "return": 0.0015590258421558367,
+        "win": true
+      },
+      {
+        "entry_date": "2017-02-01",
+        "entry_price": 8570.349609375,
+        "exit_date": "2018-04-03",
+        "exit_price": 10186.849609375,
+        "return": 0.18802110166341568,
+        "win": true
+      },
+      {
+        "entry_date": "2018-05-02",
+        "entry_price": 10783.849609375,
+        "exit_date": "2018-11-01",
+        "exit_price": 10441.7001953125,
+        "return": -0.032212083508487366,
+        "win": false
+      },
+      {
+        "entry_date": "2018-12-03",
+        "entry_price": 10930.7001953125,
+        "exit_date": "2019-02-01",
+        "exit_price": 10851.349609375,
+        "return": -0.007755794160244411,
+        "win": false
+      },
+      {
+        "entry_date": "2019-04-02",
+        "entry_price": 11711.5498046875,
+        "exit_date": "2019-08-01",
+        "exit_price": 11060.2001953125,
+        "return": -0.05608819673120835,
+        "win": false
+      }
+    ],
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260529-1.html",
+    "public_report_path": "reports/ITIS-20260529-1.html",
+    "verdict": "Reject/not deployment-ready: positive but trails or worsens simple same-span NIFTY buy-hold.",
+    "caveats": "Source HTTP 200 verified=True; OHLC filtered rows 0; NIFTY index proxy is not directly tradable; execution needs futures/ETF mapping; next-open fills from prior-close signals; 5 bps per entry/exit side; ignores taxes, impact, roll/cash yield; sample length 2015-06-26\u21922026-05-12; proxy/execution/sample-length caveats apply. Survivorship caveat is low for index-level proxy but still relevant if adapted to stock baskets.",
+    "rules": "Market fit: India adaptation of public tactical asset allocation timing rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy, monthly signal\nData required: NIFTY daily OHLC aggregated to month-end; 10-month simple moving average of monthly closes\nSignal rule: At month-end, bullish when monthly close is above its trailing 10-month SMA; bearish when monthly close is below/equal the 10-month SMA.\nEntry timing: Enter at next trading session open after a bullish month-end signal when currently in cash.\nExit timing: Exit at next trading session open after a bearish month-end signal when currently long.\nSizing/risk: 100% notional long NIFTY proxy while signal is bullish; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side",
+    "full_rulebook": "Market fit: India adaptation of public tactical asset allocation timing rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy, monthly signal\nData required: NIFTY daily OHLC aggregated to month-end; 10-month simple moving average of monthly closes\nSignal rule: At month-end, bullish when monthly close is above its trailing 10-month SMA; bearish when monthly close is below/equal the 10-month SMA.\nEntry timing: Enter at next trading session open after a bullish month-end signal when currently in cash.\nExit timing: Exit at next trading session open after a bearish month-end signal when currently long.\nSizing/risk: 100% notional long NIFTY proxy while signal is bullish; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side"
+  },
+  {
+    "id": "ITIS-20260529-2",
+    "title": "Connors-style RSI(2) pullback adapted to NIFTY 50",
+    "source_url": "https://www.quantifiedstrategies.com/rsi-2-trading-strategy/",
+    "market_fit": "India adaptation of public short-term mean-reversion rule",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "NIFTY daily OHLC; RSI(2), 200-day SMA trend filter, 5-day SMA exit",
+    "signal_rule": "Buy setup when prior close is above 200-day SMA and RSI(2) is below 5.",
+    "entry_timing": "Enter next session open after setup.",
+    "exit_timing": "Exit next session open after prior close rises above 5-day SMA.",
+    "sizing_risk": "100% notional long while in trade; one position at a time; no leverage.",
+    "costs_slippage": "5 bps per entry/exit side",
+    "strategy": "rsi2_pullback",
+    "run_date": "2026-05-29",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "metrics": {
+      "total_return": 0.1681427536729363,
+      "cagr": 0.014390341876189483,
+      "max_drawdown": -0.06089336430913994,
+      "trade_count": 47,
+      "win_rate": 0.5957446808510638,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "total_return": 0.1681427536729363,
+    "cagr": 0.014390341876189483,
+    "max_dd": -0.06089336430913994,
+    "trade_count": 47,
+    "trades": 47,
+    "win_rate": 0.5957446808510638,
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 1.44%, total 16.81%, max DD -6.09%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://www.quantifiedstrategies.com/",
+      "ok": true
+    },
+    "status": "backtested",
+    "blocker": null,
+    "trade_sample": [
+      {
+        "entry_date": "2016-11-03",
+        "entry_price": 8499.849609375,
+        "exit_date": "2016-11-09",
+        "exit_price": 8067.5,
+        "return": -0.051340127111623945,
+        "win": false
+      },
+      {
+        "entry_date": "2017-06-28",
+        "entry_price": 9520.2001953125,
+        "exit_date": "2017-07-03",
+        "exit_price": 9587.9501953125,
+        "return": 0.006612888763971592,
+        "win": true
+      },
+      {
+        "entry_date": "2017-08-11",
+        "entry_price": 9712.150390625,
+        "exit_date": "2017-08-17",
+        "exit_price": 9945.5498046875,
+        "return": 0.023519676896751385,
+        "win": true
+      },
+      {
+        "entry_date": "2017-09-25",
+        "entry_price": 9960.099609375,
+        "exit_date": "2017-10-04",
+        "exit_price": 9884.349609375,
+        "return": -0.008101542953318996,
+        "win": false
+      },
+      {
+        "entry_date": "2017-11-15",
+        "entry_price": 10171.9501953125,
+        "exit_date": "2017-11-17",
+        "exit_price": 10324.5498046875,
+        "return": 0.014494500232669294,
+        "win": true
+      }
+    ],
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260529-2.html",
+    "public_report_path": "reports/ITIS-20260529-2.html",
+    "verdict": "Reject/not deployment-ready: positive but trails or worsens simple same-span NIFTY buy-hold.",
+    "caveats": "Source HTTP 200 verified=True; OHLC filtered rows 0; NIFTY index proxy is not directly tradable; execution needs futures/ETF mapping; next-open fills from prior-close signals; 5 bps per entry/exit side; ignores taxes, impact, roll/cash yield; sample length 2015-06-26\u21922026-05-12; proxy/execution/sample-length caveats apply. Survivorship caveat is low for index-level proxy but still relevant if adapted to stock baskets.",
+    "rules": "Market fit: India adaptation of public short-term mean-reversion rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; RSI(2), 200-day SMA trend filter, 5-day SMA exit\nSignal rule: Buy setup when prior close is above 200-day SMA and RSI(2) is below 5.\nEntry timing: Enter next session open after setup.\nExit timing: Exit next session open after prior close rises above 5-day SMA.\nSizing/risk: 100% notional long while in trade; one position at a time; no leverage.\nCosts/slippage: 5 bps per entry/exit side",
+    "full_rulebook": "Market fit: India adaptation of public short-term mean-reversion rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; RSI(2), 200-day SMA trend filter, 5-day SMA exit\nSignal rule: Buy setup when prior close is above 200-day SMA and RSI(2) is below 5.\nEntry timing: Enter next session open after setup.\nExit timing: Exit next session open after prior close rises above 5-day SMA.\nSizing/risk: 100% notional long while in trade; one position at a time; no leverage.\nCosts/slippage: 5 bps per entry/exit side"
+  },
+  {
+    "id": "ITIS-20260529-3",
+    "title": "Turtle/Donchian 20-day breakout with 10-day exit adapted to NIFTY 50",
+    "source_url": "https://www.turtletrader.com/rules/",
+    "market_fit": "India adaptation of public trend-following breakout rule",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "NIFTY daily OHLC; prior 20-day highest high and prior 10-day lowest low",
+    "signal_rule": "Buy when prior daily close breaks above the highest high of the prior 20 sessions.",
+    "entry_timing": "Enter next session open after breakout.",
+    "exit_timing": "Exit next session open when prior daily close breaks below the lowest low of the prior 10 sessions.",
+    "sizing_risk": "100% notional long while in position; cash otherwise; no leverage.",
+    "costs_slippage": "5 bps per entry/exit side",
+    "strategy": "donchian_20_10",
+    "run_date": "2026-05-29",
+    "data_coverage": "2015-06-26\u21922026-05-12",
+    "metrics": {
+      "total_return": 0.2936342153453333,
+      "cagr": 0.023950992817070915,
+      "max_drawdown": -0.22563340074266536,
+      "trade_count": 50,
+      "win_rate": 0.42,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "total_return": 0.2936342153453333,
+    "cagr": 0.023950992817070915,
+    "max_dd": -0.22563340074266536,
+    "trade_count": 50,
+    "trades": 50,
+    "win_rate": 0.42,
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 2.40%, total 29.36%, max DD -22.56%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://www.turtletrader.com/rules/",
+      "ok": true
+    },
+    "status": "backtested",
+    "blocker": null,
+    "trade_sample": [
+      {
+        "entry_date": "2015-10-06",
+        "entry_price": 8180.4501953125,
+        "exit_date": "2015-11-02",
+        "exit_price": 8054.5498046875,
+        "return": -0.015882703570739176,
+        "win": false
+      },
+      {
+        "entry_date": "2016-03-10",
+        "entry_price": 7545.35009765625,
+        "exit_date": "2016-04-08",
+        "exit_price": 7542.35009765625,
+        "return": -0.0008973970672256915,
+        "win": false
+      },
+      {
+        "entry_date": "2016-04-18",
+        "entry_price": 7908.14990234375,
+        "exit_date": "2016-05-04",
+        "exit_price": 7724.14990234375,
+        "return": -0.02375550252221381,
+        "win": false
+      },
+      {
+        "entry_date": "2016-05-27",
+        "entry_price": 8081.9501953125,
+        "exit_date": "2016-06-14",
+        "exit_price": 8134.39990234375,
+        "return": 0.005986489140719975,
+        "win": true
+      },
+      {
+        "entry_date": "2016-07-04",
+        "entry_price": 8376.75,
+        "exit_date": "2016-09-30",
+        "exit_price": 8581.5,
+        "return": 0.023930432446951366,
+        "win": true
+      }
+    ],
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260529-3.html",
+    "public_report_path": "reports/ITIS-20260529-3.html",
+    "verdict": "Reject/not deployment-ready: positive but trails or worsens simple same-span NIFTY buy-hold.",
+    "caveats": "Source HTTP 200 verified=True; OHLC filtered rows 0; NIFTY index proxy is not directly tradable; execution needs futures/ETF mapping; next-open fills from prior-close signals; 5 bps per entry/exit side; ignores taxes, impact, roll/cash yield; sample length 2015-06-26\u21922026-05-12; proxy/execution/sample-length caveats apply. Survivorship caveat is low for index-level proxy but still relevant if adapted to stock baskets.",
+    "rules": "Market fit: India adaptation of public trend-following breakout rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; prior 20-day highest high and prior 10-day lowest low\nSignal rule: Buy when prior daily close breaks above the highest high of the prior 20 sessions.\nEntry timing: Enter next session open after breakout.\nExit timing: Exit next session open when prior daily close breaks below the lowest low of the prior 10 sessions.\nSizing/risk: 100% notional long while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side",
+    "full_rulebook": "Market fit: India adaptation of public trend-following breakout rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; prior 20-day highest high and prior 10-day lowest low\nSignal rule: Buy when prior daily close breaks above the highest high of the prior 20 sessions.\nEntry timing: Enter next session open after breakout.\nExit timing: Exit next session open when prior daily close breaks below the lowest low of the prior 10 sessions.\nSizing/risk: 100% notional long while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side"
   }
 ]
