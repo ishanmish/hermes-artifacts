@@ -1,5 +1,28 @@
 [
   {
+    "id": "2026-05-29-nyc-nightlife-scene-map-2026",
+    "title": "NYC Nightlife Scene Map 2026",
+    "summary": "Deep scene-mapped guide to NYC nightlife: neighborhoods, commercial clubs, underground dance, queer/performance parties, cocktails, dives, rooftops, jazz, live music, Queens food-first nights, and practical routes.",
+    "category": "travel",
+    "tags": [
+      "nyc",
+      "nightlife",
+      "travel",
+      "bars",
+      "clubs",
+      "music"
+    ],
+    "status": "saved",
+    "created_at": "2026-05-29T16:03:30.017789+05:30",
+    "updated_at": "2026-05-29T16:03:30.017789+05:30",
+    "expires_at": null,
+    "importance": "reference",
+    "superseded_by": null,
+    "path": "travel/2026-05-29-nyc-nightlife-scene-map-2026.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/travel/2026-05-29-nyc-nightlife-scene-map-2026.html",
+    "template": null
+  },
+  {
     "id": "2026-05-27-youtube-summary-dashboard",
     "title": "YouTube Video Summary Dashboard",
     "summary": "Persistent dashboard for YouTube videos sent to Hermes with 'Summarise this video', keeping searchable history plus transcript-backed key insights, takeaways, actionable points, timestamped highlights, and conclusions.",
@@ -22,6 +45,27 @@
     "template": "video-summary-dashboard",
     "temp": false,
     "retention_days": null
+  },
+  {
+    "id": "2026-05-26-trading-ideas-dashboard",
+    "title": "Indian Trading Ideas Dashboard",
+    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
+    "category": "trading",
+    "tags": [
+      "trading",
+      "india",
+      "backtests",
+      "systematic"
+    ],
+    "status": "dashboard",
+    "created_at": "2026-05-26T19:19:51.146507+05:30",
+    "updated_at": "2026-05-26T19:19:51.146507+05:30",
+    "expires_at": null,
+    "importance": null,
+    "superseded_by": null,
+    "path": "trading/trading-ideas-dashboard.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
+    "template": null
   },
   {
     "id": "2026-05-26-indian-resident-us-stocks-lrs-tax-guide",
@@ -78,27 +122,6 @@
     "path": "research/2026-05-26-scapia-vs-niyo-travel-card-community-research.html",
     "url": "https://ishanmish.github.io/hermes-artifacts/research/2026-05-26-scapia-vs-niyo-travel-card-community-research.html",
     "template": "14-research-feature-explainer.html"
-  },
-  {
-    "id": "2026-05-26-trading-ideas-dashboard",
-    "title": "Indian Trading Ideas Dashboard",
-    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
-    "category": "trading",
-    "tags": [
-      "trading",
-      "india",
-      "backtests",
-      "systematic"
-    ],
-    "status": "dashboard",
-    "created_at": "2026-05-26T19:19:51.146507+05:30",
-    "updated_at": "2026-05-26T19:19:51.146507+05:30",
-    "expires_at": null,
-    "importance": null,
-    "superseded_by": null,
-    "path": "trading/trading-ideas-dashboard.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
-    "template": null
   },
   {
     "id": "2026-05-25-spanish-crash-course-dashboard",

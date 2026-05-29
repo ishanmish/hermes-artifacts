@@ -1,196 +1,110 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>Hermes Artifacts</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>Hermes Artifacts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#03040a;--panel:rgba(13,17,29,.82);--panel2:rgba(20,25,42,.78);--line:rgba(255,255,255,.11);--text:#f7f8ff;--muted:#9aa4ba;--accent:#9b87ff;--good:#66e3b4;--warn:#ffd166;--danger:#ff6b8a;--shadow:0 24px 80px rgba(0,0,0,.42)}
+:root{--bg:#03040a;--panel:rgba(13,17,29,.82);--panel2:rgba(20,25,42,.78);--line:rgba(255,255,255,.11);--text:#f7f8ff;--muted:#9aa4ba;--accent:#9b87ff;--good:#66e3b4;--shadow:0 24px 80px rgba(0,0,0,.42)}
 *{box-sizing:border-box}body{margin:0;font-family:Geist,system-ui,sans-serif;background:radial-gradient(circle at 20% -10%,rgba(155,135,255,.22),transparent 34%),radial-gradient(circle at 80% 5%,rgba(102,227,180,.12),transparent 30%),linear-gradient(180deg,#03040a,#070a12 50%,#03040a);color:var(--text)}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 70%)}
 .wrap{max-width:1180px;margin:0 auto;padding:48px 22px 80px;position:relative}.hero{padding:34px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.035));border-radius:28px;box-shadow:var(--shadow)}
-.kicker{font:600 12px/1 Geist Mono,monospace;color:var(--good);letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(42px,7vw,78px);line-height:.92;margin:12px 0 14px;letter-spacing:-.06em}.lead{max-width:820px;color:var(--muted);font-size:18px;line-height:1.65}.note{margin-top:14px;color:#c9d0e8;font:13px/1.5 Geist Mono,monospace}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:28px 0 16px}.controls{display:flex;gap:10px;flex-wrap:wrap}.admin{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.token-state{font:600 12px Geist Mono,monospace;color:var(--muted)}button{border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--text);padding:10px 14px;border-radius:999px;font-weight:650;cursor:pointer}button:hover,button.active{border-color:rgba(155,135,255,.7);background:rgba(155,135,255,.18)}button.danger:hover{border-color:rgba(255,107,138,.75);background:rgba(255,107,138,.14)}button.small{font-size:12px;padding:7px 10px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{border:1px solid var(--line);background:var(--panel);border-radius:22px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;min-height:260px}.card:hover{background:var(--panel2);transform:translateY(-1px)}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font:600 11px/1.2 Geist Mono,monospace;text-transform:uppercase}.badge{border:1px solid var(--line);border-radius:999px;padding:4px 7px}.badge.temp{color:#16120a;background:var(--warn);border-color:rgba(255,209,102,.5)}.badge.saved{color:var(--good)}.badge.expired{color:#fff;background:var(--danger);border-color:rgba(255,107,138,.6)}h2{font-size:21px;line-height:1.16;letter-spacing:-.03em;margin:14px 0 8px}a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}p{color:var(--muted);line-height:1.55}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.tags span{font:600 11px Geist Mono,monospace;color:#c8d0ff;background:rgba(155,135,255,.12);border:1px solid rgba(155,135,255,.2);padding:6px 8px;border-radius:999px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:16px}.empty,.error{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:22px;padding:24px;color:var(--muted)}footer{margin-top:36px;color:var(--muted);font:13px Geist Mono,monospace}.toast{position:fixed;right:18px;bottom:18px;max-width:420px;border:1px solid var(--line);border-radius:18px;background:rgba(7,10,18,.94);box-shadow:var(--shadow);padding:14px 16px;color:var(--text);font:13px/1.45 Geist Mono,monospace;display:none}.toast.show{display:block}.toast.ok{border-color:rgba(102,227,180,.45)}.toast.err{border-color:rgba(255,107,138,.55)}@media(max-width:920px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.grid{grid-template-columns:1fr}.hero{padding:24px}.toolbar{display:block}.admin{margin-top:12px}}
-</style>
-</head>
-<body>
-<main class="wrap">
-  <section class="hero">
-    <div class="kicker">Hermes artifact hub</div>
-    <h1>Readable outputs, not chat walls.</h1>
-    <p class="lead">Saved reports, dashboards, and one-off research artifacts generated by Hermes. Mark anything temporary, set the retention window, and the hub will delete expired temp artifacts automatically.</p>
-    <div class="note">Admin mode uses your GitHub token locally in this browser only. Required scope: repo contents access for <code>ishanmish/hermes-artifacts</code>.</div>
-  </section>
-  <div class="toolbar">
-    <div class="controls" id="filters"></div>
-    <div class="admin">
-      <span class="token-state" id="tokenState">admin: off</span>
-      <button id="setToken" class="small">set GitHub token</button>
-      <button id="clearToken" class="small danger">clear token</button>
-    </div>
-  </div>
-  <section class="grid" id="grid"><div class="empty">Loading artifacts…</div></section>
-  <footer id="footer">Loading manifest…</footer>
-</main>
-<div class="toast" id="toast"></div>
-<script>
-const OWNER='ishanmish';
-const REPO='hermes-artifacts';
-const BRANCH='main';
-const RAW_BASE='https://ishanmish.github.io/hermes-artifacts/';
-const TOKEN_KEY='hermesArtifactsGithubToken';
-let artifacts=[];
-let currentFilter='all';
-
-const $=sel=>document.querySelector(sel);
-const fmtDate=iso=>iso?new Date(iso).toLocaleDateString('en-IN',{year:'numeric',month:'short',day:'2-digit'}):'no expiry';
-const isoDate=iso=>iso?String(iso).slice(0,10):'';
-const isTemp=a=>a.temp===true || Boolean(a.expires_at) || (a.temp!==false && a.category==='temp');
-const isExpired=a=>a.expires_at && new Date(a.expires_at).getTime() <= Date.now();
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const token=()=>localStorage.getItem(TOKEN_KEY)||'';
-
-function toast(msg, ok=true){const t=$('#toast');t.textContent=msg;t.className='toast show '+(ok?'ok':'err');setTimeout(()=>t.className='toast',5200)}
-function updateTokenState(){ $('#tokenState').textContent=token()?'admin: on':'admin: off'; }
-
-async function loadArtifacts(){
-  try{
-    const res=await fetch('artifacts.json?ts='+Date.now(),{cache:'no-store'});
-    if(!res.ok) throw new Error('manifest HTTP '+res.status);
-    artifacts=await res.json();
-    artifacts.sort((a,b)=>String(b.updated_at||b.created_at||'').localeCompare(String(a.updated_at||a.created_at||'')));
-    renderFilters();
-    render();
-  }catch(e){
-    $('#grid').innerHTML='<div class="error">Could not load artifacts.json: '+esc(e.message)+'</div>';
-    $('#footer').textContent='Manifest unavailable';
-  }
-}
-
-function categories(){
-  const cats=new Set(['all','temp']);
-  artifacts.forEach(a=>{ if(a.category) cats.add(a.category); });
-  return [...cats];
-}
-function renderFilters(){
-  $('#filters').innerHTML=categories().map(c=>`<button data-filter="${esc(c)}" class="${c===currentFilter?'active':''}">${esc(c)}</button>`).join('');
-  document.querySelectorAll('button[data-filter]').forEach(b=>b.onclick=()=>{currentFilter=b.dataset.filter;renderFilters();render();});
-}
-function visibleArtifacts(){
-  return artifacts.filter(a=>currentFilter==='all' || (currentFilter==='temp'?isTemp(a):a.category===currentFilter));
-}
-function render(){
-  const list=visibleArtifacts();
-  if(!list.length){ $('#grid').innerHTML='<div class="empty">No artifacts in this filter.</div>'; }
-  else $('#grid').innerHTML=list.map(card).join('');
-  document.querySelectorAll('[data-temp-id]').forEach(b=>b.onclick=()=>markTemp(b.dataset.tempId));
-  document.querySelectorAll('[data-keep-id]').forEach(b=>b.onclick=()=>markPermanent(b.dataset.keepId));
-  document.querySelectorAll('[data-delete-id]').forEach(b=>b.onclick=()=>deleteArtifact(b.dataset.deleteId));
-  const tempCount=artifacts.filter(isTemp).length;
-  const expiredCount=artifacts.filter(isExpired).length;
-  $('#footer').innerHTML=`Generated from <a href="artifacts.json">manifest</a> · ${artifacts.length} artifacts indexed · ${tempCount} temp · ${expiredCount} expired/pending cleanup`;
-}
-function card(a){
-  const temp=isTemp(a), expired=isExpired(a);
-  const badges=[a.category, isoDate(a.updated_at||a.created_at), a.status, a.template].filter(Boolean).map(x=>`<span>${esc(x)}</span>`).join('');
-  const tags=(a.tags||[]).map(t=>`<span>${esc(t)}</span>`).join('');
-  const tempBadge=temp?`<span class="badge ${expired?'expired':'temp'}">${expired?'expired':(a.expires_at?'temp until '+esc(fmtDate(a.expires_at)):'temp · no expiry')}</span>`:'<span class="badge saved">non-temp</span>';
-  const href=a.url||RAW_BASE+a.path;
-  return `<article class="card" data-category="${esc(a.category)}">
-    <div class="meta">${badges}${tempBadge}</div>
-    <h2><a href="${esc(href)}">${esc(a.title)}</a></h2>
-    <p>${esc(a.summary||'')}</p>
-    <div class="tags">${tags}</div>
-    <div class="actions">
-      <button class="small" data-temp-id="${esc(a.id)}">mark temp</button>
-      <button class="small" data-keep-id="${esc(a.id)}">mark non-temp</button>
-      <button class="small danger" data-delete-id="${esc(a.id)}">delete</button>
-    </div>
-  </article>`;
-}
-
-function githubContentUrl(path){return `https://api.github.com/repos/${OWNER}/${REPO}/contents/${String(path).split('/').map(encodeURIComponent).join('/')}?ref=${BRANCH}`;}
-function githubContentWriteUrl(path){return `https://api.github.com/repos/${OWNER}/${REPO}/contents/${String(path).split('/').map(encodeURIComponent).join('/')}`;}
-async function githubJson(path){
-  const res=await fetch(githubContentUrl(path),{headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json'}});
-  if(!res.ok) throw new Error(`GitHub fetch ${path}: ${res.status} ${await res.text()}`);
-  const data=await res.json();
-  const text=decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
-  return {sha:data.sha,json:JSON.parse(text)};
-}
-async function githubContentMeta(path){
-  const res=await fetch(githubContentUrl(path),{headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json'}});
-  if(res.status===404) return null;
-  if(!res.ok) throw new Error(`GitHub fetch ${path}: ${res.status} ${await res.text()}`);
-  return res.json();
-}
-async function deleteGithubPath(path, message){
-  if(!path) return;
-  const meta=await githubContentMeta(path);
-  if(!meta) return;
-  const res=await fetch(githubContentWriteUrl(path),{method:'DELETE',headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message,sha:meta.sha,branch:BRANCH})});
-  if(!res.ok) throw new Error(`GitHub delete ${path} failed: ${res.status} ${await res.text()}`);
-}
-async function putGithubJson(path, sha, json, message){
-  const content=btoa(unescape(encodeURIComponent(JSON.stringify(json,null,2)+'\n')));
-  const res=await fetch(githubContentWriteUrl(path),{method:'PUT',headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message,content,sha,branch:BRANCH})});
-  if(!res.ok) throw new Error(`GitHub update failed: ${res.status} ${await res.text()}`);
-  return res.json();
-}
-async function mutateArtifact(id, mutator, message){
-  if(!token()) { toast('Set a GitHub token first.',false); return; }
-  try{
-    toast('Updating manifest…');
-    const {sha,json}=await githubJson('artifacts.json');
-    const idx=json.findIndex(a=>a.id===id);
-    if(idx<0) throw new Error('Artifact not found in manifest: '+id);
-    mutator(json[idx]);
-    await putGithubJson('artifacts.json',sha,json,message);
-    artifacts=json;
-    renderFilters(); render();
-    toast('Saved. GitHub Pages will refresh shortly.');
-  }catch(e){ toast(e.message,false); }
-}
-function markTemp(id){
-  const daysRaw=prompt('Delete this temp artifact after how many days?', '7');
-  if(daysRaw===null) return;
-  const days=Number(daysRaw);
-  if(!Number.isFinite(days)||days<=0) { toast('Days must be a positive number.',false); return; }
-  const expires=new Date(Date.now()+days*86400000).toISOString();
-  mutateArtifact(id,a=>{a.temp=true;a.retention_days=days;a.expires_at=expires;a.updated_at=new Date().toISOString();},`Mark ${id} temp for ${days} days`);
-}
-function markPermanent(id){
-  if(!confirm('Mark this artifact non-temp and remove its expiry?')) return;
-  mutateArtifact(id,a=>{a.temp=false;a.retention_days=null;a.expires_at=null;a.updated_at=new Date().toISOString();},`Mark ${id} non-temp`);
-}
-async function deleteArtifact(id){
-  if(!token()) { toast('Set a GitHub token first.',false); return; }
-  const item=artifacts.find(a=>a.id===id);
-  if(!item) { toast('Artifact not found: '+id,false); return; }
-  const label=item.path?`${item.title}\n\nThis will remove it from the hub and delete ${item.path} from the repo.`:item.title;
-  if(!confirm('Delete this artifact permanently?\n\n'+label)) return;
-  try{
-    toast('Deleting artifact…');
-    const {sha,json}=await githubJson('artifacts.json');
-    const idx=json.findIndex(a=>a.id===id);
-    if(idx<0) throw new Error('Artifact not found in manifest: '+id);
-    const [removed]=json.splice(idx,1);
-    await deleteGithubPath(removed.path,`Delete artifact file ${id}`);
-    await putGithubJson('artifacts.json',sha,json,`Delete artifact ${id}`);
-    artifacts=json;
-    renderFilters(); render();
-    toast('Deleted. GitHub Pages will refresh shortly.');
-  }catch(e){ toast(e.message,false); }
-}
-
-$('#setToken').onclick=()=>{const t=prompt('Paste a GitHub fine-grained token with Contents read/write for ishanmish/hermes-artifacts. It is stored only in this browser localStorage.'); if(t){localStorage.setItem(TOKEN_KEY,t.trim());updateTokenState();toast('Token saved locally.')}};
-$('#clearToken').onclick=()=>{localStorage.removeItem(TOKEN_KEY);updateTokenState();toast('Token cleared.');};
-updateTokenState();
-loadArtifacts();
-</script>
-</body>
-</html>
+.kicker{font:600 12px/1 Geist Mono,monospace;color:var(--good);letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(42px,7vw,78px);line-height:.92;margin:12px 0 14px;letter-spacing:-.06em}.lead{max-width:760px;color:var(--muted);font-size:18px;line-height:1.65}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}button{border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--text);padding:10px 14px;border-radius:999px;font-weight:650;cursor:pointer}button:hover,button.active{border-color:rgba(155,135,255,.7);background:rgba(155,135,255,.18)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{border:1px solid var(--line);background:var(--panel);border-radius:22px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.25)}.card:hover{background:var(--panel2);transform:translateY(-1px)}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font:600 11px/1.2 Geist Mono,monospace;text-transform:uppercase}h2{font-size:21px;line-height:1.16;letter-spacing:-.03em;margin:14px 0 8px}a{color:inherit;text-decoration:none}a:hover{color:var(--accent)}p{color:var(--muted);line-height:1.55}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.tags span{font:600 11px Geist Mono,monospace;color:#c8d0ff;background:rgba(155,135,255,.12);border:1px solid rgba(155,135,255,.2);padding:6px 8px;border-radius:999px}footer{margin-top:36px;color:var(--muted);font:13px Geist Mono,monospace}@media(max-width:820px){.grid{grid-template-columns:1fr}.hero{padding:24px}}
+</style></head><body><main class="wrap"><section class="hero"><div class="kicker">Hermes artifact hub</div><h1>Readable outputs, not chat walls.</h1><p class="lead">Saved reports, dashboards, and one-off research artifacts generated by Hermes. Telegram stays short; this hub keeps the full reading surface.</p></section><div class="controls"><button class="active" data-filter="all">all</button><button data-filter="finance">finance</button><button data-filter="learning">learning</button><button data-filter="research">research</button><button data-filter="system">system</button><button data-filter="temp">temp</button><button data-filter="trading">trading</button><button data-filter="travel">travel</button><button data-filter="video">video</button></div><section class="grid">
+        <article class="card" data-category="travel">
+          <div class="meta"><span>travel</span><span>2026-05-29</span><span>saved</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/travel/2026-05-29-nyc-nightlife-scene-map-2026.html">NYC Nightlife Scene Map 2026</a></h2>
+          <p>Deep scene-mapped guide to NYC nightlife: neighborhoods, commercial clubs, underground dance, queer/performance parties, cocktails, dives, rooftops, jazz, live music, Queens food-first nights, and practical routes.</p>
+          <div class="tags"><span>nyc</span><span>nightlife</span><span>travel</span><span>bars</span><span>clubs</span></div>
+        </article>
+        <article class="card" data-category="video">
+          <div class="meta"><span>video</span><span>2026-05-27</span><span>dashboard</span><span>video-summary-dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/video/youtube-summary-dashboard.html">YouTube Video Summary Dashboard</a></h2>
+          <p>Persistent dashboard for YouTube videos sent to Hermes with 'Summarise this video', keeping searchable history plus transcript-backed key insights, takeaways, actionable points, timestamped highlights, and conclusions.</p>
+          <div class="tags"><span>youtube</span><span>summaries</span><span>dashboard</span><span>video</span><span>learning</span></div>
+        </article>
+        <article class="card" data-category="finance">
+          <div class="meta"><span>finance</span><span>2026-05-26</span><span>saved</span><span>finance-research-guide</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/finance/2026-05-26-indian-resident-us-stocks-lrs-tax-guide.html">Indian resident investing in U.S. stocks: LRS, taxes, charges, safety</a></h2>
+          <p>Detailed guide to INR-to-U.S.-brokerage money movement under LRS, TCS/refunds, remittance charges, U.S. dividend withholding, Indian capital-gains tax, repatriation, INDmoney specifics, Reddit sentiment, broker alternatives, safety, transferability, NRI caveats and estate-tax risk.</p>
+          <div class="tags"><span>finance</span><span>tax</span><span>lrs</span><span>us-stocks</span><span>india</span></div>
+        </article>
+        <article class="card" data-category="research">
+          <div class="meta"><span>research</span><span>2026-05-26</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/research/2026-05-26-scapia-vs-niyo-travel-card-community-research.html">Scapia vs Niyo: Indian traveller community preference</a></h2>
+          <p>Community comparison of Scapia vs Niyo for Indian travellers, now including official fees, cash withdrawal limits, ATM charges, forex markup, maintenance fees and hidden-charge caveats.</p>
+          <div class="tags"><span>travel</span><span>credit-cards</span><span>forex</span><span>india</span><span>reddit</span></div>
+        </article>
+        <article class="card" data-category="trading">
+          <div class="meta"><span>trading</span><span>2026-05-26</span><span>dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html">Indian Trading Ideas Dashboard</a></h2>
+          <p>Persistent dashboard for daily Indian systematic trading idea scouts and backtests.</p>
+          <div class="tags"><span>trading</span><span>india</span><span>backtests</span><span>systematic</span></div>
+        </article>
+        <article class="card" data-category="learning">
+          <div class="meta"><span>learning</span><span>2026-05-25</span><span>dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/learning/spanish-crash-course-dashboard.html">Spanish crash-course flashcard dashboard</a></h2>
+          <p>Interactive Spanish travel crash-course dashboard with 89 speakable chunks, first/second-person examples, preview-before-add word lookup, cleaned translations, custom card saving, random flashcards, fuzzy quiz, and local progress tracking.</p>
+          <div class="tags"><span>spanish</span><span>language-learning</span><span>flashcards</span><span>travel</span><span>dashboard</span></div>
+        </article>
+        <article class="card" data-category="finance">
+          <div class="meta"><span>finance</span><span>2026-05-23</span><span>saved</span><span>unified-dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/finance/2026-05-23-groww-to-kotak-neo-demat-transfer.html">Groww → Kotak Neo demat transfer guide</a></h2>
+          <p>Digital-first guide to transfer equity holdings from Groww to Kotak Neo without selling, including CDSL/NSDL routes, pledged-share unpledge/re-pledge workflow, collateral-margin gap risk, timelines, charges, tax checks, and broker support messages.</p>
+          <div class="tags"><span>finance</span><span>demat</span><span>groww</span><span>kotak-neo</span><span>cdsl</span></div>
+        </article>
+        <article class="card" data-category="travel">
+          <div class="meta"><span>travel</span><span>2026-05-23</span><span>saved</span><span>unified-dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/travel/2026-05-23-leticia-iquitos-fast-boat-briefing.html">Leticia → Iquitos fast boat route briefing</a></h2>
+          <p>Traveler-ready briefing for Bogotá/Medellín → Leticia → Santa Rosa → Iquitos, including CONFLUAM/Ferry Amazonas, Zoe Alexa backup, border logistics, boat experience, timings, pros/cons, and Leticia overview.</p>
+          <div class="tags"><span>travel</span><span>south-america</span><span>amazon</span><span>leticia</span><span>iquitos</span></div>
+        </article>
+        <article class="card" data-category="travel">
+          <div class="meta"><span>travel</span><span>2026-05-23</span><span>saved</span><span>unified-dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/travel/2026-05-23-iquitos-ayahuasca-retreat-briefing.html">Iquitos ayahuasca retreat briefing</a></h2>
+          <p>Traveler briefing on Iquitos ayahuasca retreats: who goes, retreat zones, lower-cost options to investigate, realistic stay length, budgets, atmosphere, non-retreat activities, and safety/vetting cautions.</p>
+          <div class="tags"><span>travel</span><span>peru</span><span>iquitos</span><span>ayahuasca</span><span>retreat</span></div>
+        </article>
+        <article class="card" data-category="trading">
+          <div class="meta"><span>trading</span><span>2026-05-22</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/temp/2026-05-22-shreyaggarwall-may-2026-pnl.html">ShreyAggarwall cached P&amp;L audit</a></h2>
+          <p>ShreyAggarwall saved P&amp;L audit with all cached monthly totals and every parsed daily return linked to its source tweet.</p>
+          <div class="tags"><span>twitter</span><span>trading</span><span>pnl</span><span>may-2026</span><span>ShreyAggarwall</span></div>
+        </article>
+        <article class="card" data-category="temp">
+          <div class="meta"><span>temp</span><span>2026-05-22</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/temp/2026-05-22-traderiit-may-2026-pnl.html">TraderIit cached P&amp;L audit</a></h2>
+          <p>TraderIit saved P&amp;L audit with all cached monthly totals and every parsed daily report linked to its source tweet.</p>
+          <div class="tags"><span>twitter</span><span>trading</span><span>pnl</span><span>may-2026</span><span>TraderIit</span></div>
+        </article>
+        <article class="card" data-category="research">
+          <div class="meta"><span>research</span><span>2026-05-22</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-andrej-karpathy-skills-repo-review.html">andrej-karpathy-skills repo review</a></h2>
+          <p>Whether multica-ai/andrej-karpathy-skills is useful for Ishan’s Hermes coding workflow, and how to integrate it safely.</p>
+          <div class="tags"><span>hermes</span><span>skills</span><span>coding</span><span>github</span><span>repo-review</span></div>
+        </article>
+        <article class="card" data-category="research">
+          <div class="meta"><span>research</span><span>2026-05-22</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-hermes-desktop-community-signal.html">Hermes Desktop community signal</a></h2>
+          <p>External comments from GitHub, X/Twitter, and Reddit on whether Hermes Desktop is useful and where it is rough.</p>
+          <div class="tags"><span>hermes</span><span>desktop</span><span>community</span><span>x</span><span>reddit</span></div>
+        </article>
+        <article class="card" data-category="research">
+          <div class="meta"><span>research</span><span>2026-05-22</span><span>saved</span><span>14-research-feature-explainer.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/research/2026-05-22-hermes-desktop-repo-review.html">Hermes Desktop repo review</a></h2>
+          <p>What fathah/hermes-desktop is, how it works, and whether it is useful for Ishan’s Hermes workflow.</p>
+          <div class="tags"><span>hermes</span><span>desktop</span><span>github</span><span>repo-review</span></div>
+        </article>
+        <article class="card" data-category="system">
+          <div class="meta"><span>system</span><span>2026-05-22</span><span>saved</span><span>16-implementation-plan.html</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/system/2026-05-22-hermes-artifact-system-implementation.html">Hermes artifact system: Anthropic template migration</a></h2>
+          <p>Implementation note rebuilt in Anthropic implementation-plan format; documents template mapping, converted artifacts, and future Telegram artifact policy.</p>
+          <div class="tags"><span>html-artifacts</span><span>telegram</span><span>workflow</span><span>anthropic-template</span></div>
+        </article>
+        <article class="card" data-category="travel">
+          <div class="meta"><span>travel</span><span>2026-05-22</span><span>saved</span><span>unified-dashboard</span></div>
+          <h2><a href="https://ishanmish.github.io/hermes-artifacts/travel/south-america-offbeat-research-2026-05-22.html">South America: 42-day itinerary + Reddit traveller opinions + stay hot spots</a></h2>
+          <p>42-day Colombia/Peru/Bolivia itinerary with Reddit traveller pros/cons, best transfer legs, and centre-of-action stay hotspots for every recommended base.</p>
+          <div class="tags"><span>travel</span><span>south-america</span><span>itinerary</span><span>reddit</span><span>transfers</span></div>
+        </article></section><footer>Generated 29 May 2026, 16:03 IST · 16 artifacts indexed · <a href="artifacts.json">manifest</a></footer></main><script>
+document.querySelectorAll('button[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active');let f=b.dataset.filter;document.querySelectorAll('.card').forEach(c=>c.style.display=(f==='all'||c.dataset.category===f)?'block':'none')})
+</script></body></html>
