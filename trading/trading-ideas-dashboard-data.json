@@ -2423,5 +2423,437 @@
     "caveats": "Source HTTP 200 verified=True; OHLC filtered rows 0; NIFTY index proxy is not directly tradable; execution needs futures/ETF mapping; next-open fills from prior-close signals; 5 bps per entry/exit side; ignores taxes, impact, roll/cash yield; sample length 2015-06-26→2026-05-12; proxy/execution/sample-length caveats apply. Survivorship caveat is low for index-level proxy but still relevant if adapted to stock baskets.",
     "rules": "Market fit: India adaptation of public trend-following breakout rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; prior 20-day highest high and prior 10-day lowest low\nSignal rule: Buy when prior daily close breaks above the highest high of the prior 20 sessions.\nEntry timing: Enter next session open after breakout.\nExit timing: Exit next session open when prior daily close breaks below the lowest low of the prior 10 sessions.\nSizing/risk: 100% notional long while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side",
     "full_rulebook": "Market fit: India adaptation of public trend-following breakout rule\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: NIFTY daily OHLC; prior 20-day highest high and prior 10-day lowest low\nSignal rule: Buy when prior daily close breaks above the highest high of the prior 20 sessions.\nEntry timing: Enter next session open after breakout.\nExit timing: Exit next session open when prior daily close breaks below the lowest low of the prior 10 sessions.\nSizing/risk: 100% notional long while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side"
+  },
+  {
+    "id": "ITIS-20260531-1",
+    "title": "StockCharts ADX/+DI trend-strength cross, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/average-directional-index-adx",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC; Wilder +DI, -DI, ADX(14).",
+    "signal_rule": "+DI(14) crosses above -DI(14) and ADX(14) is above 25 on the signal close.",
+    "entry_timing": "Enter next session open after the prior-close signal.",
+    "exit_timing": "Exit next session open when -DI crosses above +DI, or ADX falls below 20.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "adx_di_cross_14_25_20",
+    "why": "StockCharts documents ADX as trend-strength and +DI/-DI as directional movement; fixed cross/threshold rules are objective.",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.02845419578885844,
+      "cagr": 0.0025826851992512,
+      "max_drawdown": -0.11536794544218176,
+      "trade_count": 20,
+      "win_rate": 0.5,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 0.26%, total 2.85%, max DD -11.54%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "Data coverage 2015-06-26→2026-05-12; OHLC filtered rows 0; source HTTP 200 verified; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, impact, futures roll/ETF tracking/cash yield; survivorship/proxy/execution/sample-length caveats apply.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Wilder +DI, -DI, ADX(14).\nSignal rule: +DI(14) crosses above -DI(14) and ADX(14) is above 25 on the signal close.\nEntry timing: Enter next session open after the prior-close signal.\nExit timing: Exit next session open when -DI crosses above +DI, or ADX falls below 20.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Wilder +DI, -DI, ADX(14).\nSignal rule: +DI(14) crosses above -DI(14) and ADX(14) is above 25 on the signal close.\nEntry timing: Enter next session open after the prior-close signal.\nExit timing: Exit next session open when -DI crosses above +DI, or ADX falls below 20.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "total_return": 0.02845419578885844,
+    "cagr": 0.0025826851992512,
+    "max_dd": -0.11536794544218176,
+    "win_rate": 0.5,
+    "trades": 20,
+    "trade_count": 20,
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/average-directional-index-adx",
+      "bytes_checked": 100000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2016-03-08",
+        "entry_price": 7486.39990234375,
+        "exit_date": "2016-03-16",
+        "exit_price": 7457.0498046875,
+        "return": -0.004418495270101408,
+        "win": false
+      },
+      {
+        "entry_date": "2017-01-06",
+        "entry_price": 8281.849609375,
+        "exit_date": "2017-05-25",
+        "exit_price": 9384.0498046875,
+        "return": 0.1325196933264503,
+        "win": true
+      },
+      {
+        "entry_date": "2017-05-26",
+        "entry_price": 9507.75,
+        "exit_date": "2017-06-28",
+        "exit_price": 9520.2001953125,
+        "return": 0.0008088238768209077,
+        "win": true
+      },
+      {
+        "entry_date": "2018-09-10",
+        "entry_price": 11570.25,
+        "exit_date": "2018-09-11",
+        "exit_price": 11476.849609375,
+        "return": -0.00856842466063279,
+        "win": false
+      },
+      {
+        "entry_date": "2018-11-05",
+        "entry_price": 10558.75,
+        "exit_date": "2018-11-13",
+        "exit_price": 10451.900390625,
+        "return": -0.010614472316354706,
+        "win": false
+      },
+      {
+        "entry_date": "2019-05-21",
+        "entry_price": 11863.650390625,
+        "exit_date": "2019-06-18",
+        "exit_price": 11677.0498046875,
+        "return": -0.016220902041408136,
+        "win": false
+      },
+      {
+        "entry_date": "2019-06-20",
+        "entry_price": 11653.650390625,
+        "exit_date": "2019-07-08",
+        "exit_price": 11770.400390625,
+        "return": 0.00951331094451513,
+        "win": true
+      },
+      {
+        "entry_date": "2019-09-23",
+        "entry_price": 11542.7001953125,
+        "exit_date": "2019-10-07",
+        "exit_price": 11196.2001953125,
+        "return": -0.030503963036365045,
+        "win": false
+      },
+      {
+        "entry_date": "2020-04-28",
+        "entry_price": 9389.7998046875,
+        "exit_date": "2020-05-06",
+        "exit_price": 9226.7998046875,
+        "return": -0.017850582907919743,
+        "win": false
+      },
+      {
+        "entry_date": "2020-12-24",
+        "entry_price": 13672.150390625,
+        "exit_date": "2021-01-28",
+        "exit_price": 13810.400390625,
+        "return": 0.00960674042137133,
+        "win": true
+      }
+    ],
+    "report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260531-1.html",
+    "site_report_path": "/Users/ishanmishra/.hermes/hermes-artifacts-site/trading/ITIS-20260531-1.html",
+    "report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-1.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-1.html",
+    "run_date": "2026-05-31",
+    "dashboard_status": "dashboard"
+  },
+  {
+    "id": "ITIS-20260531-2",
+    "title": "StockCharts Parabolic SAR stop-and-reverse, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/parabolic-sar",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC; Parabolic SAR with acceleration 0.02, max 0.20.",
+    "signal_rule": "Parabolic SAR flips below price / uptrend state after the close.",
+    "entry_timing": "Enter next session open after SAR flips to uptrend.",
+    "exit_timing": "Exit next session open after SAR flips above price / downtrend state.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "parabolic_sar_002_02",
+    "why": "StockCharts describes Parabolic SAR as a trailing stop-and-reverse system; the flip state is directly testable.",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.2562704320338398,
+      "cagr": 0.021195788124251935,
+      "max_drawdown": -0.2922052117980416,
+      "trade_count": 126,
+      "win_rate": 0.46825396825396826,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 2.12%, total 25.63%, max DD -29.22%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "Data coverage 2015-06-26→2026-05-12; OHLC filtered rows 0; source HTTP 200 verified; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, impact, futures roll/ETF tracking/cash yield; survivorship/proxy/execution/sample-length caveats apply.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Parabolic SAR with acceleration 0.02, max 0.20.\nSignal rule: Parabolic SAR flips below price / uptrend state after the close.\nEntry timing: Enter next session open after SAR flips to uptrend.\nExit timing: Exit next session open after SAR flips above price / downtrend state.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Parabolic SAR with acceleration 0.02, max 0.20.\nSignal rule: Parabolic SAR flips below price / uptrend state after the close.\nEntry timing: Enter next session open after SAR flips to uptrend.\nExit timing: Exit next session open after SAR flips above price / downtrend state.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "total_return": 0.2562704320338398,
+    "cagr": 0.021195788124251935,
+    "max_dd": -0.2922052117980416,
+    "win_rate": 0.46825396825396826,
+    "trades": 126,
+    "trade_count": 126,
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/parabolic-sar",
+      "bytes_checked": 100000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2015-06-29",
+        "entry_price": 8247.0498046875,
+        "exit_date": "2015-06-30",
+        "exit_price": 8316.349609375,
+        "return": 0.007898779736456474,
+        "win": true
+      },
+      {
+        "entry_date": "2015-07-02",
+        "entry_price": 8471.9501953125,
+        "exit_date": "2015-07-28",
+        "exit_price": 8371.099609375,
+        "return": -0.012398105904860346,
+        "win": false
+      },
+      {
+        "entry_date": "2015-08-06",
+        "entry_price": 8585.7998046875,
+        "exit_date": "2015-08-13",
+        "exit_price": 8384.4501953125,
+        "return": -0.023939742266112174,
+        "win": false
+      },
+      {
+        "entry_date": "2015-09-14",
+        "entry_price": 7811.10009765625,
+        "exit_date": "2015-09-24",
+        "exit_price": 7838.39990234375,
+        "return": 0.002993253759908221,
+        "win": true
+      },
+      {
+        "entry_date": "2015-10-06",
+        "entry_price": 8180.4501953125,
+        "exit_date": "2015-10-29",
+        "exit_price": 8175.4501953125,
+        "return": -0.0011109076983151223,
+        "win": false
+      },
+      {
+        "entry_date": "2015-11-23",
+        "entry_price": 7869.5,
+        "exit_date": "2015-12-07",
+        "exit_price": 7816.5498046875,
+        "return": -0.007225169351908423,
+        "win": false
+      },
+      {
+        "entry_date": "2015-12-18",
+        "entry_price": 7828.89990234375,
+        "exit_date": "2016-01-06",
+        "exit_price": 7788.0498046875,
+        "return": -0.005715250305499242,
+        "win": false
+      },
+      {
+        "entry_date": "2016-01-27",
+        "entry_price": 7469.60009765625,
+        "exit_date": "2016-02-10",
+        "exit_price": 7264.2998046875,
+        "return": -0.02797103461223449,
+        "win": false
+      },
+      {
+        "entry_date": "2016-03-02",
+        "entry_price": 7321.7001953125,
+        "exit_date": "2016-03-30",
+        "exit_price": 7651.10009765625,
+        "return": 0.04446704230027909,
+        "win": true
+      },
+      {
+        "entry_date": "2016-04-01",
+        "entry_price": 7718.0498046875,
+        "exit_date": "2016-04-06",
+        "exit_price": 7636.0498046875,
+        "return": -0.011119133339904441,
+        "win": false
+      }
+    ],
+    "report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260531-2.html",
+    "site_report_path": "/Users/ishanmishra/.hermes/hermes-artifacts-site/trading/ITIS-20260531-2.html",
+    "report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-2.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-2.html",
+    "run_date": "2026-05-31",
+    "dashboard_status": "dashboard"
+  },
+  {
+    "id": "ITIS-20260531-3",
+    "title": "StockCharts Aroon Up/Down trend-emergence cross, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC; Aroon Up/Down(25).",
+    "signal_rule": "Aroon Up(25) crosses above Aroon Down(25) and Aroon Up is above 70 on the signal close.",
+    "entry_timing": "Enter next session open after the prior-close signal.",
+    "exit_timing": "Exit next session open when Aroon Down crosses above Aroon Up, or Aroon Up falls below 50.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "strategy": "aroon_25_cross_70_50",
+    "why": "StockCharts defines Aroon Up/Down from recency of highs/lows; cross and threshold rules are mechanical.",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.7004190477359242,
+      "cagr": 0.050015505387338344,
+      "max_drawdown": -0.16455882323186655,
+      "trade_count": 47,
+      "win_rate": 0.5106382978723404,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.7895564867285323,
+      "cagr": 0.09890311709624044,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0,
+      "start": "2015-06-26",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09890311709624044,
+    "benchmark_total": 1.7895564867285323,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 5.00%, total 70.04%, max DD -16.46%; same-span NIFTY buy-hold CAGR 9.89%, total 178.96%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "Data coverage 2015-06-26→2026-05-12; OHLC filtered rows 0; source HTTP 200 verified; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, impact, futures roll/ETF tracking/cash yield; survivorship/proxy/execution/sample-length caveats apply.",
+    "rules": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Aroon Up/Down(25).\nSignal rule: Aroon Up(25) crosses above Aroon Down(25) and Aroon Up is above 70 on the signal close.\nEntry timing: Enter next session open after the prior-close signal.\nExit timing: Exit next session open when Aroon Down crosses above Aroon Up, or Aroon Up falls below 50.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "full_rulebook": "Market fit: India-adaptable\nInstrument/universe: NIFTY 50 index daily OHLC proxy\nData required: Daily OHLC; Aroon Up/Down(25).\nSignal rule: Aroon Up(25) crosses above Aroon Down(25) and Aroon Up is above 70 on the signal close.\nEntry timing: Enter next session open after the prior-close signal.\nExit timing: Exit next session open when Aroon Down crosses above Aroon Up, or Aroon Up falls below 50.\nSizing/risk: 100% notional while in position; cash otherwise; no leverage.\nCosts/slippage: 5 bps per entry/exit side\nBenchmark: same-span NIFTY buy-and-hold",
+    "total_return": 0.7004190477359242,
+    "cagr": 0.050015505387338344,
+    "max_dd": -0.16455882323186655,
+    "win_rate": 0.5106382978723404,
+    "trades": 47,
+    "trade_count": 47,
+    "status": "backtested",
+    "blocker": null,
+    "source_check": {
+      "status": 200,
+      "effective_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon",
+      "bytes_checked": 100000,
+      "ok": true
+    },
+    "trade_sample": [
+      {
+        "entry_date": "2015-10-06",
+        "entry_price": 8180.4501953125,
+        "exit_date": "2015-11-09",
+        "exit_price": 7788.25,
+        "return": -0.048419623719421545,
+        "win": false
+      },
+      {
+        "entry_date": "2016-01-11",
+        "entry_price": 7527.4501953125,
+        "exit_date": "2016-01-12",
+        "exit_price": 7587.2001953125,
+        "return": 0.007433645982432235,
+        "win": true
+      },
+      {
+        "entry_date": "2016-03-10",
+        "entry_price": 7545.35009765625,
+        "exit_date": "2016-05-18",
+        "exit_price": 7846.75,
+        "return": 0.03942514575117628,
+        "win": true
+      },
+      {
+        "entry_date": "2016-05-27",
+        "entry_price": 8081.9501953125,
+        "exit_date": "2016-06-27",
+        "exit_price": 8039.35009765625,
+        "return": -0.005768381588408755,
+        "win": false
+      },
+      {
+        "entry_date": "2016-07-01",
+        "entry_price": 8313.0498046875,
+        "exit_date": "2016-09-28",
+        "exit_price": 8711.2001953125,
+        "return": 0.04737067619940083,
+        "win": true
+      },
+      {
+        "entry_date": "2016-12-21",
+        "entry_price": 8105.85009765625,
+        "exit_date": "2016-12-27",
+        "exit_price": 7915.0498046875,
+        "return": -0.024026822051324004,
+        "win": false
+      },
+      {
+        "entry_date": "2017-01-06",
+        "entry_price": 8281.849609375,
+        "exit_date": "2017-06-27",
+        "exit_price": 9594.0498046875,
+        "return": 0.15786366959986653,
+        "win": true
+      },
+      {
+        "entry_date": "2017-07-11",
+        "entry_price": 9797.4501953125,
+        "exit_date": "2017-08-16",
+        "exit_price": 9825.849609375,
+        "return": 0.002397204251066265,
+        "win": true
+      },
+      {
+        "entry_date": "2017-09-13",
+        "entry_price": 10099.25,
+        "exit_date": "2017-09-28",
+        "exit_price": 9736.400390625,
+        "return": -0.03641040766099579,
+        "win": false
+      },
+      {
+        "entry_date": "2017-10-16",
+        "entry_price": 10207.400390625,
+        "exit_date": "2017-11-20",
+        "exit_price": 10287.2001953125,
+        "return": 0.00731392928001684,
+        "win": true
+      }
+    ],
+    "report_path": "/Users/ishanmishra/.hermes/artifacts/trading/ITIS-20260531-3.html",
+    "site_report_path": "/Users/ishanmishra/.hermes/hermes-artifacts-site/trading/ITIS-20260531-3.html",
+    "report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-3.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/ITIS-20260531-3.html",
+    "run_date": "2026-05-31",
+    "dashboard_status": "dashboard"
   }
 ]
