@@ -1,5 +1,26 @@
 [
   {
+    "id": "2026-06-01-trading-ideas-dashboard",
+    "title": "Indian Trading Ideas Dashboard",
+    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
+    "category": "trading",
+    "tags": [
+      "trading",
+      "india",
+      "backtests",
+      "systematic"
+    ],
+    "status": "dashboard",
+    "created_at": "2026-06-01T19:04:17.420503+05:30",
+    "updated_at": "2026-06-01T19:04:17.420503+05:30",
+    "expires_at": null,
+    "importance": null,
+    "superseded_by": null,
+    "path": "trading/trading-ideas-dashboard.html",
+    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
+    "template": null
+  },
+  {
     "id": "2026-05-29-nyc-nightlife-scene-map-2026",
     "title": "NYC Nightlife Scene Map 2026",
     "summary": "Deep scene-mapped guide to NYC nightlife: neighborhoods, commercial clubs, underground dance, queer/performance parties, cocktails, dives, rooftops, jazz, live music, Queens food-first nights, and practical routes.",
@@ -45,27 +66,6 @@
     "template": "video-summary-dashboard",
     "temp": false,
     "retention_days": null
-  },
-  {
-    "id": "2026-05-26-trading-ideas-dashboard",
-    "title": "Indian Trading Ideas Dashboard",
-    "summary": "Persistent dashboard for daily Indian systematic trading idea scouts and backtests.",
-    "category": "trading",
-    "tags": [
-      "trading",
-      "india",
-      "backtests",
-      "systematic"
-    ],
-    "status": "dashboard",
-    "created_at": "2026-05-26T19:19:51.146507+05:30",
-    "updated_at": "2026-05-26T19:19:51.146507+05:30",
-    "expires_at": null,
-    "importance": null,
-    "superseded_by": null,
-    "path": "trading/trading-ideas-dashboard.html",
-    "url": "https://ishanmish.github.io/hermes-artifacts/trading/trading-ideas-dashboard.html",
-    "template": null
   },
   {
     "id": "2026-05-26-indian-resident-us-stocks-lrs-tax-guide",
