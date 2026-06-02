@@ -1,5 +1,382 @@
 [
   {
+    "id": "ITIS-20260602-1",
+    "title": "StockCharts RSI(14) oversold rebound, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+    "strategy": "rsi14_30_70_rebound",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC; RSI(14) on close.",
+    "signal_rule": "RSI(14) crosses back above 30 after being below 30; exit when RSI(14) reaches/crosses above 70.",
+    "entry_timing": "Enter next session open after prior-close RSI(14) cross above 30.",
+    "exit_timing": "Exit next session open after prior-close RSI(14) >= 70; force-exit at final close if still open.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "why": "StockCharts documents RSI below 30 as oversold and above 70 as overbought; cross-back rules make the idea objective and OHLC-testable.",
+    "run_date": "2026-06-02",
+    "source_http_status": 200,
+    "effective_source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.2624451662903713,
+      "cagr": 0.022008950636564828,
+      "max_drawdown": -0.32990832484642263,
+      "trade_count": 9,
+      "win_rate": 0.6666666666666666,
+      "start": "2015-08-28",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.9217316042463768,
+      "cagr": 0.10534404222425287,
+      "max_drawdown": -0.38439852452742096,
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "start": "2015-08-28",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.10534404222425287,
+    "benchmark_total": 1.9217316042463768,
+    "benchmark_dd": -0.38439852452742096,
+    "benchmark_comparison": "Strategy CAGR 2.20%, total 26.24%, max DD -32.99%; same-span NIFTY buy-hold CAGR 10.53%, total 192.17%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "OHLC validation filtered rows 0; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, futures/ETF tracking, impact, cash yield and roll; survivorship/proxy/execution/sample-length caveats apply. Source HTTP 200 verified.",
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/reports/ITIS-20260602-1_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260602-1_report.html",
+    "report_url": "reports/ITIS-20260602-1_report.html",
+    "trades_sample": [
+      {
+        "entry_date": "2015-08-28",
+        "entry_price": 8053.7001953125,
+        "entry_equity": 1.0,
+        "exit_date": "2016-06-03",
+        "exit_price": 8246.2001953125,
+        "pnl": 0.022878410778436997
+      },
+      {
+        "entry_date": "2016-11-24",
+        "entry_price": 8011.7998046875,
+        "entry_equity": 1.022878410778437,
+        "exit_date": "2017-01-27",
+        "exit_price": 8610.5,
+        "pnl": 0.07365284484420775
+      },
+      {
+        "entry_date": "2018-10-11",
+        "entry_price": 10169.7998046875,
+        "entry_equity": 1.098216315661991,
+        "exit_date": "2019-03-13",
+        "exit_price": 11326.2001953125,
+        "pnl": 0.1125958272503993
+      },
+      {
+        "entry_date": "2019-08-09",
+        "entry_price": 11087.900390625,
+        "entry_equity": 1.2218708902238387,
+        "exit_date": "2019-11-05",
+        "exit_price": 11974.599609375,
+        "pnl": 0.07889028418131594
+      },
+      {
+        "entry_date": "2020-03-04",
+        "entry_price": 11351.349609375,
+        "entry_equity": 1.3182646319864748,
+        "exit_date": "2020-07-07",
+        "exit_price": 10802.849609375,
+        "pnl": -0.04927168734500531
+      },
+      {
+        "entry_date": "2022-05-18",
+        "entry_price": 16318.150390625,
+        "entry_equity": 1.2533115092012588,
+        "exit_date": "2022-08-01",
+        "exit_price": 17243.19921875,
+        "pnl": 0.055631914032830965
+      },
+      {
+        "entry_date": "2023-10-30",
+        "entry_price": 19053.400390625,
+        "entry_equity": 1.3230356273375008,
+        "exit_date": "2023-11-30",
+        "exit_price": 20108.5,
+        "pnl": 0.05432080968650932
+      },
+      {
+        "entry_date": "2024-10-29",
+        "entry_price": 24328.849609375,
+        "entry_equity": 1.3949039938585726,
+        "exit_date": "2025-03-25",
+        "exit_price": 23751.5,
+        "pnl": -0.024707093888580944
+      },
+      {
+        "entry_date": "2026-01-23",
+        "entry_price": 25344.599609375,
+        "entry_equity": 1.3604399699167522,
+        "exit_date": "2026-05-12",
+        "exit_price": 23379.55078125,
+        "pnl": -0.0784554723556583,
+        "forced_exit": true
+      }
+    ]
+  },
+  {
+    "id": "ITIS-20260602-2",
+    "title": "StockCharts CCI(20) +100/-100 trend regime, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "strategy": "cci20_plus100_minus100_trend",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily OHLC; CCI(20) from typical price.",
+    "signal_rule": "CCI(20) crosses above +100 for bullish regime; exit when CCI(20) crosses below -100.",
+    "entry_timing": "Enter next session open after prior-close CCI(20) cross above +100.",
+    "exit_timing": "Exit next session open after prior-close CCI(20) cross below -100; force-exit at final close if still open.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "why": "StockCharts describes moves above +100 as strength/uptrend and below -100 as weakness; crossings are objective and daily-testable.",
+    "run_date": "2026-06-02",
+    "source_http_status": 200,
+    "effective_source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.5867233990171004,
+      "cagr": 0.04435995728884956,
+      "max_drawdown": -0.18703426479279583,
+      "trade_count": 51,
+      "win_rate": 0.43137254901960786,
+      "start": "2015-09-22",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.9927740375384024,
+      "cagr": 0.10855769692737827,
+      "max_drawdown": -0.38439852452742096,
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "start": "2015-09-22",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.10855769692737827,
+    "benchmark_total": 1.9927740375384024,
+    "benchmark_dd": -0.38439852452742096,
+    "benchmark_comparison": "Strategy CAGR 4.44%, total 58.67%, max DD -18.70%; same-span NIFTY buy-hold CAGR 10.86%, total 199.28%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "OHLC validation filtered rows 0; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, futures/ETF tracking, impact, cash yield and roll; survivorship/proxy/execution/sample-length caveats apply. Source HTTP 200 verified.",
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/reports/ITIS-20260602-2_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260602-2_report.html",
+    "report_url": "reports/ITIS-20260602-2_report.html",
+    "trades_sample": [
+      {
+        "entry_date": "2015-09-22",
+        "entry_price": 8014.7998046875,
+        "entry_equity": 1.0,
+        "exit_date": "2015-11-03",
+        "exit_price": 8086.35009765625,
+        "pnl": 0.007918596347409768
+      },
+      {
+        "entry_date": "2015-12-30",
+        "entry_price": 7938.60009765625,
+        "entry_equity": 1.0079185963474098,
+        "exit_date": "2016-01-08",
+        "exit_price": 7611.64990234375,
+        "pnl": -0.042143443199909036
+      },
+      {
+        "entry_date": "2016-03-04",
+        "entry_price": 7505.39990234375,
+        "entry_equity": 0.9654414362321107,
+        "exit_date": "2016-06-27",
+        "exit_price": 8039.35009765625,
+        "pnl": 0.07007126360956972
+      },
+      {
+        "entry_date": "2016-07-01",
+        "entry_price": 8313.0498046875,
+        "entry_equity": 1.0330911376099325,
+        "exit_date": "2016-08-29",
+        "exit_price": 8583.75,
+        "pnl": 0.03153097808967775
+      },
+      {
+        "entry_date": "2016-08-31",
+        "entry_price": 8754.0498046875,
+        "entry_equity": 1.0656655116345515,
+        "exit_date": "2016-09-30",
+        "exit_price": 8581.5,
+        "pnl": -0.020690898881510877
+      },
+      {
+        "entry_date": "2016-12-12",
+        "entry_price": 8230.650390625,
+        "entry_equity": 1.0436159342918074,
+        "exit_date": "2016-12-23",
+        "exit_price": 7972.5,
+        "pnl": -0.03233291233012647
+      },
+      {
+        "entry_date": "2017-01-06",
+        "entry_price": 8281.849609375,
+        "entry_equity": 1.0098727917820274,
+        "exit_date": "2017-06-28",
+        "exit_price": 9520.2001953125,
+        "pnl": 0.1483766095439849
+      },
+      {
+        "entry_date": "2017-07-07",
+        "entry_price": 9670.349609375,
+        "entry_equity": 1.1597142926973631,
+        "exit_date": "2017-08-11",
+        "exit_price": 9712.150390625,
+        "pnl": 0.0033185003845013217
+      },
+      {
+        "entry_date": "2017-09-12",
+        "entry_price": 10056.849609375,
+        "entry_equity": 1.163562805023591,
+        "exit_date": "2017-09-27",
+        "exit_price": 9920.599609375,
+        "pnl": -0.014534185668165334
+      },
+      {
+        "entry_date": "2017-10-16",
+        "entry_price": 10207.400390625,
+        "entry_equity": 1.146651367178807,
+        "exit_date": "2017-11-16",
+        "exit_price": 10152.900390625,
+        "pnl": -0.006333675538475525
+      }
+    ]
+  },
+  {
+    "id": "ITIS-20260602-3",
+    "title": "StockCharts Aroon Up/Down crossover trend signal, adapted to NIFTY daily long/cash",
+    "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon",
+    "strategy": "aroon25_up_down_cross",
+    "market_fit": "India-adaptable",
+    "instrument": "NIFTY 50 index daily OHLC proxy",
+    "data_required": "Daily high/low/open/close; Aroon Up/Down(25).",
+    "signal_rule": "Aroon Up(25) crosses above Aroon Down(25) for bullish trend; exit when Aroon Up crosses below Aroon Down.",
+    "entry_timing": "Enter next session open after prior-close bullish Aroon crossover.",
+    "exit_timing": "Exit next session open after prior-close bearish Aroon crossover; force-exit at final close if still open.",
+    "sizing_risk": "100% notional while in position; cash otherwise; no leverage.",
+    "why": "StockCharts documents Aroon Up/Down crossovers as trend-direction signals; the crossover is objective and daily-testable.",
+    "run_date": "2026-06-02",
+    "source_http_status": 200,
+    "effective_source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon",
+    "data_coverage": "2015-06-26→2026-05-12",
+    "costs_slippage": "5 bps per entry/exit side",
+    "metrics": {
+      "total_return": 0.2501318887656869,
+      "cagr": 0.021013900340988156,
+      "max_drawdown": -0.3771041266935793,
+      "trade_count": 47,
+      "win_rate": 0.6170212765957447,
+      "start": "2015-08-17",
+      "end": "2026-05-12"
+    },
+    "benchmark": {
+      "total_return": 1.757900666474287,
+      "cagr": 0.09910932589682653,
+      "max_drawdown": -0.38439852452742107,
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "start": "2015-08-17",
+      "end": "2026-05-12"
+    },
+    "benchmark_cagr": 0.09910932589682653,
+    "benchmark_total": 1.757900666474287,
+    "benchmark_dd": -0.38439852452742107,
+    "benchmark_comparison": "Strategy CAGR 2.10%, total 25.01%, max DD -37.71%; same-span NIFTY buy-hold CAGR 9.91%, total 175.79%, max DD -38.44%.",
+    "verdict": "Reject/not deployment-ready: underperforms same-span NIFTY buy-and-hold after costs.",
+    "caveats": "OHLC validation filtered rows 0; NIFTY index proxy is not directly tradable; next-open execution from prior-close signal; 5 bps/side costs; ignores taxes, futures/ETF tracking, impact, cash yield and roll; survivorship/proxy/execution/sample-length caveats apply. Source HTTP 200 verified.",
+    "local_report_path": "/Users/ishanmishra/.hermes/artifacts/trading/reports/ITIS-20260602-3_report.html",
+    "public_report_url": "https://ishanmish.github.io/hermes-artifacts/trading/reports/ITIS-20260602-3_report.html",
+    "report_url": "reports/ITIS-20260602-3_report.html",
+    "trades_sample": [
+      {
+        "entry_date": "2015-08-17",
+        "entry_price": 8530.5,
+        "entry_equity": 1.0,
+        "exit_date": "2015-10-06",
+        "exit_price": 8180.4501953125,
+        "pnl": -0.04199381159020721
+      },
+      {
+        "entry_date": "2015-11-09",
+        "entry_price": 7788.25,
+        "entry_equity": 0.9580061884097928,
+        "exit_date": "2016-01-11",
+        "exit_price": 7527.4501953125,
+        "pnl": -0.03445258858155076
+      },
+      {
+        "entry_date": "2016-01-12",
+        "entry_price": 7587.2001953125,
+        "entry_equity": 0.9250003953419306,
+        "exit_date": "2016-03-10",
+        "exit_price": 7545.35009765625,
+        "pnl": -0.006510117058318499
+      },
+      {
+        "entry_date": "2016-05-23",
+        "entry_price": 7813.9501953125,
+        "entry_equity": 0.9189785344892637,
+        "exit_date": "2016-05-27",
+        "exit_price": 8081.9501953125,
+        "pnl": 0.03326359444268778
+      },
+      {
+        "entry_date": "2016-06-30",
+        "entry_price": 8260.25,
+        "entry_equity": 0.9495470637620502,
+        "exit_date": "2016-07-01",
+        "exit_price": 8313.0498046875,
+        "pnl": 0.005385894270181213
+      },
+      {
+        "entry_date": "2016-10-06",
+        "entry_price": 8768.7001953125,
+        "entry_equity": 0.9546612238520337,
+        "exit_date": "2016-12-21",
+        "exit_price": 8105.85009765625,
+        "pnl": -0.07651691885304213
+      },
+      {
+        "entry_date": "2016-12-27",
+        "entry_price": 7915.0498046875,
+        "entry_equity": 0.8816134884544017,
+        "exit_date": "2017-01-06",
+        "exit_price": 8281.849609375,
+        "pnl": 0.04529599110396032
+      },
+      {
+        "entry_date": "2017-07-03",
+        "entry_price": 9587.9501953125,
+        "entry_equity": 0.9215470451845637,
+        "exit_date": "2017-07-11",
+        "exit_price": 9797.4501953125,
+        "pnl": 0.020828748074314563
+      },
+      {
+        "entry_date": "2017-08-16",
+        "entry_price": 9825.849609375,
+        "entry_equity": 0.9407417164273418,
+        "exit_date": "2017-09-13",
+        "exit_price": 10099.25,
+        "pnl": 0.02679703800740829
+      },
+      {
+        "entry_date": "2017-09-28",
+        "entry_price": 9736.400390625,
+        "entry_equity": 0.9659508079575999,
+        "exit_date": "2017-10-16",
+        "exit_price": 10207.400390625,
+        "pnl": 0.04732705445260499
+      }
+    ]
+  },
+  {
     "id": "ITIS-20260601-1",
     "title": "StockCharts Chaikin Money Flow zero-line regime, adapted to NIFTY daily long/cash",
     "source_url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/chaikin-money-flow-cmf",
